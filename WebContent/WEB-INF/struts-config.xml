@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+ 
+<struts-config>
+	<form-beans>
+		<form-bean name="LoginForm" type="login.form.LoginForm" />
+		<form-bean name="PatientForm" type="patient.form.PatientForm" />
+		<form-bean name="DiseaseForm" type="disease.form.DiseaseForm" />
+		<form-bean name="SurgicalHistoryForm" type="pastSergHistory.form.PastSurgicalHistoryForm" />
+		<form-bean name="PatientOthersForm" type="patientOthers.form.PatientOthersForm" />
+		<form-bean name="DepartmentDiseaseForm" type="department.form.DepartmentDiseaseForm" />
+		<form-bean name="RoleForm" type="role.form.RoleForm" />
+		<form-bean name="UserForm" type="user.form.UserForm" />
+		<form-bean name="ExtractionForm" type="extraction.form.ExtractionForm" />
+	</form-beans>
+	
+	<global-exceptions></global-exceptions>
+	<global-forwards></global-forwards>
+	
+	<action-mappings>
+		
+		<action path="/login" name="LoginForm" validate="true" input="login.jsp" type="login.action.LoginAction">
+			<forward name="success" path="/Dashboard/Dashboard.jsp" redirect="true"/>
+			<forward name="failure" path="/" redirect="true"/>
+		</action>
+		
+		<action path="/Logout" type="logout.LogoutAction" validate="false" scope="request">
+			<forward name="success" path="/" redirect="true"/>
+		</action>
+		
+		<action path="/NewExtraction" name="ExtractionForm" validate="true" input="/Patient/PatientExtraction.jsp" type="extraction.action.AddPatientExtractionAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="dutyNurseSuccess" path="/Patient/ExtractionList.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/MakeDischarge" name="PatientForm" validate="true" input="/Patient/SearchPatient.jsp" type="patient.action.MakeDischargeAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/UpdateDepartmentDiseaseInfo" name="DepartmentDiseaseForm" validate="true" input="/Department/DiseaseUpdate.jsp" type="department.action.DepartmentDiseaseAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/UpdateIndoorDiseaseInfo" name="PatientForm" validate="true" input="/Department/IndoorDiseaseUpdateOrView.jsp" type="patient.action.UpdateIndoorDiseaseInfoAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/NewPatient" name="PatientForm" validate="true" input="/Patient/NewPatient.jsp" type="patient.action.AddNewPatientAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/EditPatient" name="PatientForm" validate="true" input="/Patient/EditPatient.jsp" type="patient.action.EditPatientAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientCardiovascular" name="DiseaseForm" validate="true" input="/Disease/CardiovascularSystem.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientRespratory" name="DiseaseForm" validate="true" input="/Disease/Respratory.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientBlood" name="DiseaseForm" validate="true" input="/Disease/Blood.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientLymphaticAndVascularTumor" name="DiseaseForm" validate="true" input="/Disease/LymphaticAndVascularTumor.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientOroFacialCleft" name="DiseaseForm" validate="true" input="/Disease/OroFacialCleft.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientOroFacialInfection" name="DiseaseForm" validate="true" input="/Disease/OroFaciaInfection.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		
+		<action path="/PatientMalignantTumor" name="DiseaseForm" validate="true" input="/Disease/MalignantTumor.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientLiver" name="DiseaseForm" validate="true" input="/Disease/Liver.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientKidney" name="DiseaseForm" validate="true" input="/Disease/Kidney.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientMandibleWithTMJLowerFace" name="DiseaseForm" validate="true" input="/Disease/MandibleWithTMJLowerFace.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientZygomaComp" name="DiseaseForm" validate="true" input="/Disease/ZygomaticomaxillaryComplex.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientEndocrine" name="DiseaseForm" validate="true" input="/Disease/Endocrine.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientOralAndMaxillofacialTrauma" name="DiseaseForm" validate="true" input="/Disease/OralAndMaxillofacialTrauma.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		<action path="/PatientMaxillarySinusitisChOrAcuteFistula" name="DiseaseForm" validate="true" input="/Disease/MaxillarySinusitisChOrAcuteFistula.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		
+		<action path="/ChangeSurgicalStatus" name="SurgicalHistoryForm" validate="true" input="/Patient/PresentStatus.jsp" type="pastSergHistory.action.ChangeSurgicalStatusAction">
+			<forward name="success" path="/Patient/PresentStatus.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/NewSurgicalHistory" name="SurgicalHistoryForm" validate="true" input="/PastSergHistory/AddPastSergHistory.jsp" type="pastSergHistory.action.AddSurgicalHistoryAction">
+			<forward name="success" path="/Patient/PresentStatus.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientSocialAndPersonalHistory" name="PatientOthersForm" validate="true" input="/PatientOthers/PatientPersonalHistory.jsp" type="patientOthers.action.UpdatePatientOthersInfoAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/UpdatePatientGeneralSurveyAction" name="PatientOthersForm" validate="true" input="/PatientOthers/GeneralSurvey.jsp" type="patientOthers.action.UpdatePatientGeneralSurveyAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientInvestigation" name="PatientOthersForm" validate="true" input="/PatientOthers/Investigation.jsp" type="patientOthers.action.UpdatePatientInvestigationAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientPreAnsEve" name="PatientOthersForm" validate="true" input="/PatientOthers/PreAnestheticEvaluation.jsp" type="patientOthers.action.UpdatePreAnestheticEvaluationAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/PatientPhyExmHistory" name="PatientOthersForm" validate="true" input="/PatientOthers/PatinetPhysicalExamination.jsp" type="patientOthers.action.UpdatePatientPhyExmInfoAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+		
+		
+		<action path="/PatientDrugGroup" name="PatientOthersForm" validate="true" input="/PatientOthers/PatientDrugAnMedication.jsp" type="patientOthers.action.UpdatePatientDrugAction">
+			<forward name="success" path="/PatientOthers/PatientDrugAnMedication.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/DrugComplete" name="PatientOthersForm" validate="true" input="/PatientOthers/PatientDrugAnMedication.jsp" type="patientOthers.action.MakePastPatientMedicationAction">
+			<forward name="success" path="/PatientOthers/PatientDrugAnMedication.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/NewMedication" name="PatientOthersForm" validate="true" input="/PatientOthers/AddMedication.jsp" type="patientOthers.action.AddPatientMedicationAction">
+			<forward name="success" path="/PatientOthers/PatientDrugAnMedication.jsp" redirect="true"/>
+		</action>
+		
+		
+		<!-- FollowUp Disease Page Control Here ** start-->
+		<action path="/NewFindingsMalignantTumorPatient" name="PatientForm" validate="true" input="/Disease/MalignantTumor.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/MalignantTumor.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/MalignantTumor.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsLympVascuTumorPatient" name="PatientForm" validate="true" input="/Disease/LymphaticAndVascularTumor.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/LymphaticAndVascularTumor.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/LymphaticAndVascularTumor.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsLiverPatient" name="PatientForm" validate="true" input="/Disease/Liver.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/Liver.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/Liver.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsKidneyPatient" name="PatientForm" validate="true" input="/Disease/Kidney.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/Kidney.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/Kidney.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsEndocrinePatient" name="PatientForm" validate="true" input="/Disease/Endocrine.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/Endocrine.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/Endocrine.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsCardiovascularSystemPatient" name="PatientForm" validate="true" input="/Disease/CardiovascularSystem.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/CardiovascularSystem.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/CardiovascularSystem.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsBloodPatient" name="PatientForm" validate="true" input="/Disease/Blood.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/Blood.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/Blood.jsp" redirect="true"/>
+		</action>		
+		<action path="/NewFindingsTMJLowerFacePatient" name="PatientForm" validate="true" input="/Disease/MandibleWithTMJLowerFace.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/MandibleWithTMJLowerFace.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/MandibleWithTMJLowerFace.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsOroFaciaInfecPatient" name="PatientForm" validate="true" input="/Disease/OroFaciaInfection.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/OroFaciaInfection.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/OroFaciaInfection.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsMaxillSinFistulaPatient" name="PatientForm" validate="true" input="/Disease/MaxillarySinusitisChOrAcuteFistula.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/MaxillarySinusitisChOrAcuteFistula.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/MaxillarySinusitisChOrAcuteFistula.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsOralAnMaxillofacialPatient" name="PatientForm" validate="true" input="/Disease/OralAndMaxillofacialTrauma.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/OralAndMaxillofacialTrauma.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/OralAndMaxillofacialTrauma.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsOroFacialCleftPatient" name="PatientForm" validate="true" input="/Disease/OroFacialCleft.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/OroFacialCleft.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/OroFacialCleft.jsp" redirect="true"/>
+		</action>		
+		<action path="/NewFindingsBenignCystTumorPatient" name="PatientForm" validate="true" input="/Disease/BenignCystTumor.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/BenignCystTumor.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/BenignCystTumor.jsp" redirect="true"/>
+		</action>		
+		<!-- FollowUp Disease Page Control Here ** end-->
+		
+		<action path="/NewFindingsRespratoryPatient" name="PatientForm" validate="true" input="/Disease/Respratory.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/Respratory.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/Respratory.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsSalivaryGlandPatient" name="PatientForm" validate="true" input="/Disease/SalivaryGland.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/SalivaryGland.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/SalivaryGland.jsp" redirect="true"/>
+		</action>
+		
+		
+		<action path="/NewFindingsTMJDisorderPatient" name="PatientForm" validate="true" input="/Disease/TMJDisorder.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/TMJDisorder.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/TMJDisorder.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsZygomatComplexPatient" name="PatientForm" validate="true" input="/Disease/ZygomaticomaxillaryComplex.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/ZygomaticomaxillaryComplex.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/ZygomaticomaxillaryComplex.jsp" redirect="true"/>
+		</action>
+		
+		<action path="/AddUser" name="UserForm" validate="true" input="/User/AddUser.jsp" type="user.action.AddUserAction">
+			<forward name="success" path="/User/SearchUser.jsp" redirect="true"/>
+			<forward name="failure" path="/User/SearchUser.jsp" />
+		</action>
+		
+		<action path="/AddRole" name="RoleForm" validate="true" input="/Role/AddRole.jsp" type="role.action.AddRoleAction">
+			<forward name="success" path="/Role/SearchRole.jsp" redirect="true"/>
+			<forward name="failure" path="/Role/SearchRole.jsp" />
+		</action>
+		
+		<action path="/UpdateRole" name="RoleForm" validate="true" input="/Role/EditRole.jsp" type="role.action.UpdateRoleAction">
+			<forward name="success" path="/Role/SearchRole.jsp" redirect="true"/>
+			<forward name="failure" path="/Role/SearchRole.jsp" />
+		</action>
+		
+		<action path="/UpdateUser" name="UserForm" validate="true" input="/User/EditUser.jsp" type="user.action.UpdateUserAction">
+			<forward name="success" path="/User/SearchUser.jsp" redirect="true"/>
+			<forward name="failure" path="/User/SearchUser.jsp" />
+		</action>
+		
+		<action path="/DropUser" name="UserForm" validate="true" input="/User/SearchUser.jsp" type="user.action.DropUserAction">
+			<forward name="success" path="/User/SearchUser.jsp" redirect="true"/>
+			<forward name="failure" path="/User/SearchUser.jsp" redirect="true"/>
+		</action>
+		
+		
+	</action-mappings>
+	
+	<message-resources parameter="MessageResources" />
+</struts-config>

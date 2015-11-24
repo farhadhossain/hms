@@ -1,0 +1,32 @@
+table.imagetable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+	overflow: scroll;
+}
+table.imagetable th {
+	background:#D3D3D3;
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #999999;
+}
+table.imagetable td {
+	border-width: 1px;
+	padding: 4px;
+	border-style: solid;
+	border-color: #999999;
+	background-color: #ffffff;
+}
+
+.customButton{
+    border: 1px solid #CCCCCC; /*To define the border around the button*/
+	background-image: url('bg_white.jpg'); /*To define background image*/
+	background-color: White; /*To define background color for browsers that does not support background image*/
+	font-size: 11px; /*To define font size*/
+	cursor:pointer; /*To define nice cursor with hand pointer*/
+	height: 25px; /*To define the specific height of button*/
+ }

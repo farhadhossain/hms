@@ -1,0 +1,252 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	background-color: #2F4F4F;
+	/*background: url(../Images/bg.jpg); */
+	color: #000305;
+	font-size: 87.5%;
+	font-family: Arial, 'Lucida Sans Unicode';
+	line-height: 1.5;
+	text-align: left;
+
+}
+
+a {
+	text-decoration: none;	
+}
+
+.body {
+	margin: 0 auto 0 auto;
+	width: 70%;
+	clear: both;
+
+}
+
+.body h2 {
+	color: white;
+}
+
+.mainHeader img {
+	width: 100%;
+	height: 16%;
+	margin: .5% 0;
+}
+
+.mainHeader h1 {
+	float: left;
+	
+}
+
+.mainHeader nav {
+	background-color: #666;
+	height: 40px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.mainNav {
+	background-color: #666;
+	height: 40px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	
+}
+
+.mainNav ul {
+	list-style: none;
+	margin: 0 auto;
+}
+
+.mainNav ul li {
+	float: left;
+	display: inline;
+}
+
+.mainNav a:link, .mainNav a:visited {
+	color: #FFF;
+	display: inline-block;
+	padding: 10px 25px;
+}
+
+.mainNav a .imageLink {
+	float: right;
+	
+}
+
+.mainNav a:active, .mainNav a:hover,
+.mainNav .active a:link, .mainNav .active a:visited {
+	background-color: #CF5C3F;
+	text-shadow: none;
+	
+
+}
+
+.mainNav ul li a {
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.mainContent {
+	line-height: 25px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	
+}
+
+.content {
+	width: 80%;
+	float: left;
+}
+
+.subContent {
+	background-color: #FFF;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 3% 5%;
+	margin-top: 2px;
+
+}
+
+.subContentSearch {
+	background-color: 	#E6E6B8;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 1% 1%;
+	margin-top: 0;
+
+}
+
+.subContent1 {
+	
+	background-color: grey;
+	border-radius: 1px;
+	border-style: solid;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 3% 5%;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+	
+
+
+
+.form-horizontal {
+	border-radius: 10px;
+}
+
+.outerTable {
+	border-radius: 10px;
+	
+	
+	
+}
+.formInnerTable {
+	font-family: inherit; 
+	font-size: 14px;
+}
+
+.formInnerTable td {
+	padding: 5px;
+	color: white;
+}
+
+.formInnerTable tr input {
+	
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.formInnerTable tr select {
+	
+	border-radius: 3px;
+	border: none;
+	width: 100px;
+	text-align: right;
+	margin-left: 3px;
+	padding-left: 5px;
+}
+
+.button {
+	width: 100px;
+	color: #ABC;
+	cursor: pointer;
+  	background-color: #333;
+  	-webkit-box-shadow: none;
+    box-shadow: none;
+    margin: 2px 2px 2px 2px;
+}
+
+
+
+.imagetable1 {
+	
+	width:25%;
+	border: 1px solid #a1a1a1;
+	padding: 1% 2%;
+	align: left;
+	float: left;
+	margin: 0 2% 3% 1%;
+	
+    background: #dddddd;
+    
+    border-radius: 10px;
+}
+
+	
+
+.imagetable {
+	
+	font-size: 15px;
+	font-family: inherit;
+	width: 98%;
+	float: center;
+	border: 1px solid #a1a1a1;
+    padding: 0px 0px; 
+    background: #dddddd;
+    border-radius: 10px;
+    
+}
+
+
+.imagetable th {
+	padding-bottom: 3px;	
+}
+.imagetable td {
+	border: 1px solid #a1a1a1;
+	border-collapse: collapse;
+	font-size: 15px;
+	text-align: center;
+	padding: 10px 10px 10px 10px;
+	
+}
+.imagetable theader {
+	color: white;
+	font-weight: bold;
+}
+
+
+.groupTable {
+	border: 1px solid #a1a1a1;
+	background-color: #dddddd; 
+	border-radius: 10px
+		
+}
+
+.tableData1 {
+	font-size: 14px;
+	color: white;
+}
+
+.tableData2 {
+	font-size: 13px;
+}
+	
+
