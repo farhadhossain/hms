@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE web-app
-  PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
-  "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
-  
-<web-app>	
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:javaee="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" id="WebApp_9" version="2.4">
+
 <display-name>HMS</display-name>
 
 	<!-- <context-param> 
@@ -18,6 +15,16 @@
     	<param-name>file-upload</param-name> 
     	<param-value>/usr/local/apache-tomcat-7.0.52/webapps/TestImages/</param-value> 
 	</context-param>
+
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
 	<servlet>
     <servlet-name>action</servlet-name>
@@ -57,8 +64,8 @@
 	<welcome-file-list>
 		<welcome-file>/home/login.jsp</welcome-file>
     </welcome-file-list>
-	
-	
+
+    <jsp-config>
   <taglib>
     <taglib-uri>/tags/struts-bean</taglib-uri>
     <taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
@@ -78,6 +85,6 @@
     <taglib-uri>/tags/struts-nested</taglib-uri>
     <taglib-location>/WEB-INF/struts-nested.tld</taglib-location>
   </taglib>
-
+  </jsp-config>
 
 </web-app>

@@ -537,7 +537,8 @@ public class UpdatePatientDiseaseInfoDAO {
 					}else if(dto.getHistoryId()[i]==211){
 						tail_1=", input_value"; tail_2=", "+dto.getHisDescripId211();
 					}else if(dto.getHistoryId()[i]==219){
-						tail_1=", input_value"; tail_2=", "+dto.getHisDescripId219();
+						tail_1=", input_value"; tail_2=", "+dto.
+								getHisDescripId219();
 					}else if(dto.getHistoryId()[i]==222){
 						tail_1=", input_value"; tail_2=", "+dto.getHisDescripId222();
 					}else if(dto.getHistoryId()[i]==223){
@@ -720,6 +721,12 @@ public class UpdatePatientDiseaseInfoDAO {
 						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId162()+"'";
 					}else if(dto.getInspectionId()[i]==163){
 						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId163()+"'";
+					}else if(dto.getInspectionId()[i]==165){
+						tail_1=", input_value, input_value_2"; tail_2=", '"+dto.getInspecDescripId165_1()+"', '"+dto.getInspecDescripId165_2()+"'";
+					}else if(dto.getInspectionId()[i]==166){
+						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId166()+"'";
+					}else if(dto.getInspectionId()[i]==168){
+						tail_1=", input_value, input_value_2, input_value_3, input_value_4"; tail_2=", '"+dto.getInspecDescripId168_1()+", '"+dto.getInspecDescripId168_2()+", '"+dto.getInspecDescripId168_3()+dto.getInspecDescripId168_4()+"'";
 					}
 					stmt.execute("insert into tbl_patient_disease_inspection(patient_id, inspection_id"+tail_1+") values("+dto.getUserId()+", "+dto.getInspectionId()[i]+tail_2+")");
 					tail_1="";

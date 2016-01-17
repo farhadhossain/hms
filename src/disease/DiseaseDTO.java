@@ -609,6 +609,13 @@ public class DiseaseDTO
 	private int inspecDescripId138;
 	private int inspecDescripId139;
 	private int inspecDescripId140;
+	private String inspecDescripId165_1;
+	private String inspecDescripId165_2;
+	private String inspecDescripId166;
+	private String inspecDescripId168_1;
+	private String inspecDescripId168_2;
+	private String inspecDescripId168_3;
+	private String inspecDescripId168_4;
 	
 	private String specialCaseId96;
 	private String specialCaseId97;
@@ -4001,5 +4008,60 @@ public class DiseaseDTO
 	public String getHisDescripId232() {
 		return hisDescripId232;
 	}
-	
+
+	public String getInspecDescripId165_1() {
+		return inspecDescripId165_1;
+	}
+
+	public void setInspecDescripId165_1(String inspecDescripId165_1) {
+		this.inspecDescripId165_1 = inspecDescripId165_1;
+	}
+
+	public String getInspecDescripId165_2() {
+		return inspecDescripId165_2;
+	}
+
+	public void setInspecDescripId165_2(String inspecDescripId165_2) {
+		this.inspecDescripId165_2 = inspecDescripId165_2;
+	}
+
+	public String getInspecDescripId166() {
+		return inspecDescripId166;
+	}
+
+	public void setInspecDescripId166(String inspecDescripId166) {
+		this.inspecDescripId166 = inspecDescripId166;
+	}
+
+	public String getInspecDescripId168_1() {
+		return inspecDescripId168_1;
+	}
+
+	public void setInspecDescripId168_1(String inspecDescripId168_1) {
+		this.inspecDescripId168_1 = inspecDescripId168_1;
+	}
+
+	public String getInspecDescripId168_2() {
+		return inspecDescripId168_2;
+	}
+
+	public void setInspecDescripId168_2(String inspecDescripId168_2) {
+		this.inspecDescripId168_2 = inspecDescripId168_2;
+	}
+
+	public String getInspecDescripId168_3() {
+		return inspecDescripId168_3;
+	}
+
+	public void setInspecDescripId168_3(String inspecDescripId168_3) {
+		this.inspecDescripId168_3 = inspecDescripId168_3;
+	}
+
+	public String getInspecDescripId168_4() {
+		return inspecDescripId168_4;
+	}
+
+	public void setInspecDescripId168_4(String inspecDescripId168_4) {
+		this.inspecDescripId168_4 = inspecDescripId168_4;
+	}
 }

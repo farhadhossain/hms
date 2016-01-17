@@ -58,7 +58,7 @@ public class AddNewPatientAction extends Action{
 			dto.setBloodGroup(form.getBloodGroup());
 			
 			PatientService service = new PatientService();
-			DAOResult daoResult= new DAOResult();//service.addNewPatient(dto, loginDTO.getUserID());
+			DAOResult daoResult= service.addNewPatient(dto, loginDTO.getUserID());
 			if(daoResult.isValid()==false){
 				target="failure";
 			}

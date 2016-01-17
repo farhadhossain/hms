@@ -259,7 +259,19 @@ int size=dtoList.size();
 					                    		</td>
 							                    <td>
 							                    	<%=statusList.get(dto.getDeptId())%>
-							                    	<%if(dto.getDeptId()==MyConfig.deptIndoor){%><br>[ Pending Surgical Plan ]<%}%>
+							                    	<%if(dto.getDeptId()==MyConfig.deptIndoor){%>
+														<%if(dto.getSurgicalStatus()==0){%>
+															<br>[ Waiting for Admission ]
+														<%}else if(dto.getSurgicalStatus()==1){%>
+															<br>[ Pending Surgical Plan ]
+														<%}else if(dto.getSurgicalStatus()==2){%>
+															<br>[ Pre Operative ]
+														<%}else if(dto.getSurgicalStatus()==3){%>
+															<br>[ Post Operative ]
+														<%}else if(dto.getSurgicalStatus()==4){%>
+															<br>[ Discahrged ]
+														<%}%>
+													<%}%>
 							                    	<%if(dto.getDeptId()==5){%>
 							                    		<br><%=MyConfig.refToOtherDeptDetails.get(dto.getOtherDeptRefId())%>
 							                    	<%}%>
@@ -296,13 +308,21 @@ int size=dtoList.size();
 						                        		<%if(loginDTO.getRoleID()==MyConfig.DoctorForBed || loginDTO.getRoleID()==MyConfig.deptIndoor || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.AnesthetistRole){%>
 								                       		<a target="_blank" href="../Report/PatientInfoAll.jsp?accountID=<%=dto.getAccId()%>">View Findings</a><br>
 								                    	<%}%>
-								                    	
-						                        		<a target="_blank" href="../Patient/Prescription.jsp?accountID=<%=dto.getAccId()%>">Prescription</a><br>
-						                        		
+
+														<a target="_blank" href="../Patient/Prescription.jsp?accountID=<%=dto.getAccId()%>">Prescription</a><br>
+
 						                        		<a href="../Patient/EditPatient.jsp?accountID=<%=dto.getAccId()%>">Referred To</a><br>
 						                        		
 						                        		<%if(loginDTO.getRoleID()==MyConfig.DoctorForBed || loginDTO.getRoleID()==MyConfig.deptIndoor || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.AnesthetistRole){%>
-								                       		<a target="_blank" href="../PastSergHistory/AddPastSergHistory.jsp?userID=<%=dto.getAccId() %>"><button>Make Pre-Operative</button></a>
+								                       		<%if(dto.getSurgicalStatus()==0){%>
+															  <a  href="../Patient/EditPatient.jsp?accountID=<%=dto.getAccId()%>&surgicalStatus=1">Admit the Patient</a><br>
+														    <%}else if(dto.getSurgicalStatus()==1){%>
+														  	  <a  href="../Patient/Surgery.jsp?userID=<%=dto.getAccId() %>&surgicalStatus=2">Make Pre-Operative</a>
+															<%}else if(dto.getSurgicalStatus()==2){%>
+																<a  href="../Patient/Surgery.jsp?userID=<%=dto.getAccId() %>&surgicalStatus=3">Make Post-Operative</a>
+															<%}else if(dto.getSurgicalStatus()==3){%>
+														        <a href="../Patient/Discharge.jsp?accountID=<%=dto.getAccId()%>&surgicalID=0">Make Discharge</a>
+															<%}%>
 									                    <%}%>
 						                        	</td>
 						                        <%}%>

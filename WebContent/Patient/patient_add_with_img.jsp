@@ -9,6 +9,7 @@
 <%@ page import="javax.imageio.*,org.apache.commons.io.FilenameUtils,java.awt.Graphics2D,java.awt.image.*" %>
 
 <%
+
  	String fileNameHeader=loginDTO.getUserID()+"_"+System.currentTimeMillis()+"_";
 	PatientDTO dto = new PatientDTO();
 	
@@ -16,14 +17,14 @@
 	String fileName="";
    	int maxFileSize = 5000 * 1024;
    	int maxMemSize = 5000 * 1024;
-   	ServletContext context = pageContext.getServletContext();
+   	ServletContext context = session.getServletContext();
    	String filePath = context.getInitParameter("file-upload");
     String contentType = request.getContentType();
     
    	if((contentType.indexOf("multipart/form-data") >= 0)) {
 	    DiskFileItemFactory factory = new DiskFileItemFactory();
     	factory.setSizeThreshold(maxMemSize);
-      	factory.setRepository(new File("c:\\temp"));
+      	//factory.setRepository(new File("/Users/macintosh/Desktop"));
 	    ServletFileUpload upload = new ServletFileUpload(factory);
     	upload.setSizeMax( maxFileSize );
       	try{

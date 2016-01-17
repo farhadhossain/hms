@@ -1,5 +1,6 @@
 package patient.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import org.apache.struts.action.Action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +11,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionForward;
 
+import org.apache.struts.util.RequestUtils;
+import org.apache.struts2.ServletActionContext;
 import patient.PatientDTO;
 import patient.PatientService;
 import patient.form.PatientForm;
@@ -46,7 +49,8 @@ public class EditPatientAction extends Action{
 			dto.setBloodGroup(form.getBloodGroup());
 			dto.setOtherDeptRefId(form.getOtherDeptRefId());
 			dto.setBedDoctorID(form.getBedDoctorID());
-			
+			dto.setSurgicalStatus(form.getSurgicalStatus());
+
 			PatientService service = new PatientService();
 			DAOResult daoResult=service.updatePatientDTO(dto, loginDTO);
 			if(daoResult.isValid()==false){

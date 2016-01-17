@@ -27,7 +27,7 @@ if(loginDTO!=null){
 String accountID= request.getParameter("accountID");
 PatientService patientServ = new PatientService();
 PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
-
+String surgicalStatus = request.getParameter("surgicalStatus")==null?"":request.getParameter("surgicalStatus");
 %>
 <html lang="en">
 <head><html:base/><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -128,28 +128,28 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 					<div class="ibox-content">
 						<html:form action="/EditPatient" >
 							<div class="form-horizontal">
-								<div class="form-group">
+								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Name <span class="red">*</span></label>
 									<div class="col-sm-4">
 										<input class="form-control" type="text" name="name" value="<%=patientDTO.getName()%>"/>
 									</div>
 								</div>
 								
-								<div class="form-group">
+								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Age <span class="red">*</span></label>
 									<div class="col-sm-4">
 										<input class="form-control" type="text" name="age" value="<%=patientDTO.getAge() %>"/>
 									</div>
 								</div>
 								
-								<div class="form-group">
+								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Sex <span class="red">*</span></label>
 									<div class="col-sm-4">
 										<input class="form-control" name="sex" type="text" readonly="readonly" value="<%=patientDTO.getSex() %>"/>
 									</div>
 								</div>
 								
-								<div class="form-group">
+								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Ticket Number</label>
 									<div class="col-sm-4">
 										<input class="form-control" type="text" name="ticketNumber" value="<%=patientDTO.getTicketNumber()==null?"":patientDTO.getTicketNumber()%>">
@@ -184,37 +184,37 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 									</div>
 								</div>
 								
-								<div class="form-group">
+								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Blood group</label>
 									<div class="col-sm-4">
 										<input class="form-control" type="text" name="bloodGroup" value="<%=patientDTO.getBloodGroup()==null?"":patientDTO.getBloodGroup() %>">
 									</div>
 								</div>
 								
-								<div class="form-group">
+								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Telephone Number</label>
 									<div class="col-sm-4">
 										<input class="form-control" type="text" name="telephoneNum"value="<%=patientDTO.getTelephoneNum()==null?"":patientDTO.getTelephoneNum() %>" />
 									</div>
 								</div>
-								<div class="form-group">
+								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Present Address</label>
 									<div class="col-sm-4">
 										<textarea class="form-control" rows="2" name="presentAdd" value="<%=patientDTO.getPresentAdd() %>" ></textarea>
 									</div>
 								</div>
 							
-								<div class="form-group">
+								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Permanent Address</label>
 									<div class="col-sm-4">
 										<textarea class="form-control" rows="2" name="permanentAdd" value="<%=patientDTO.getPermanentAdd() %>" ></textarea>
 									</div>
 								</div>
 								<%
-								ArrayList<UserDTO> doctorForBedList = new UserService().getAllUsers("", MyConfig.DoctorForBed);
+								ArrayList<UserDTO> doctorForBedList = new UserService().getAllUsers(null, MyConfig.DoctorForBed);
 							 	%>
 							 	<div class="form-group" <%if(patientDTO.getDeptId()==MyConfig.deptIndoor){%>style="display: block;"<%}else{%>style="display: none;"<%}%>>
-									<label class="col-sm-4 control-label">Select Surgeon</label>
+									<label class="col-sm-4 control-label">Select Bed Doctor</label>
 									<div class="col-sm-4">
 										<select name="bedDoctorID">
 											<option value="-1"><%="None"%></option>
@@ -228,7 +228,7 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 									</div>
 								</div>
 							 	
-								<div class="form-group">
+								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Refered To</label>
 									<div class="col-sm-4">
 										<select class="form-control m-b" name="deptId" id="deptId" onchange="showReferedDeptDetails(this.value)">
@@ -241,7 +241,7 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 									</div>
 								</div>
 								
-								<div class="form-group" id="otherDeptRefDetails" <%if(patientDTO.getDeptId()==5){%>style="display: none;"<%}%>>
+								<div class="form-group" id="otherDeptRefDetails" <%if(patientDTO.getDeptId()==5){%>style="display: none;"<%}%> <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Refered To Other Department Details</label>
 									<div class="col-sm-4">
 										<select class="form-control m-b" name="otherDeptRefId" id="otherDeptRefId">
@@ -257,6 +257,7 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 									<div class="col-sm-8">
 										<input type="submit" value="Submit" class="btn btn-primary">
 										<input type="hidden" name="accId" id="accId" value="<%=accountID%>">
+										<input type="hidden" name="surgicalStatus" id="surgicalStatus" value="<%=request.getParameter("surgicalStatus")%>">
 									</div>
 								</div>
 						   	</div>

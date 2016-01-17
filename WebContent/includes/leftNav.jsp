@@ -101,11 +101,17 @@
 	                    </li>
 	                    
 	                    <li>
-	                        <a href='../Report/AllDeptCompareReport.jsp'>
+	                        <a href='../Report/PresentWardStatus.jsp'>
 	                        	<i class="fa fa-bar-chart"></i> 
-	                        	<span class="nav-label">Department Comparison Report</span>
+	                        	<span class="nav-label">Present Ward Status</span>
 	                        </a>                
-	                    </li>	                    
+	                    </li>
+						<li>
+							<a href='../Report/AllDeptCompareReport.jsp'>
+								<i class="fa fa-bar-chart"></i>
+								<span class="nav-label">Department Comparison Report</span>
+							</a>
+						</li>
                     <%}%>
                     
                     <%if(loginDTO.getClientType()==-1 && RoleRepository.isPermitted(loginDTO.getRoleID(), PermissionDTO.UserSearch)==true){%>

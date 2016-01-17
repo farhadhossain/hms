@@ -183,7 +183,7 @@ if(loginDTO!=null){
 			        }%>
 					
                     <div class="ibox-content">
-						<form action="patient_add_with_img.jsp" method="post"  onsubmit="return validationResult();" enctype="multipart/form-data" name="form1" id="form1">
+						<html:form action="/NewPatient"  onsubmit="return validationResult();" enctype="multipart/form-data">
 							<div class="form-horizontal">
 						`		
 								<div class="form-group">
@@ -302,7 +302,7 @@ if(loginDTO!=null){
 									</div>
 								</div>
 							</div>
-						</form>
+						</html:form>
 					</div><!-- /ibox-content -->
                 </div><!--/./ibox float-e-margins-->
             </div><!--/./col-lg-12-->

@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import login.LoginDTO;
 
@@ -35,7 +36,35 @@ public class ExtractionDAO {
 		}
 		return deptDisList;
 	}
-	
+
+
+	public List<ExtractionItem> getExtractionItems() {
+		List<ExtractionItem> deptDisList = new ArrayList<ExtractionItem>();
+		String sql="select * from tbl_extraction_list";
+		Connection conn = null;
+		Statement stmt = null;
+		try{
+			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
+			stmt = conn.createStatement();
+			ResultSet rs=stmt.executeQuery(sql);
+
+			while(rs.next()){
+				ExtractionItem item = new ExtractionItem();
+				item.setId(rs.getInt("id"));
+				item.setName(rs.getString("name"));
+				item.setTaka(rs.getInt("taka"));
+				deptDisList.add(item);
+			}
+			rs.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{stmt.close();}catch(Exception e){}
+			try{conn.close();}catch(Exception e){}
+		}
+		return deptDisList;
+	}
+
 	public HashMap<Integer, Integer> getExtractionTakaByID() {
 		HashMap<Integer, Integer> deptDisList = new HashMap<Integer, Integer>();
 		String sql="select * from tbl_extraction_list";
@@ -356,5 +385,71 @@ public class ExtractionDAO {
 		}
 		return dto;
 	}*/
+
+
+	public DAOResult saveTreatmentPlan(TreatmentPlanDTO dto) {
+		DAOResult daoRes = new DAOResult();
+		daoRes.setMessage("Added Successfully");
+		int sizeOfArray=0;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try{
+			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
+			stmt = conn.createStatement();
+			if(dto.getId()>0){
+				stmt.execute("delete from tbl_extraction_patient where id="+dto.getId());
+			}
+
+			String sql="insert into tbl_extraction_patient(patient_id, extraction_id, input_value, input_value_2, input_value_3, input_value_4, payment_amount, payment_reg_no, is_instrument_provided, is_done) values("+dto.getPatientId()+", "+dto.getExtractionId()+", '"+dto.getInputValue1()+"', '"+dto.getInputValue2()+"', '"+dto.getInputValue3()+"', '"+dto.getInputValue4()+"',"+dto.getPaymentAmount()+",'"+dto.getPaymentRegNo()+"',"+dto.isInstrumentProvided()+","+dto.isDone()+")";
+			System.out.println(sql);
+			stmt.execute(sql);
+
+		}catch(Exception e){
+			daoRes.setMessage("Error: "+e.toString());
+		}finally{
+			try{stmt.close();}catch(Exception e){}
+			try{conn.close();}catch(Exception e){}
+		}
+		return daoRes;
+	}
+
+	public List<TreatmentPlanDTO> getTreatmentPlan(int patientId) {
+		List<TreatmentPlanDTO> dtos = new ArrayList<TreatmentPlanDTO>();
+		Connection conn = null;
+		Statement stmt = null;
+		try{
+			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
+			stmt = conn.createStatement();
+
+			String sql="SELECT * FROM tbl_extraction_patient where patient_id="+patientId;
+			System.out.println(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while(rs.next()){
+				TreatmentPlanDTO dto = new TreatmentPlanDTO();
+				dto.setId(rs.getInt("id"));
+				dto.setPatientId(rs.getInt("patient_id"));
+				dto.setExtractionId(rs.getInt("extraction_id"));
+				dto.setInputValue1(rs.getString("input_value"));
+				dto.setInputValue2(rs.getString("input_value_2"));
+				dto.setInputValue3(rs.getString("input_value_3"));
+				dto.setInputValue4(rs.getString("input_value_4"));
+				dto.setPaymentAmount(rs.getString("payment_amount"));
+				dto.setPaymentRegNo(rs.getString("payment_reg_no"));
+				dto.setInstrumentProvided(rs.getBoolean("is_instrument_provided"));
+				dto.setDone(rs.getBoolean("is_done"));
+				dtos.add(dto);
+			}
+			rs.close();
+
+		}catch(Exception e){
+			System.out.println(e.toString());
+		}finally{
+			try{stmt.close();}catch(Exception e){}
+			try{conn.close();}catch(Exception e){}
+		}
+		return dtos;
+	}
 
 }

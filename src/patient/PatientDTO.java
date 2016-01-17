@@ -5,6 +5,12 @@ import java.util.HashSet;
 
 public class PatientDTO
 {
+
+	public static int SURGERY_STATUS_ADMITTED = 1;
+	public static int SURGERY_STATUS_PRE_OPERATIVE = 2;
+	public static int SURGERY_STATUS_POST_OPERATIVE = 3;
+	public static int SURGERY_STATUS_DISCHARGED = 4;
+
 	public PatientDTO(){
 		ticketNumber="";
 		regNumber="";
@@ -35,6 +41,7 @@ public class PatientDTO
 	private String cabinNumber;
 	private String bloodGroup;
 	private int otherDeptRefId;
+	private int surgicalStatus;
 	
 	public String imageName;
 	public int dischargeStatus;	
@@ -43,6 +50,8 @@ public class PatientDTO
 	public String date_of_adm;
 	public String date_of_disch;
 	public String referredBy;
+
+
 	
 	public String getTicketNumber() {
 		return ticketNumber;
@@ -122,7 +131,15 @@ public class PatientDTO
 	public void setPermanentAdd(String permanentAdd) {
 		this.permanentAdd = permanentAdd;
 	}
-	
+
+	public int getSurgicalStatus() {
+		return surgicalStatus;
+	}
+
+	public void setSurgicalStatus(int surgicalStatus) {
+		this.surgicalStatus = surgicalStatus;
+	}
+
 	public int getDeptId() {
 		return deptId;
 	}

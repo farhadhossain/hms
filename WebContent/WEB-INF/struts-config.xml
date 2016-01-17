@@ -9,6 +9,7 @@
 		<form-bean name="PatientForm" type="patient.form.PatientForm" />
 		<form-bean name="DiseaseForm" type="disease.form.DiseaseForm" />
 		<form-bean name="SurgicalHistoryForm" type="pastSergHistory.form.PastSurgicalHistoryForm" />
+		<form-bean name="PatientSurgeryForm" type="patient.form.PatientSurgeryForm" />
 		<form-bean name="PatientOthersForm" type="patientOthers.form.PatientOthersForm" />
 		<form-bean name="DepartmentDiseaseForm" type="department.form.DepartmentDiseaseForm" />
 		<form-bean name="RoleForm" type="role.form.RoleForm" />
@@ -139,7 +140,18 @@
 		<action path="/NewSurgicalHistory" name="SurgicalHistoryForm" validate="true" input="/PastSergHistory/AddPastSergHistory.jsp" type="pastSergHistory.action.AddSurgicalHistoryAction">
 			<forward name="success" path="/Patient/PresentStatus.jsp" redirect="true"/>
 		</action>
-		
+
+		<action path="/UpdatePatientSurgery" name="PatientSurgeryForm" validate="true" input="/Patient/Surgery.jsp" type="patient.action.PatientSurgeryAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+
+		<action path="/MakeDischarge" name="PatientSurgeryForm" validate="true" input="/Patient/Discharge.jsp" type="patient.action.PatientSurgeryAction">
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
+		</action>
+
+
 		<action path="/PatientSocialAndPersonalHistory" name="PatientOthersForm" validate="true" input="/PatientOthers/PatientPersonalHistory.jsp" type="patientOthers.action.UpdatePatientOthersInfoAction">
 			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
 		</action>

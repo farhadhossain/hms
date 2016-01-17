@@ -47,4 +47,9 @@ public class PatientService {
 	public String DischargePatientByID(int patientId) {
 		return new PatientDAO().DischargePatientByID(patientId);
 	}
+
+	public ArrayList<PatientDTO> getCurrentWardStatus(){
+		PatientDAO dao = new PatientDAO();
+		return dao.getCurrentWardStatus();
+	}
 }

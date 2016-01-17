@@ -1,9 +1,19 @@
 package utility;
 
 public class DAOResult {
+
+	private int objectId;
 	private boolean isValid;
 	private String message;
-	
+
+	public int getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(int objectId) {
+		this.objectId = objectId;
+	}
+
 	public boolean isValid() {
 		return isValid;
 	}

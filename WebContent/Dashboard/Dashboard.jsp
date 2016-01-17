@@ -481,7 +481,7 @@ html {
                     <div class="ibox-content">
 	                   <div class="row">
 	                 		<div class="col-sm-3 col-xs-6">
-								<a>
+								<a href="<%=request.getContextPath()+"/Patient/SearchPatient.jsp"%>">
 									<div class="tile-stats tile-red" style="background: #303641;">
 										<div class="icon"><i class="fa fa-user fa-5x"></i></div>
 										<div class="num" data-start="0" data-end="30" data-duration="1500" data-delay="0"><%=dto.todaysTotal %></div>

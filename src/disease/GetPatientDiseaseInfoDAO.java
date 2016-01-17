@@ -856,6 +856,9 @@ public class GetPatientDiseaseInfoDAO {
 					disDTO.setInspecDescripId162(rs.getString("input_value"));
 				}else if(inspectionId==163){
 					disDTO.setInspecDescripId163(rs.getString("input_value"));
+				}else if(inspectionId==165){
+					disDTO.setInspecDescripId165_1(rs.getString("input_value"));
+					disDTO.setInspecDescripId165_2(rs.getString("input_value_2"));
 				}
 				disDTO.patInspId.add(inspectionId);
 			}

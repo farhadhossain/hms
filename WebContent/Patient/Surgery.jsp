@@ -8,21 +8,30 @@
 <%@page import="user.UserDTO"%>
 <%@page import="user.UserService"%>
 <%@page import="utility.MyConfig"%>
+<%@ page import="patient.PatientSurgeryService" %>
+<%@ page import="patient.PatientSurgeryDTO" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 <%
 
-ArrayList<UserDTO> surgeonList = new UserService().getAllUsers("", MyConfig.SurgeonRole);
-ArrayList<UserDTO> assistSurgeonList = new UserService().getAllUsers("", MyConfig.AssistantSurgeonRole);
-ArrayList<UserDTO> anesthetistList = new UserService().getAllUsers("", MyConfig.AnesthetistRole);
 
-String userID = request.getParameter("userID");
-session.removeAttribute("userID");
-session.setAttribute("userID", userID);
 
-int surgicalStatus = request.getParameter("surgicalStatus")==null?0: Integer.parseInt(request.getParameter("surgicalStatus"));
+	String accountID= request.getParameter("userID");
+	PatientSurgeryService patientServ = new PatientSurgeryService();
+	PatientSurgeryDTO patientSurgeryDTO=patientServ.getSurgeryByPatientID(Integer.parseInt(accountID));
+
+
+	ArrayList<UserDTO> surgeonList = new UserService().getAllUsers("", MyConfig.SurgeonRole);
+	ArrayList<UserDTO> assistSurgeonList = new UserService().getAllUsers("", MyConfig.AssistantSurgeonRole);
+	ArrayList<UserDTO> anesthetistList = new UserService().getAllUsers("", MyConfig.AnesthetistRole);
+
+	String userID = request.getParameter("userID");
+	session.removeAttribute("userID");
+	session.setAttribute("userID", userID);
+
+	int surgicalStatus = request.getParameter("surgicalStatus")==null?0: Integer.parseInt(request.getParameter("surgicalStatus"));
 
 %>
 <html lang="en">
@@ -163,53 +172,16 @@ int surgicalStatus = request.getParameter("surgicalStatus")==null?0: Integer.par
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
             	<div class="col-lg-12">
-					 <%if(surgicalStatus==0){%>
-            		 <div class="row border-bottom">
-				            <nav class="navbar navbar-static-top navbar-inverse" role="navigation" style="margin-bottom: 0">
-				                <div class = "container-fluid">
-				                	<ul class="nav nav-tabs">
-
-				               			<li role="presentation"><a href="../PatientOthers/PatientPersonalHistory.jsp?userID=<%=userID%>">Social & Personal</a></li>
-								  		<li role="presentation"><a href="../PatientOthers/Investigation.jsp?userID=<%=userID%>">Investigation</a></li>
-									  	<li role="presentation"><a href="../PatientOthers/PatinetPhysicalExamination.jsp?userID=<%=userID%>">Physical Examination</a></li>
-									  	<li role="presentation"><a href="../PatientOthers/PreAnestheticEvaluation.jsp?userID=<%=userID%>">Pre-Anesthetic Evaluation</a></li>
-									  	<li role="presentation"><a href="../PatientOthers/GeneralSurvey.jsp?userID=<%=userID%>">General Survey</a></li>
-										<li role="presentation" class="dropdown active">
-											<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-									      		Surgery<span class="caret"></span>
-								    		</a>
-									    	<ul class="dropdown-menu" role="menu">
-									      		<li role="presentation"><a href="../PastSergHistory/SearchPastSergHistory.jsp?userID=<%=userID%>">Surgical History</a></li>
-									      		<li role="presentation" class="active"><a href="../PastSergHistory/AddPastSergHistory.jsp?userID=<%=userID %>">Add New</a></li>
-									    	</ul>
-									  	</li>
-									  	<li role="presentation" class="dropdown">
-											<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-									      		Drugs<span class="caret"></span>
-								    		</a>
-									    	<ul class="dropdown-menu" role="menu">
-									      		<li role="presentation"><a href="../PatientOthers/PatientDrugAnMedication.jsp?userID=<%=userID%>">Drug History</a></li>
-									      		<li role="presentation"><a href="../PatientOthers/AddMedication.jsp?userID=<%=userID %>">Add New</a></li>
-									    	</ul>
-									  	</li>
-
-									</ul>
-				                </div>
-
-				            </nav><!--/./navbar navbar-static-top-->
-
-					 </div><!--/./row border-bottom-->
-                     <%}%>
                 <div style="clear:both"></div>
    				 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-						<html:form action="/NewSurgicalHistory" onsubmit="return validationResult();">
+						<html:form action="/UpdatePatientSurgery" onsubmit="return validationResult();">
 							<div class="form-horizontal">
                     			
                     			<div class="form-group">
                             		<label class="col-sm-4 control-label">Name of Operations: <span class="red">*</span></label>
                             		<div class="col-sm-6">
-                            			<input name="nameOfOp" class="form-control" type="text">
+                            			<input name="nameOfOp" class="form-control" type="text" value="<%=patientSurgeryDTO.getNameOfOp()%>">
                             		</div>
                             		<div class="col-sm-2"></div>
                     			</div>
@@ -218,24 +190,16 @@ int surgicalStatus = request.getParameter("surgicalStatus")==null?0: Integer.par
                     			<div class="form-group">
                             		<label class="col-sm-4 control-label">Date of Operations: <span class="red">*</span></label>
                             		<div class="col-sm-6">
-                            			<input type="text" class="form-control" name="dateOfOp" id="dateOfOp" style="width: 100px;">
+                            			<input type="text" class="form-control" name="dateOfOp" id="dateOfOp" style="width: 100px;" value="<%=patientSurgeryDTO.getDateOfOp()%>">
                             		</div>	
                             		<div class="col-sm-2"></div>
-                    			</div>
-                    			<div class="hr-line-dashed"></div>
-                    
-                    			<div class="form-group" <%if(surgicalStatus==2){%>style="display: none;"<%}%>>
-                            		<label class="col-sm-4 control-label">Accident and injuries:</label>
-                            		<div class="col-sm-6">
-                            			<input class="form-control" type="text" name="accAndInjuries">
-                            		</div>
                     			</div>
                     			<div class="hr-line-dashed"></div>
                     			
                     			<div class="form-group" <%if(surgicalStatus==2){%>style="display: none;"<%}%>>
                             		<label class="col-sm-4 control-label">Complications of anesthesia:</label>
                             		<div class="col-sm-6">
-                            			<input name="compliOfAnesthesia" class="form-control" type="text">
+                            			<textarea name="compliOfAnesthesia" class="form-control"> <%=patientSurgeryDTO.getCompliOfAnesthesia()%></textarea>
                             		</div>
                             		<div class="col-sm-2"></div>
                     			</div>
@@ -243,7 +207,7 @@ int surgicalStatus = request.getParameter("surgicalStatus")==null?0: Integer.par
 								<div class="form-group" <%if(surgicalStatus==2){%>style="display: none;"<%}%>>
                             		<label class="col-sm-4 control-label">Post operative complication:</label>
 			                        <div class="col-sm-6">
-            			               <input name="postOperativeCompli" class="form-control" type="text">
+            			               <textarea name="postOperativeCompli" class="form-control"><%=patientSurgeryDTO.getPostOperativeCompli()%></textarea>
                         		    </div>
                             		<div class="col-sm-2"></div>
                     			</div>
@@ -251,10 +215,19 @@ int surgicalStatus = request.getParameter("surgicalStatus")==null?0: Integer.par
 								<div class="form-group" <%if(surgicalStatus==2){%>style="display: none;"<%}%>>
                 		            <label class="col-sm-4 control-label">others</label>
                         		    <div class="col-sm-6">
-                            			<input name="others" class="form-control" type="text">
+                            			<textarea name="others" class="form-control"><%=patientSurgeryDTO.getOthers()%></textarea>
                             		</div>
                             		<div class="col-sm-2"></div>
-                    			</div>	
+                    			</div>
+
+								<div class="form-group" <%if(surgicalStatus==2){%>style="display: none;"<%}%>>
+									<label class="col-sm-4 control-label">Operational Notes</label>
+									<div class="col-sm-6">
+                            			<textarea name="operationalNotes" class="form-control"><%=patientSurgeryDTO.getOperationalNotes()%></textarea>
+									</div>
+									<div class="col-sm-2"></div>
+								</div>
+
                     			
                     			<div class="form-group">
 									<label class="col-sm-4 control-label">Select Surgeon</label>
@@ -303,6 +276,7 @@ int surgicalStatus = request.getParameter("surgicalStatus")==null?0: Integer.par
                             		<div class="col-sm-6">
 	                            		<input type="submit" value="Submit" class="btn btn-primary">
 										<input type="hidden" name="userID" id="userID" value="<%=userID%>">
+										<input type="hidden" name="surgicalStatus" id="surgicalStatus" value="<%=surgicalStatus%>">
                             		</div>
                             		<div class="col-sm-2"></div>
                     			</div>

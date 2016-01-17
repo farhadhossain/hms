@@ -189,7 +189,7 @@ int size=dtoList.size();
 					                    		<td><%=dto.patientInfo%></td>
 					                    		<td>MinorOT/Outdoor</td>
 					                    		<td><%=dto.doctorInfo %></td>
-					                    		<td><a href="../Patient/PatientExtraction.jsp?accountID=<%=dto.getUserId()%>">Payment Process</a></td>
+					                    		<td><a href="../Patient/PatientExtraction.jsp?accountID=<%=dto.getUserId()%>">Provide Instruments</a></td>
 						                   	</tr>
 					                    <%}%>  
 					                </tbody>

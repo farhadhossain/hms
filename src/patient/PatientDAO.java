@@ -88,7 +88,7 @@ public class PatientDAO
 		Statement stmt=null;
 		Statement stmt2=null;
 		ArrayList<PatientDTO> patientDTOs = new ArrayList<PatientDTO>();
-		String sql="SELECT (select CONCAT('Name: ', employee_name, '<br>Phone Number: ', phone_number) from tbl_user where id=added_by), id, pin, current_status, name, age, sex, tel_num, present_add, permanent_add, date_of_rec, ticket_number, image_name, is_discharged, date_of_adm, date_of_disch, other_dept_ref_id, (select CONCAT('Name: ', employee_name, '<br>Phone Number: ', phone_number) from tbl_user where id=referred_by_form_diagnosis) FROM tbl_patient where id>0";
+		String sql="SELECT (select CONCAT('Name: ', employee_name, '<br>Phone Number: ', phone_number) from tbl_user where id=added_by), id, pin, current_status, surgical_status, name, age, sex, tel_num, present_add, permanent_add, date_of_rec, ticket_number,reg_number, image_name, is_discharged, date_of_adm, date_of_disch, other_dept_ref_id, (select CONCAT('Name: ', employee_name, '<br>Phone Number: ', phone_number) from tbl_user where id=referred_by_form_diagnosis) FROM tbl_patient where id>0";
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
@@ -131,6 +131,7 @@ public class PatientDAO
 	        	dto.setAccId(rs.getInt("id"));
 	        	dto.setPin(rs.getString("pin"));
 	        	dto.setDeptId(rs.getInt("current_status"));
+				dto.setSurgicalStatus(rs.getInt("surgical_status"));
 	        	dto.setName(rs.getString("name"));
 	        	dto.setAge(rs.getInt("age"));
 	        	dto.setSex(rs.getString("sex"));
@@ -139,6 +140,7 @@ public class PatientDAO
 	        	dto.setPermanentAdd(rs.getString("permanent_add"));
 	        	dto.setDateOfRec(rs.getString("date_of_rec"));
 	        	dto.setTicketNumber(rs.getString("ticket_number"));
+				dto.setRegNumber(rs.getString("reg_number"));
 	        	dto.imageName = rs.getString("image_name");
 	        	dto.dischargeStatus = rs.getInt("is_discharged");
 	        	dto.date_of_adm = rs.getString("date_of_adm");
@@ -186,6 +188,7 @@ public class PatientDAO
 	        	patientDTO.setAccId(rs.getInt("id"));
 	        	patientDTO.setPin(rs.getString("pin"));
 	        	patientDTO.setDeptId(rs.getInt("current_status"));
+				patientDTO.setSurgicalStatus(rs.getInt("surgical_status"));
 	        	patientDTO.setName(rs.getString("name"));
 	        	patientDTO.setAge(rs.getInt("age"));
 	        	patientDTO.setSex(rs.getString("sex"));
@@ -255,7 +258,17 @@ public class PatientDAO
 			sql="insert into tbl_patient_log(patient_id, work) values("+dto.getAccId()+", 'Update Today')";
 			System.out.println(sql);
 			stmt.execute(sql);
-			
+
+			if(dto.getSurgicalStatus()>0){
+				sql="update tbl_patient set surgical_status = "+dto.getSurgicalStatus()+" where id="+dto.getAccId();
+				System.out.println(sql);
+				stmt.execute(sql);
+			}
+			if(dto.getSurgicalStatus()==1){
+				sql="update tbl_patient set date_of_adm = now() where id="+dto.getAccId();
+				System.out.println(sql);
+				stmt.execute(sql);
+			}
 			/*ResultSet rs = null;
 			for(int i=0; i<dto.getDiseaseType().length; i++){
 				sql="select * from tbl_patient_disease where patient_id="+dto.getAccId()+" and disease_id="+dto.getDiseaseType()[i];
@@ -275,7 +288,7 @@ public class PatientDAO
 			
 		}catch(Exception e){
 			daoResult.setValid(false);
-			daoResult.setMessage("Database Error: "+e.toString());
+			daoResult.setMessage("Database Error: " + e.toString());
 		}finally{
 			try{stmt.close();}catch(Exception e){}
 			try{conn.close();}catch(Exception e){}
@@ -391,7 +404,7 @@ public class PatientDAO
 	        ResultSet rs=stmt.executeQuery(sql);
 	        
 	        while(rs.next()){
-	        	list.put(rs.getInt(5), rs.getString(1)+" , "+rs.getString(2)+" , "+rs.getString(3)+" , "+rs.getString(4)); 
+	        	list.put(rs.getInt(5), rs.getString(1) + " , " + rs.getString(2) + " , " + rs.getString(3) + " , " + rs.getString(4));
 	        }
 	        rs.close();
 	        
@@ -403,5 +416,70 @@ public class PatientDAO
 		}
 		return list;
 	}
-	
+
+
+	public ArrayList<PatientDTO> getCurrentWardStatus() {
+		Connection conn=null;
+		Statement stmt=null;
+
+		ArrayList<PatientDTO> patientDTOs = new ArrayList<PatientDTO>();
+		String sql="SELECT (select CONCAT('Name: ', employee_name, '<br>Phone Number: ', phone_number) from tbl_user where id=added_by), id, pin, current_status, surgical_status, name, age, sex, tel_num, present_add, permanent_add, date_of_rec, ticket_number,reg_number, image_name, is_discharged, date_of_adm, date_of_disch, other_dept_ref_id, (select CONCAT('Name: ', employee_name, '<br>Phone Number: ', phone_number) from tbl_user where id=bed_doctor_id) as bedDoc, word_number,bed_number,cabin_number FROM tbl_patient where id>0";
+		try{
+			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
+			stmt = conn.createStatement();
+
+			sql+=" and surgical_status in (1,2,3) order by date_of_rec desc";
+
+			System.out.println(sql);
+
+			ResultSet rs=stmt.executeQuery(sql);
+			while(rs.next()){
+				PatientDTO dto = new PatientDTO();
+
+				dto.addedBy=rs.getString(1);
+				dto.setAccId(rs.getInt("id"));
+				dto.setPin(rs.getString("pin"));
+				dto.setDeptId(rs.getInt("current_status"));
+				dto.setSurgicalStatus(rs.getInt("surgical_status"));
+				dto.setName(rs.getString("name"));
+				dto.setAge(rs.getInt("age"));
+				dto.setSex(rs.getString("sex"));
+				dto.setTelephoneNum(rs.getString("tel_num"));
+				dto.setPresentAdd(rs.getString("present_add"));
+				dto.setPermanentAdd(rs.getString("permanent_add"));
+				dto.setDateOfRec(rs.getString("date_of_rec"));
+				dto.setTicketNumber(rs.getString("ticket_number"));
+				dto.setRegNumber(rs.getString("reg_number"));
+				dto.imageName = rs.getString("image_name");
+				dto.dischargeStatus = rs.getInt("is_discharged");
+				dto.date_of_adm = rs.getString("date_of_adm");
+				dto.date_of_disch = rs.getString("date_of_disch");
+				dto.setOtherDeptRefId(rs.getInt("other_dept_ref_id"));
+				dto.setWordNumber(rs.getString("word_number"));
+				dto.setCabinNumber(rs.getString("cabin_number"));
+				dto.setBedNumber(rs.getString("bed_number"));
+				dto.referredBy=rs.getString("bedDoc");
+
+	        	/*dto.diseaseTypeHash = new HashSet<Integer>();
+	        	if(dto.getDeptId()==MyConfig.deptIndoor){
+		        	sql="select * from tbl_patient_disease where patient_id="+dto.getAccId();
+		        	System.out.println(sql);
+		        	ResultSet rsInn = stmt2.executeQuery(sql);
+		        	while(rsInn.next()){
+		        		dto.diseaseTypeHash.add(rsInn.getInt("disease_id"));
+		        	}
+		        	rsInn.close();
+	        	}*/
+
+				patientDTOs.add(dto);
+			}
+			rs.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{stmt.close();}catch(Exception e){}
+			try{conn.close();}catch(Exception e){}
+		}
+		return patientDTOs;
+	}
 }

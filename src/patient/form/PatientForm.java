@@ -21,6 +21,7 @@ public class PatientForm extends ActionForm
 	private String bloodGroup;
 	private int otherDeptRefId;
 	private int bedDoctorID;
+	private int surgicalStatus;
 	
 	public String getTicketNumber() {
 		return ticketNumber;
@@ -124,8 +125,12 @@ public class PatientForm extends ActionForm
 	public int getBedDoctorID() {
 		return bedDoctorID;
 	}
-	
-	
-	
-	
+
+	public int getSurgicalStatus() {
+		return surgicalStatus;
+	}
+
+	public void setSurgicalStatus(int surgicalStatus) {
+		this.surgicalStatus = surgicalStatus;
+	}
 }

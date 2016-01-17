@@ -637,6 +637,16 @@ public class MyUtility {
 				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId158(), new String[]{"Right","Left"}, editAndView);
 			}else if(descripId==162){
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+patCurDisDTO.getInspecDescripId162()+"\">\n";
+			}else if(descripId==165){
+				tail=generateSelectBox(name, Integer.parseInt(patCurDisDTO.getInspecDescripId165_1()), new String[]{"Swelling","Ulcer","Perforation","Sinus","Necrosis","Abscess"}, editAndView);
+				tail+="&emsp;Others <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getInspecDescripId165_2()+"\">\n";
+			}else if(descripId==166){
+				tail=generateSelectBox(name, Integer.parseInt(patCurDisDTO.getInspecDescripId166()), new String[]{"Smooth superficial", "Round", "Mobile", "Lobuleted", "Circumscribed", "Busselation", "Solid cystic", "Soft fluctuant", "Compressible"}, editAndView);
+			}else if(descripId==168){
+				tail=generateSelectBox(name, Integer.parseInt(patCurDisDTO.getInspecDescripId168_1()), new String[]{"Exophytic", "Ulcer infiltrative", "Rerrulouy", "Papillary", "Nodular", "Pigmented", "Deep excavatating ulcer with diffuse peripheral extension", "Leukoplakia"}, editAndView);
+				tail+="&emsp;Others <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getInspecDescripId168_2()+"\">\n<br>";
+				tail+="&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Surface:<input type=\"text\" name=\""+name+"_3"+"\" value=\""+patCurDisDTO.getInspecDescripId168_3()+"\">\n<br>";
+				tail+="&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Edge:<input type=\"text\" name=\""+name+"_4"+"\" value=\""+patCurDisDTO.getInspecDescripId168_4()+"\">\n";
 			}
 		}else if(inputName.equals("diagnosisId")){
 			String name="diagnosisId"+descripId;
@@ -1338,7 +1348,7 @@ public class MyUtility {
 			if(descripId==93){
 				tail=generateSelectBox(name, patOthersDTO.getInfoId93(), new String[]{"Posteroanterior view","Anteroposterior view"});
 			}else if(descripId==94){
-				tail=generateSelectBox(name, patOthersDTO.getInfoId94(), new String[]{"Posteroanterior view","Reverse Towne’s view","Towne’s view","Lateral view","Oblique view","Occipitomental view","30’ Occipitomental view","Submentovertex view","OPG view","Cephalometry view"});
+				tail=generateSelectBox(name, patOthersDTO.getInfoId94(), new String[]{"Posteroanterior view","Reverse Towneï¿½s view","Towneï¿½s view","Lateral view","Oblique view","Occipitomental view","30ï¿½ Occipitomental view","Submentovertex view","OPG view","Cephalometry view"});
 			}else if(descripId==95){
 				tail=generateSelectBox(name, patOthersDTO.getInfoId95(), new String[]{"Periapical view","Occlusal view"});
 			}else if(descripId==92){

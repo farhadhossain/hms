@@ -179,9 +179,13 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 										    
 										    <div role="tabpanel" class="tab-pane" id="clinicalExamination" style="">
 										    	<div class="panel-body">
-											 		<table class="table" style="font-size: 13px;">
-													
-							                        </table>
+													<%if(editAndView==true || (editAndView==false && patCurDisDTO.patInspId.isEmpty()==false)){%>
+													<div class="table-responsive">
+														<table class="table" style="font-size: 13px;">
+															<%=MyUtility.generateHTML(disInspectionList, disInspecParentByChild, "inspectionId", patCurDisDTO.patInspId, patCurDisDTO, editAndView)%>
+														</table>
+													</div>
+													<%}%>
 										    	</div><!--/./form-group--> 
 								    		 </div>
 											
