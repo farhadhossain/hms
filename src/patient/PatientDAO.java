@@ -75,7 +75,7 @@ public class PatientDAO
 			
 		}catch(Exception e){
 			daoResult.setValid(false);
-			daoResult.setMessage("Database Error: "+e.toString());
+			daoResult.setMessage("Database Error: " + e.toString());
 		}finally{
 			try{stmt.close();}catch(Exception e){}
 			try{conn.close();}catch(Exception e){}
@@ -111,14 +111,24 @@ public class PatientDAO
 					sql+=" and reg_number like '%"+nameTicketPhone+"%'";
 				}
 			}
+			if(roleID!=MyConfig.frontDeskRole || roleID!=MyConfig.dutyNurseRole){
+				sql+=" and ( ";
+			}else{
+                sql+=" and ";
+            }
+
 			if(roleID==MyConfig.diagnosisRoomRole){
-				sql+=" and current_status="+MyConfig.deptDiagnosisRoom;
+				sql+="  current_status="+MyConfig.deptDiagnosisRoom;
 			}else if(roleID==MyConfig.minorOTOrOutdoorRole){
-				sql+=" and current_status="+MyConfig.deptOutdoorOrMinorOT;
+				sql+="  current_status="+MyConfig.deptOutdoorOrMinorOT;
 			}else if(roleID==MyConfig.SurgeonRole || roleID==MyConfig.AssistantSurgeonRole || roleID==MyConfig.AnesthetistRole || roleID==MyConfig.DoctorForBed){
-				sql+=" and current_status="+MyConfig.deptIndoor;
+				sql+="  current_status="+MyConfig.deptIndoor;
 			}
-			
+
+			if(roleID!=MyConfig.frontDeskRole || roleID!=MyConfig.dutyNurseRole){
+				sql+=" or current_status="+MyConfig.deptEmergency+")";
+			}
+
 			sql+=" order by date_of_rec desc";
 			
 			System.out.println(sql);

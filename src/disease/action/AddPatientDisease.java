@@ -21,6 +21,7 @@ public class AddPatientDisease extends Action{
 		DiseaseForm form = (DiseaseForm) p_form;
 		String target = "success";
 		DiseaseDTO dto = new DiseaseDTO();
+		dto.setRequestParameters(p_request.getParameterMap());
 		
 		String nad = p_request.getParameter("nad");
 		if(nad!=null && nad.equals("1")){
@@ -28,7 +29,6 @@ public class AddPatientDisease extends Action{
 		}else{
 			dto.setNad(0);
 		}
-		
 		int[] initializeValue={0};
 		dto.setUserId(form.getUserId());
 		dto.setDiseaseId(form.getDiseaseId());
@@ -59,8 +59,8 @@ public class AddPatientDisease extends Action{
 		dto.setInspecDescripId60(form.getInspecDescripId60());
 		dto.setInspecDescripId61(form.getInspecDescripId61());
 
-		dto.setPalpaDescripId22_1(form.getPalpaDescripId22_1()==null?"":form.getPalpaDescripId22_1());
-		dto.setPalpaDescripId22_2(form.getPalpaDescripId22_2()==null?"":form.getPalpaDescripId22_2());
+		dto.setPalpaDescripId22_1(form.getPalpaDescripId22_1() == null ? "" : form.getPalpaDescripId22_1());
+		dto.setPalpaDescripId22_2(form.getPalpaDescripId22_2() == null ? "" : form.getPalpaDescripId22_2());
 		dto.setPalpaDescripId27(form.getPalpaDescripId27());
 		dto.setPalpaDescripId28(form.getPalpaDescripId28());
 		dto.setPalpaDescripId53(form.getPalpaDescripId53());
@@ -101,11 +101,11 @@ public class AddPatientDisease extends Action{
 
 		dto.setPalpaDescripId56(form.getPalpaDescripId56());
 		dto.setPalpaDescripId57(form.getPalpaDescripId57());
-		dto.setPalpaDescripId58_1(form.getPalpaDescripId58_1()==null?"":form.getPalpaDescripId58_1());
-		dto.setPalpaDescripId58_2(form.getPalpaDescripId58_2()==null?"":form.getPalpaDescripId58_2());
+		dto.setPalpaDescripId58_1(form.getPalpaDescripId58_1() == null ? "" : form.getPalpaDescripId58_1());
+		dto.setPalpaDescripId58_2(form.getPalpaDescripId58_2() == null ? "" : form.getPalpaDescripId58_2());
 		dto.setPalpaDescripId65(form.getPalpaDescripId65());
 		dto.setPalpaDescripId66(form.getPalpaDescripId66());
-		dto.setPalpaDescripId67_1(form.getPalpaDescripId67_1()==null?"":form.getPalpaDescripId67_1());
+		dto.setPalpaDescripId67_1(form.getPalpaDescripId67_1() == null ? "" : form.getPalpaDescripId67_1());
 		dto.setPalpaDescripId67_2(form.getPalpaDescripId67_2());
 		
 		dto.setLastDateOfDialysis(form.getLastDateOfDialysis());
@@ -136,7 +136,7 @@ public class AddPatientDisease extends Action{
 		dto.setSpecialCaseId223_1(form.getSpecialCaseId223_1());
 		dto.setSpecialCaseId223_2(form.getSpecialCaseId223_2());
 		dto.setSpecialCaseId225(form.getSpecialCaseId225());
-		dto.setSpecialCaseId226(form.getSpecialCaseId226() );
+		dto.setSpecialCaseId226(form.getSpecialCaseId226());
 		dto.setSpecialCaseId227(form.getSpecialCaseId227());
 		dto.setSpecialCaseId228(form.getSpecialCaseId228());
 		dto.setSpecialCaseId229(form.getSpecialCaseId229());
@@ -151,7 +151,7 @@ public class AddPatientDisease extends Action{
 		dto.setSpecialCaseId266_1(form.getSpecialCaseId266_1());
 		dto.setSpecialCaseId266_2(form.getSpecialCaseId266_2());
 		dto.setSpecialCaseId307(form.getSpecialCaseId307());
-		dto.setSpecialCaseId308(form.getSpecialCaseId308() );
+		dto.setSpecialCaseId308(form.getSpecialCaseId308());
 		dto.setSpecialCaseId309(form.getSpecialCaseId309());
 		dto.setSpecialCaseId311(form.getSpecialCaseId311());
 		dto.setSpecialCaseId269(form.getSpecialCaseId269());
@@ -425,7 +425,7 @@ public class AddPatientDisease extends Action{
 		dto.setSpecialCaseId107_1(form.getSpecialCaseId107_1());
 		dto.setSpecialCaseId107_2(form.getSpecialCaseId107_2());
 		dto.setSpecialCaseId107_3(form.getSpecialCaseId107_3());
-		dto.setSpecialCaseId107_4(form.getSpecialCaseId107_4() );
+		dto.setSpecialCaseId107_4(form.getSpecialCaseId107_4());
 		dto.setSpecialCaseId108_1(form.getSpecialCaseId108_1());
 		dto.setSpecialCaseId108_2(form.getSpecialCaseId108_2());
 		dto.setSpecialCaseId108_3(form.getSpecialCaseId108_3());
@@ -599,6 +599,18 @@ public class AddPatientDisease extends Action{
 		
 		dto.setPalpaDescripId90(form.getPalpaDescripId90());
 		dto.setPalpaDescripId115(form.getPalpaDescripId115());
+
+		dto.setInspecDescripId165(form.getInspecDescripId165());
+		dto.setInspecDescripId165_2(form.getInspecDescripId165_2());
+		dto.setInspecDescripId166(form.getInspecDescripId166());
+		dto.setInspecDescripId168(form.getInspecDescripId168());
+		dto.setInspecDescripId168_2(form.getInspecDescripId168_2());
+		dto.setInspecDescripId178(form.getInspecDescripId178());
+		dto.setInspecDescripId178_2(form.getInspecDescripId178_2());
+		dto.setInspecDescripId178_3(form.getInspecDescripId178_3());
+		dto.setInspecDescripId178_4(form.getInspecDescripId178_4());
+		dto.setInspecDescripId178_5(form.getInspecDescripId178_5());
+		dto.setInspecDescripId178_6(form.getInspecDescripId178_6());
 		
 		DiseaseService service = new DiseaseService();
 		DAOResult daoResult=service.addPatientDiseaseInfo(dto);

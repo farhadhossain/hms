@@ -12,6 +12,7 @@
 <%@page import="disease.DiseaseService"%>
 <%@page import="disease.DiseaseDTO"%>
 <%@ page import="utility.MyUtility" %>
+<%@ page import="disease.form.DiseaseMetaData" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -38,10 +39,10 @@ DiseaseService disServ = new DiseaseService();
 DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(Integer.parseInt(userID), Integer.parseInt(diseaseID)); 
 ArrayList<FollowUpDTO> followUpList=disServ.getFollowUpReport(Integer.parseInt(userID), Integer.parseInt(diseaseID));
 
-HashMap<Integer, String> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
+HashMap<Integer, DiseaseMetaData> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
 HashMap<Integer, String> disHistoryParentByChild = new HashMap<Integer, String>();
 
-HashMap<Integer, String> disOthersList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
+HashMap<Integer, DiseaseMetaData> disOthersList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
 
 int id = 1;
 String actionNameFollowUp="/NewFindingsSalivaryGlandPatient";

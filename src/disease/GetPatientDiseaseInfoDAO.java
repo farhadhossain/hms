@@ -1,9 +1,12 @@
 package disease;
 
+import disease.form.DiseaseMetaValues;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class GetPatientDiseaseInfoDAO {
@@ -47,7 +50,8 @@ public class GetPatientDiseaseInfoDAO {
 		disDTO.patTrtmntId = new HashSet<Integer>();
 		disDTO.patDiagonosisId = new HashSet<Integer>();
 		disDTO.patPrtFactId = new HashSet<Integer>();
-		
+		disDTO.setValues(new HashMap<String, DiseaseMetaValues>());
+
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
@@ -164,6 +168,12 @@ public class GetPatientDiseaseInfoDAO {
 					disDTO.setHisDescripId230(rs.getString("input_value")==null?1:Integer.parseInt(rs.getString("input_value")));
 				}
 				disDTO.patHisId.add(historyId);
+				DiseaseMetaValues metaValues = new DiseaseMetaValues();
+				metaValues.setParam1(rs.getString("input_value"));
+				metaValues.setParam2(rs.getString("input_value_2"));
+				metaValues.setParam3(rs.getString("input_value_3"));
+				metaValues.setParam4(rs.getString("input_value_4"));
+				disDTO.getValues().put("tbl_patient_disease_history-" + historyId, metaValues);
 			}
 			rs.close();
 			
@@ -171,12 +181,24 @@ public class GetPatientDiseaseInfoDAO {
 			rs = stmt.executeQuery("select * from tbl_patient_disease_symptom where patient_id="+userID+" and symptom_id in (select id from tbl_disease_symptom where dis_id="+diseaseID+")");
 			while(rs.next()){
 				disDTO.patSympId.add(rs.getInt("symptom_id"));
+				DiseaseMetaValues metaValues = new DiseaseMetaValues();
+				metaValues.setParam1(rs.getString("input_value"));
+				metaValues.setParam2(rs.getString("input_value_2"));
+				metaValues.setParam3(rs.getString("input_value_3"));
+				metaValues.setParam4(rs.getString("input_value_4"));
+				disDTO.getValues().put("tbl_patient_disease_symptom-" + rs.getInt("symptom_id"), metaValues);
 			}
 			rs.close();
 			
 			rs = stmt.executeQuery("select * from tbl_patient_disease_auscultation where patient_id="+userID+" and auscultation_id in (select id from tbl_disease_auscultation where dis_id="+diseaseID+")");
 			while(rs.next()){
 				disDTO.patAuscId.add(rs.getInt("auscultation_id"));
+				DiseaseMetaValues metaValues = new DiseaseMetaValues();
+				metaValues.setParam1(rs.getString("input_value"));
+				metaValues.setParam2(rs.getString("input_value_2"));
+				metaValues.setParam3(rs.getString("input_value_3"));
+				metaValues.setParam4(rs.getString("input_value_4"));
+				disDTO.getValues().put("tbl_patient_disease_auscultation-" + rs.getInt("auscultation_id"), metaValues);
 			}
 			rs.close();
 			
@@ -651,6 +673,12 @@ public class GetPatientDiseaseInfoDAO {
 					disDTO.setSpecialCaseId454_4(rs.getString("input_value_4"));
 				}				
 				disDTO.patSpCaseId.add(specialCaseId);
+				DiseaseMetaValues metaValues = new DiseaseMetaValues();
+				metaValues.setParam1(rs.getString("input_value"));
+				metaValues.setParam2(rs.getString("input_value_2"));
+				metaValues.setParam3(rs.getString("input_value_3"));
+				metaValues.setParam4(rs.getString("input_value_4"));
+				disDTO.getValues().put("tbl_patient_disease_special_case_details-" + specialCaseId, metaValues);
 			}
 			rs.close();
 			
@@ -690,6 +718,12 @@ public class GetPatientDiseaseInfoDAO {
 				}
 				
 				disDTO.patOthersId.add(othersId);
+				DiseaseMetaValues metaValues = new DiseaseMetaValues();
+				metaValues.setParam1(rs.getString("input_value"));
+				metaValues.setParam2(rs.getString("input_value_2"));
+				metaValues.setParam3(rs.getString("input_value_3"));
+				metaValues.setParam4(rs.getString("input_value_4"));
+				disDTO.getValues().put("tbl_patient_disease_others-" + othersId, metaValues);
 			}
 			rs.close();
 			
@@ -754,6 +788,12 @@ public class GetPatientDiseaseInfoDAO {
 				}
 				
 				disDTO.patPalpId.add(palpationId);
+				DiseaseMetaValues metaValues = new DiseaseMetaValues();
+				metaValues.setParam1(rs.getString("input_value"));
+				metaValues.setParam2(rs.getString("input_value_2"));
+				metaValues.setParam3(rs.getString("input_value_3"));
+				metaValues.setParam4(rs.getString("input_value_4"));
+				disDTO.getValues().put("tbl_patient_disease_palpation-" + palpationId, metaValues);
 			}
 			rs.close();
 			
@@ -857,10 +897,30 @@ public class GetPatientDiseaseInfoDAO {
 				}else if(inspectionId==163){
 					disDTO.setInspecDescripId163(rs.getString("input_value"));
 				}else if(inspectionId==165){
-					disDTO.setInspecDescripId165_1(rs.getString("input_value"));
+					disDTO.setInspecDescripId165(rs.getInt("input_value"));
 					disDTO.setInspecDescripId165_2(rs.getString("input_value_2"));
+				}else if(inspectionId==166){
+					disDTO.setInspecDescripId166(rs.getInt("input_value"));
+				}else if(inspectionId==168){
+					disDTO.setInspecDescripId168(rs.getInt("input_value"));
+					disDTO.setInspecDescripId168_2(rs.getString("input_value_2"));
+				}else if(inspectionId==178){
+					disDTO.setInspecDescripId178(rs.getInt("input_value"));
+					disDTO.setInspecDescripId178_2(rs.getString("input_value_2"));
+					disDTO.setInspecDescripId178_3(rs.getString("input_value_3"));
+					disDTO.setInspecDescripId178_4(rs.getString("input_value_4"));
+					disDTO.setInspecDescripId178_5(rs.getString("input_value_5"));
+					disDTO.setInspecDescripId178_6(rs.getString("input_value_6"));
 				}
+
 				disDTO.patInspId.add(inspectionId);
+
+				DiseaseMetaValues metaValues = new DiseaseMetaValues();
+				metaValues.setParam1(rs.getString("input_value"));
+				metaValues.setParam2(rs.getString("input_value_2"));
+				metaValues.setParam3(rs.getString("input_value_3"));
+				metaValues.setParam4(rs.getString("input_value_4"));
+				disDTO.getValues().put("tbl_patient_disease_inspection-" + inspectionId, metaValues);
 			}
 			rs.close();
 			
@@ -919,6 +979,12 @@ public class GetPatientDiseaseInfoDAO {
 					disDTO.setTreatmentId167(rs.getString("input_value"));
 				}
 				disDTO.patTrtmntId.add(treatmentId);
+				DiseaseMetaValues metaValues = new DiseaseMetaValues();
+				metaValues.setParam1(rs.getString("input_value"));
+				metaValues.setParam2(rs.getString("input_value_2"));
+				metaValues.setParam3(rs.getString("input_value_3"));
+				metaValues.setParam4(rs.getString("input_value_4"));
+				disDTO.getValues().put("tbl_patient_disease_treatment-" + treatmentId, metaValues);
 			}
 			rs.close();
 			
@@ -980,6 +1046,12 @@ public class GetPatientDiseaseInfoDAO {
 					disDTO.setDiagnosisId129(rs.getString("input_value"));
 				}
 				disDTO.patDiagonosisId.add(diagnosisId);
+				DiseaseMetaValues metaValues = new DiseaseMetaValues();
+				metaValues.setParam1(rs.getString("input_value"));
+				metaValues.setParam2(rs.getString("input_value_2"));
+				metaValues.setParam3(rs.getString("input_value_3"));
+				metaValues.setParam4(rs.getString("input_value_4"));
+				disDTO.getValues().put("tbl_patient_disease_diagnosis-" + diagnosisId, metaValues);
 			}
 			rs.close();
 			

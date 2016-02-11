@@ -302,7 +302,7 @@ int size=dtoList.size();
 						                        			<a href="../Department/IndoorDiseaseUpdateOrView.jsp?accountID=<%=dto.getAccId()%>&generalOnly=true">General Diseases</a><br>
 						                        			<a href="../Department/IndoorDiseaseUpdateOrView.jsp?accountID=<%=dto.getAccId()%>">Special Diseases</a><br>
 						                        		<%}else if(dto.getDeptId()==MyConfig.deptEmergency){%>
-						                        			<a href="../Department/DiseaseUpdate.jsp?accountID=<%=dto.getAccId()%>&departmentId=<%=dto.getDeptId()%>">Emergency</a><br>
+						                        			<a href="/Disease/MaxillofacialEmergency.jsp?userID=<%=dto.getAccId()%>&diseaseID=27">Emergency</a><br>
 						                        		<%}%>
 						                        		
 						                        		<%if(loginDTO.getRoleID()==MyConfig.DoctorForBed || loginDTO.getRoleID()==MyConfig.deptIndoor || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.AnesthetistRole){%>

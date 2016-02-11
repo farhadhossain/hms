@@ -3,7 +3,7 @@
 		<div class="panel-heading" role="tab" id="<%= "heading" + id%>">
 			<h4 class="panel-title">
 				<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="<%= "#collapse"+ id%>" aria-expanded="false" aria-controls="<%= "collapse"+ id%>">
-					Symptom
+					Clinical Presentation
 				</a>
 			</h4>
 		</div>

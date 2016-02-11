@@ -3,7 +3,7 @@ hms.controller('TreatmentPlanController', function ($scope, $http, $window, $loc
     $scope.isDutyNurse=$window.isDutyNurse;
 
     var patientID =  $location.search().accountID;
-    $scope.prescription = {chiefComplain:[],onObservation:[],investigation:[], patientID:patientID};
+    $scope.prescription = {ho:[],chiefComplain:[],onObservation:[],investigation:[], patientID:patientID};
 
 
     $scope.getPrescription = function (accountID) {
@@ -13,6 +13,7 @@ hms.controller('TreatmentPlanController', function ($scope, $http, $window, $loc
         }).success(function (result) {
             if(result.prescription && result.prescription.id) {
                 $scope.prescription = result.prescription;
+                $scope.prescription.ho = JSON.parse($scope.prescription.ho);
                 $scope.prescription.chiefComplain = JSON.parse($scope.prescription.chiefComplain);
                 $scope.prescription.onObservation = JSON.parse($scope.prescription.onObservation);
                 $scope.prescription.investigation = JSON.parse($scope.prescription.investigation);

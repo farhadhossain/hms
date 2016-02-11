@@ -560,8 +560,9 @@ public class UpdatePatientDiseaseInfoDAO {
 					}else if(dto.getHistoryId()[i]==230){
 						tail_1=", input_value"; tail_2=", "+dto.getHisDescripId230();
 					}
-					
+
 					stmt.execute("insert into tbl_patient_disease_history(patient_id, history_id"+tail_1+") values("+dto.getUserId()+", "+dto.getHistoryId()[i]+tail_2+")");
+
 					tail_1="";
 					tail_2="";
 				}
@@ -722,11 +723,15 @@ public class UpdatePatientDiseaseInfoDAO {
 					}else if(dto.getInspectionId()[i]==163){
 						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId163()+"'";
 					}else if(dto.getInspectionId()[i]==165){
-						tail_1=", input_value, input_value_2"; tail_2=", '"+dto.getInspecDescripId165_1()+"', '"+dto.getInspecDescripId165_2()+"'";
+						tail_1=", input_value, input_value_2"; tail_2=", '"+dto.getInspecDescripId165()+"', '"+dto.getInspecDescripId165_2()+"'";
 					}else if(dto.getInspectionId()[i]==166){
 						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId166()+"'";
 					}else if(dto.getInspectionId()[i]==168){
-						tail_1=", input_value, input_value_2, input_value_3, input_value_4"; tail_2=", '"+dto.getInspecDescripId168_1()+", '"+dto.getInspecDescripId168_2()+", '"+dto.getInspecDescripId168_3()+dto.getInspecDescripId168_4()+"'";
+						tail_1=", input_value, input_value_2";
+						tail_2=", '"+dto.getInspecDescripId168()+"', '"+dto.getInspecDescripId168_2()+"'";
+					}else if(dto.getInspectionId()[i]==178){
+						tail_1=", input_value, input_value_2, input_value_3, input_value_4, input_value_5, input_value_6";
+						tail_2=", '"+dto.getInspecDescripId178()+"', '"+dto.getInspecDescripId178_2()+"', '"+dto.getInspecDescripId178_3()+"', '"+dto.getInspecDescripId178_4()+"', '"+dto.getInspecDescripId178_5()+"', '"+dto.getInspecDescripId178_6()+"'";
 					}
 					stmt.execute("insert into tbl_patient_disease_inspection(patient_id, inspection_id"+tail_1+") values("+dto.getUserId()+", "+dto.getInspectionId()[i]+tail_2+")");
 					tail_1="";
@@ -983,7 +988,53 @@ public class UpdatePatientDiseaseInfoDAO {
 			}
 			
 			stmt.executeUpdate("update tbl_patient_disease set nad="+dto.getNad()+" where patient_id="+dto.getUserId()+" and disease_id="+dto.getDiseaseId());
-			
+
+            for(Object key: dto.getRequestParameters().keySet()){
+                if(key.toString().split("-").length>1 && key.toString().split("-").length<4 && key.toString().endsWith("input_value")){
+                    String table =  key.toString().split("-")[0];
+                    String id =  key.toString().split("-")[1];
+                    String columns = "input_value";
+                    String[] strArr=(String[])dto.getRequestParameters().get(key);
+                    String values = "'"+strArr[0]+"'";
+                    if(dto.getRequestParameters().get(table+"-"+id+"-input_value_2")!=null) {
+                        columns+=", input_value_2";
+                        strArr=(String[])dto.getRequestParameters().get(table+"-"+id+"-input_value_2");
+                        values+=", '"+strArr[0]+"'";
+						if(dto.getRequestParameters().get(table+"-"+id+"-input_value_3")!=null) {
+							columns+=", input_value_3";
+							strArr=(String[])dto.getRequestParameters().get(table+"-"+id+"-input_value_3");
+							values+=", '"+strArr[0]+"'";
+							if(dto.getRequestParameters().get(table+"-"+id+"-input_value_4")!=null) {
+								columns+=", input_value_4";
+								strArr=(String[])dto.getRequestParameters().get(table+"-"+id+"-input_value_4");
+								values+=", '"+strArr[0]+"'";
+							}
+						}
+                    }
+					String firstField="";
+					if(table.equals("tbl_patient_disease_history")){
+					   firstField = "history_id";
+					}else if(table.equals("tbl_patient_disease_inspection")){
+					   firstField = "inspection_id";
+					}else if(table.equals("tbl_patient_disease_special_case_details")){
+						firstField = "sp_case_id";
+					}else if(table.equals("tbl_patient_disease_diagnosis")){
+						firstField = "diagnosis_id";
+					}else if(table.equals("tbl_patient_disease_others")){
+						firstField = "others_id";
+					}else if(table.equals("tbl_patient_disease_palpation")){
+						firstField = "palpation_id";
+					}else if(table.equals("tbl_patient_disease_symptom")){
+						firstField = "symptom_id";
+				    }else if(table.equals("tbl_patient_disease_auscultation")){
+						firstField = "auscultation_id";
+					}
+
+                    String query = "insert into "+ table+"(patient_id, "+firstField+", "+columns+") values("+dto.getUserId()+", "+id+", "+ values+")";
+                    System.out.println(query);
+                    stmt.execute(query);
+                }
+            }
 		}catch(Exception e){
 			daoRes.setMessage("Error: "+e.toString());
 		}finally{

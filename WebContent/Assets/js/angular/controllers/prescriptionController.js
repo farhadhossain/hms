@@ -1,6 +1,6 @@
 hms.controller('PrescriptionController', function ($scope, $http, $location) {
 
-    $scope.prescription = {chiefComplain:[],onObservation:[],investigation:[],diagonosis:[],medicines:[],advice:[],patientID: $location.search().accountID};
+    $scope.prescription = {ho:[],chiefComplain:[],onObservation:[],investigation:[],diagonosis:[{disease:''}],medicines:[],advice:[],patientID: $location.search().accountID};
 
     $scope.searchMedicine = function(val, index){
         if(val.length>=3) {
@@ -41,6 +41,7 @@ hms.controller('PrescriptionController', function ($scope, $http, $location) {
         }).success(function (result) {
             if(result.prescription && result.prescription.id) {
                 $scope.prescription = result.prescription;
+                $scope.prescription.ho = JSON.parse($scope.prescription.ho);
                 $scope.prescription.chiefComplain = JSON.parse($scope.prescription.chiefComplain);
                 $scope.prescription.onObservation = JSON.parse($scope.prescription.onObservation);
                 $scope.prescription.investigation = JSON.parse($scope.prescription.investigation);
@@ -60,11 +61,14 @@ hms.controller('PrescriptionController', function ($scope, $http, $location) {
         var temp = {medicines:[]};
         temp.id =  $scope.prescription.id;
         temp.patientID = $scope.prescription.patientID;
+        temp.ho = JSON.stringify($scope.prescription.ho);
         temp.chiefComplain = JSON.stringify($scope.prescription.chiefComplain);
         temp.onObservation = JSON.stringify($scope.prescription.onObservation);
         temp.investigation = JSON.stringify($scope.prescription.investigation);
         temp.diagonosis = JSON.stringify($scope.prescription.diagonosis);
         temp.advice = JSON.stringify($scope.prescription.advice);
+        temp.referTo =  $scope.prescription.referTo;
+        temp.nextVisitDate =  $scope.prescription.nextVisitDate;
         for(var index in $scope.medicines){
             var med =  $scope.medicines[index];
             delete med.$$hashKey;
@@ -166,6 +170,14 @@ hms.controller('PrescriptionController', function ($scope, $http, $location) {
         }
 
         return {other:{text:''}};
+    };
+
+    $scope.isObject = function(input) {
+        return angular.isObject(input);
+    };
+
+    $scope.isString = function(input) {
+        return angular.isString(input);
     };
 
 });

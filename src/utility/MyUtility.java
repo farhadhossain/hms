@@ -2,13 +2,16 @@ package utility;
 
 import java.util.HashMap;
 import java.util.HashSet;
+
+import disease.form.DiseaseMetaData;
+import disease.form.DiseaseMetaValues;
 import patientOthers.PatientOthersDTO;
 
 import department.DepartmentDiseaseDTO;
 import disease.DiseaseDTO;
 
 public class MyUtility {
-	static int[] getSortedKeyList(HashMap<Integer, String> mapInfo){
+	static int[] getSortedKeyList(HashMap<Integer, DiseaseMetaData> mapInfo){
 		int[] array = new int[mapInfo.size()]; 
 		
 		int i=0;
@@ -60,7 +63,8 @@ public class MyUtility {
 		return tail;
 	}
 	
-	public static String getInputString(String inputName, int spaceingColumn, int descripId, String descripName, boolean isChecked, DiseaseDTO patCurDisDTO, boolean isChildExists, boolean editAndView){
+	public static String getInputString(String inputName, int spaceingColumn, int descripId, DiseaseMetaData metaData, boolean isChecked, DiseaseDTO patCurDisDTO, boolean isChildExists, boolean editAndView){
+		String tableName="";
 		String str1="";
 		if(spaceingColumn>0){
 			str1=" style=\"margin-left: "+spaceingColumn+"px;\" ";
@@ -77,9 +81,10 @@ public class MyUtility {
 
 		String tail="";
 		if(inputName.equals("specialCaseId")){
+			tableName = "tbl_patient_disease_special_case_details";
 			String name="specialCaseId"+descripId;
 			if(descripId==1){
-				tail=generateSelectBox(name, patCurDisDTO.getSpecialCaseId1(), new String[]{"Present","Absent"}, editAndView);
+				tail=generateSelectBox(name, patCurDisDTO.getSpecialCaseId1(), new String[]{"Present", "Absent"}, editAndView);
 			}else if(descripId==2){
 				tail=generateSelectBox(name, patCurDisDTO.getSpecialCaseId2(), new String[]{"Present","Absent"}, editAndView);
 			}else if(descripId==3){
@@ -540,6 +545,7 @@ public class MyUtility {
 				tail+="</table>";
 			}			
 		}else if(inputName.equals("inspectionId")){
+			tableName = "tbl_patient_disease_inspection";
 			String name="inspecDescripId"+descripId;
 			if(descripId==4){
 				tail="<input type=\"text\" name=\"heightVsPressure\" value=\""+patCurDisDTO.getHeightVsPressure()+"\">\n";
@@ -638,17 +644,20 @@ public class MyUtility {
 			}else if(descripId==162){
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+patCurDisDTO.getInspecDescripId162()+"\">\n";
 			}else if(descripId==165){
-				tail=generateSelectBox(name, Integer.parseInt(patCurDisDTO.getInspecDescripId165_1()), new String[]{"Swelling","Ulcer","Perforation","Sinus","Necrosis","Abscess"}, editAndView);
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId165() , new String[]{"Swelling","Ulcer","Perforation","Sinus","Necrosis","Abscess"}, editAndView);
 				tail+="&emsp;Others <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getInspecDescripId165_2()+"\">\n";
 			}else if(descripId==166){
-				tail=generateSelectBox(name, Integer.parseInt(patCurDisDTO.getInspecDescripId166()), new String[]{"Smooth superficial", "Round", "Mobile", "Lobuleted", "Circumscribed", "Busselation", "Solid cystic", "Soft fluctuant", "Compressible"}, editAndView);
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId166(), new String[]{"Smooth superficial", "Round", "Mobile", "Lobuleted", "Circumscribed", "Busselation", "Solid cystic", "Soft fluctuant", "Compressible"}, editAndView);
 			}else if(descripId==168){
-				tail=generateSelectBox(name, Integer.parseInt(patCurDisDTO.getInspecDescripId168_1()), new String[]{"Exophytic", "Ulcer infiltrative", "Rerrulouy", "Papillary", "Nodular", "Pigmented", "Deep excavatating ulcer with diffuse peripheral extension", "Leukoplakia"}, editAndView);
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId168(), new String[]{"Exophytic", "Ulcer infiltrative", "Rerrulouy", "Papillary", "Nodular", "Pigmented", "Deep excavatating ulcer with diffuse peripheral extension", "Leukoplakia"}, editAndView);
 				tail+="&emsp;Others <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getInspecDescripId168_2()+"\">\n<br>";
-				tail+="&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Surface:<input type=\"text\" name=\""+name+"_3"+"\" value=\""+patCurDisDTO.getInspecDescripId168_3()+"\">\n<br>";
-				tail+="&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Edge:<input type=\"text\" name=\""+name+"_4"+"\" value=\""+patCurDisDTO.getInspecDescripId168_4()+"\">\n";
+			}else if(descripId==178){
+				tail="<div class=\"fourth-child\">Skin size : <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getInspecDescripId178_2()+"\"> X <input type=\"text\" name=\""+name+"_3"+"\" value=\""+patCurDisDTO.getInspecDescripId178_3()+"\"></div>";
+				tail+="<div class=\"fourth-child\">Mucosa : <input type=\"text\" name=\""+name+"_4"+"\" value=\""+patCurDisDTO.getInspecDescripId178_4()+"\"> X <input type=\"text\" name=\""+name+"_5"+"\" value=\""+patCurDisDTO.getInspecDescripId178_5()+"\"></div>";
+				tail+="<div class=\"fourth-child\">Muscle name:<input type=\"text\" name=\""+name+"_6"+"\" value=\""+patCurDisDTO.getInspecDescripId178_6()+"\"></div>";
 			}
 		}else if(inputName.equals("diagnosisId")){
+			tableName = "tbl_patient_disease_diagnosis";
 			String name="diagnosisId"+descripId;
 			if(descripId==18){
 				tail=generateSelectBox(name, patCurDisDTO.getDiagnosisId18(), new String[]{"High","Low"}, editAndView);
@@ -708,6 +717,7 @@ public class MyUtility {
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+patCurDisDTO.getDiagnosisId129()+"\">\n";
 			}
 		}else if(inputName.equals("treatmentId")){
+			tableName = "tbl_patient_disease_treatment";
 			String name="treatmentId"+descripId;
 			if(descripId==5){
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+patCurDisDTO.getTreatmentId5()+"\">\n";
@@ -767,11 +777,13 @@ public class MyUtility {
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+patCurDisDTO.getTreatmentId167()+"\">\n";
 			}
 		}else if(inputName.equals("auscultationId")){
+			tableName="tbl_patient_disease_auscultation";
 			String name="auscuDescripId"+descripId;
 			if(descripId==7){
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+patCurDisDTO.getAuscuDescripId7()+"\">\n";
 			}
 		}else if(inputName.equals("historyId")){
+			tableName = "tbl_patient_disease_history";
 			String name="hisDescripId"+descripId;
 			if(descripId==54){
 				tail="<br> &emsp;&emsp;&emsp;Last date of dialysis <input type=\"text\" name=\"lastDateOfDialysis\" value=\""+patCurDisDTO.getLastDateOfDialysis()+"\">&emsp;";
@@ -909,6 +921,7 @@ public class MyUtility {
 				tail="<input type=\"text\" name=\"otherPertFact\" value=\""+patCurDisDTO.getOtherPertFact()+"\">\n";
 			}
 		}else if(inputName.equals("othersId")){
+			tableName = "tbl_patient_disease_others";
 			String name="othsDescripId"+descripId;
 			if(descripId==1){
 				tail=generateSelectBox(name, patCurDisDTO.getOthsDescripId1(), new String[]{"Skin","Mucosa","Bluish","Radish","Sinus opening","Ulcer","Normal"}, editAndView);
@@ -943,6 +956,7 @@ public class MyUtility {
 			}
 			
 		}else if(inputName.equals("palpationId")){
+			tableName = "tbl_patient_disease_palpation";
 			String name="palpaDescripId"+descripId;
 			if(descripId==1){
 				tail="<input type=\"text\" name=\"heartRatePerMin\" value=\""+patCurDisDTO.getHeartRatePerMin()+"\">\n";
@@ -1007,9 +1021,32 @@ public class MyUtility {
 			}else if(descripId==114){
 				tail=generateSelectBox(name, patCurDisDTO.getPalpaDescripId114(), new String[]{"Right","Left","Bilateral"}, editAndView);
 			}
+		}else if(inputName.equals("symptomId")) {
+			tableName = "tbl_patient_disease_symptom";
 		}
-		
-		return "<input type=\"checkbox\" "+str1+" name=\""+inputName+"\" value=\""+descripId+"\"> "+descripName+"\n"+tail;
+
+		String fieldName = tableName+"-"+descripId+"-";
+		if("TEXT_AREA".equals(metaData.getInputType())){
+			DiseaseMetaValues metaValues = new DiseaseMetaValues();
+			if(patCurDisDTO.getValues().get(tableName+"-"+descripId)!=null){
+				metaValues = patCurDisDTO.getValues().get(tableName+"-"+descripId);
+			}
+			return metaData.getName()+ ": <textarea type=\"text\" class=\"form-control\" rows=\"2\" name=\""+fieldName+"input_value\">"+metaValues.getParam1()+"</textarea>";
+		}else if("INPUT_TEXT".equals(metaData.getInputType())){
+			DiseaseMetaValues metaValues = new DiseaseMetaValues();
+			if(patCurDisDTO.getValues().get(tableName+"-"+descripId)!=null){
+				metaValues = patCurDisDTO.getValues().get(tableName+"-"+descripId);
+			}
+			return metaData.getName()+ ": <input type=\"text\" name=\""+fieldName+"input_value\" value=\""+metaValues.getParam1()+"\"> ";
+		}else if("OTHER_TEXT".equals(metaData.getInputType())){
+			DiseaseMetaValues metaValues = new DiseaseMetaValues();
+			if(patCurDisDTO.getValues().get(tableName+"-"+descripId)!=null){
+				metaValues =  patCurDisDTO.getValues().get(tableName+"-"+descripId);
+			}
+			return "<input type=\"checkbox\" " + str1 + " name=\"" + fieldName + "input_value\" value=\"" + descripId + "\"> " + metaData.getName()+ ": <input type=\"text\" name=\""+fieldName+"input_value_2\" value=\""+metaValues.getParam2()+"\"> ";
+		}else {
+			return "<input type=\"checkbox\" " + str1 + " name=\"" + inputName + "\" value=\"" + descripId + "\"> " + metaData.getName() + "\n" + tail;
+		}
 	}
 	
 	
@@ -1059,7 +1096,7 @@ public class MyUtility {
 	}*/
 	
 	
-	public static String generateHTML(HashMap<Integer, String> disHistoryList, HashMap<Integer, String> parentByChild, String inputName, HashSet<Integer> patCurDisInfo, DiseaseDTO patCurDisDTO, boolean editAndView){
+	public static String generateHTML(HashMap<Integer, DiseaseMetaData> disHistoryList, HashMap<Integer, String> parentByChild, String inputName, HashSet<Integer> patCurDisInfo, DiseaseDTO patCurDisDTO, boolean editAndView){
 		HashSet<Integer> insertedId = new HashSet<Integer>();
 		String html="";
 		int spaceingColumn=40;
@@ -1190,7 +1227,7 @@ public class MyUtility {
 		return html;
 	}
 	
-	public static String generateHTML(HashMap<Integer, String> disHistoryList, HashMap<Integer, String> parentByChild, String inputName, HashSet<Integer> patCurDisInfo, PatientOthersDTO patOthersDTO){
+	public static String generateHTML(HashMap<Integer, DiseaseMetaData> disHistoryList, HashMap<Integer, String> parentByChild, String inputName, HashSet<Integer> patCurDisInfo, PatientOthersDTO patOthersDTO){
 		HashSet<Integer> insertedId = new HashSet<Integer>();
 		String html="";
 		int spaceingColumn=40;
@@ -1334,7 +1371,7 @@ public class MyUtility {
 		return "<input type=\"checkbox\" "+checkBox+" name=\"diseaseId\" value=\""+diseaseId+"\"> "+diseaseName+tail+"\n";
 	}
 	
-	public static String getInputString(String inputName, int spaceingColumn, int descripId, String descripName, boolean isChecked, PatientOthersDTO patOthersDTO){
+	public static String getInputString(String inputName, int spaceingColumn, int descripId, DiseaseMetaData metaData, boolean isChecked, PatientOthersDTO patOthersDTO){
 		String str1="";
 		if(spaceingColumn>0){
 			str1=" style=\"margin-left: "+spaceingColumn+"px;\" ";
@@ -1401,6 +1438,6 @@ public class MyUtility {
 			}
 		}
 		
-		return "<input type=\"checkbox\" "+str1+" name=\""+inputName+"\" value=\""+descripId+"\"> "+descripName+"\n"+tail;
+		return "<input type=\"checkbox\" "+str1+" name=\""+inputName+"\" value=\""+descripId+"\"> "+metaData.getName()+"\n"+tail;
 	}
 }

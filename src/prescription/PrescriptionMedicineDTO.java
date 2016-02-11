@@ -8,10 +8,13 @@ public class PrescriptionMedicineDTO {
     private int prescriptionId;
     private String medicineName;
     private String medicineType;
+    private String totalNumber;
     private String frequency;
     private String dose;
+    private String doseUnit;
     private String comment;
     private String afterMeal;
+    private String duration;
 
     public int getId() {
         return id;
@@ -75,5 +78,29 @@ public class PrescriptionMedicineDTO {
 
     public void setAfterMeal(String afterMeal) {
         this.afterMeal = afterMeal;
+    }
+
+    public String getTotalNumber() {
+        return totalNumber;
+    }
+
+    public void setTotalNumber(String totalNumber) {
+        this.totalNumber = totalNumber;
+    }
+
+    public String getDoseUnit() {
+        return doseUnit;
+    }
+
+    public void setDoseUnit(String doseUnit) {
+        this.doseUnit = doseUnit;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 }

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 
 /**
@@ -33,9 +34,12 @@ public class PrescriptionDAO {
             if(dto.getId()>0){
                 stmt.execute("DELETE from prescription where id = "+dto.getId());
             }
-
-            String sql="insert into prescription(chiefComplain, onObservation, investigation, diagonosis,advice, patientId) " +
-                    "values('"+dto.getChiefComplain()+"', '"+dto.getOnObservation()+"', '"+dto.getInvestigation()+"','"+dto.getDiagonosis()+"', '"+dto.getAdvice()+"' , "+dto.getPatientID()+")";
+            String nextVisitDate="NULL";
+            try {
+                nextVisitDate = "'"+new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(dto.getNextVisitDate()))+"'";
+            }catch(Exception t){}
+            String sql="insert into prescription(nextVisitDate,referTo,ho, chiefComplain, onObservation, investigation, diagonosis,advice, patientId) " +
+                    "values("+nextVisitDate+",'"+dto.getReferTo()+"','"+dto.getHo()+"','"+dto.getChiefComplain()+"', '"+dto.getOnObservation()+"', '"+dto.getInvestigation()+"','"+dto.getDiagonosis()+"', '"+dto.getAdvice()+"' , "+dto.getPatientID()+")";
             System.out.println(sql);
             PreparedStatement statement = conn.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
@@ -49,8 +53,8 @@ public class PrescriptionDAO {
             daoResult.setObjectId(autoIncKeyFromApi);
 
             for(PrescriptionMedicineDTO med: dto.getMedicines()){
-                sql="insert into prescription_medicine(medicineName, medicineType, frequency, dose, comment, afterMeal, prescriptionId) " +
-                        "values('"+med.getMedicineName()+"','"+med.getMedicineType()+"','"+med.getFrequency()+"','"+med.getDose()+"','"+med.getComment()+"','"+med.getAfterMeal()+"',"+autoIncKeyFromApi+")";
+                sql="insert into prescription_medicine(medicineName, medicineType, frequency, dose, comment, afterMeal, prescriptionId, doseUnit, totalNumber, duration) " +
+                        "values('"+med.getMedicineName()+"','"+med.getMedicineType()+"','"+med.getFrequency()+"','"+med.getDose()+"','"+med.getComment()+"','"+med.getAfterMeal()+"',"+autoIncKeyFromApi+",'"+med.getDoseUnit()+"','"+med.getTotalNumber()+"','"+med.getDuration()+"')";
                 stmt.execute(sql);
             }
 
@@ -79,12 +83,17 @@ public class PrescriptionDAO {
             ResultSet rs=stmt.executeQuery(sql);
             if(rs.next()){
                 dto.setId(rs.getInt("id"));
+                dto.setHo(rs.getString("ho"));
                 dto.setInvestigation(rs.getString("investigation"));
                 dto.setOnObservation(rs.getString("onObservation"));
                 dto.setDiagonosis(rs.getString("diagonosis"));
                 dto.setAdvice(rs.getString("advice"));
                 dto.setChiefComplain(rs.getString("chiefComplain"));
                 dto.setPatientID(rs.getInt("patientId"));
+                try {
+                    dto.setNextVisitDate(new SimpleDateFormat("MM/dd/yyyy").format(rs.getDate("nextVisitDate")));
+                }catch(Exception r){}
+                dto.setReferTo(rs.getString("referTo"));
             }
             rs.close();
 
@@ -97,7 +106,10 @@ public class PrescriptionDAO {
                 medicineDTO.setMedicineType(rs.getString("medicineType"));
                 medicineDTO.setFrequency(rs.getString("frequency"));
                 medicineDTO.setDose(rs.getString("dose"));
+                medicineDTO.setDoseUnit(rs.getString("doseUnit"));
                 medicineDTO.setPrescriptionId(rs.getInt("prescriptionId"));
+                medicineDTO.setTotalNumber(rs.getString("totalNumber"));
+                medicineDTO.setDuration(rs.getString("duration"));
                 dto.getMedicines().add(medicineDTO);
             }
 

@@ -12,6 +12,7 @@
 <%@page import="disease.DiseaseDTO"%>
 <%@ page import="utility.MyUtility" %>
 <%@page import="disease.FollowUpDTO"%>
+<%@ page import="disease.form.DiseaseMetaData" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -39,19 +40,19 @@ DiseaseService disServ = new DiseaseService();
 DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(Integer.parseInt(userID), Integer.parseInt(diseaseID)); 
 ArrayList<FollowUpDTO> followUpList=disServ.getFollowUpReport(Integer.parseInt(userID), Integer.parseInt(diseaseID));
 
-HashMap<Integer, String> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
+HashMap<Integer, DiseaseMetaData> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
 HashMap<Integer, String> disHistoryParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
 
-HashMap<Integer, String> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
+HashMap<Integer, DiseaseMetaData> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
 HashMap<Integer, String> disInspecParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
 
-HashMap<Integer, String> disPalpationList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseasePalpation);
+HashMap<Integer, DiseaseMetaData> disPalpationList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseasePalpation);
 HashMap<Integer, String> disPalpationParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseasePalpation);
 
-HashMap<Integer, String> disAuscultationList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseAuscultation);
+HashMap<Integer, DiseaseMetaData> disAuscultationList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseAuscultation);
 HashMap<Integer, String> disAuscultationParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseAuscultation);
 
-HashMap<Integer, String> disOthersList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
+HashMap<Integer, DiseaseMetaData> disOthersList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
 HashMap<Integer, String> disOthersParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
 
 int id = 1;
@@ -135,7 +136,7 @@ String actionNameFollowUp="/NewFindingsOralAnMaxillofacialPatient";
 						<div style="clear:both"></div>
 			 			<div class="ibox float-e-margins">
                   			<div class="ibox-title">
-                      			<h5>Oral and Maxillofacial Trauma  </h5>
+                      			<h5>Maxillofacial Emergency  </h5>
                   			</div><!--/./ibox-title-->
                				<div class="ibox-content">
 									

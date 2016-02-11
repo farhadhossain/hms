@@ -138,6 +138,37 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
     <!-- Patient info panel END-->
 	 <!-- Left Container-->
 	 <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 0px;">
+		 <div class="panel panel-default">
+			 <div class="panel-heading">
+				 <h3 class="panel-title">
+					 <i class="fa fa-comments"></i>&nbsp;&nbsp;(H/O)
+				 </h3>
+			 </div>
+			 <div class="panel-body">
+				 <table>
+					 <!--<tr ng-repeat="(key, value) in items"><td><input type="checkbox" value="{{key}}">&emsp;{{value}}</td></tr> -->
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Diabetes">&emsp;Diabetes</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Heart disease">&emsp;Heart disease</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Blood disorder">&emsp;Blood disorder</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Hypertension">&emsp;Hypertension</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Anticoagulant therapy">&emsp;Anticoagulant therapy</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Asthma">&emsp;Asthma</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Hyper thyroidism">&emsp;Hyper thyroidism</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Hypo thyroidism">&emsp;Hypo thyroidism</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Trauma">&emsp;Trauma</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Stroke">&emsp;Stroke</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Chronic kidney disease">&emsp;Chronic kidney disease</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Liver disease">&emsp;Liver disease</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Autoimmune disease">&emsp;Autoimmune disease</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Rheumatic fever">&emsp;Rheumatic fever</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Hepatitis-  B">&emsp;Hepatitis-  B</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Hepatitis-  C">&emsp;Hepatitis-  C</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" value="Steroid therapy">&emsp;Steroid therapy</td></tr>
+					 <tr><td><input type="checkbox" checklist-model="prescription.ho" checklist-comparator="compareFn" checklist-value="getOtherCheckboxValue(prescription.ho)">&emsp;Others [if any] <input type="text" ng-model="getOtherTextModel(prescription.ho).other.text"></td></tr>
+
+				 </table>
+			 </div>
+		 </div>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">
@@ -360,13 +391,13 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 		   	<div class="panel-body">
 				<table>
 		     		<tr><td>
-		     			<input type="checkbox" checklist-model="prescription.investigation" value="x-Ray">&emsp;x-Ray<br>
-		     				<input type="checkbox" checklist-model="prescription.investigation" value="OPG" style="margin-left: 40px;">&emsp;OPG<br>
-							<input type="checkbox" checklist-model="prescription.investigation" value="Periapical view" style="margin-left: 40px;">&emsp;Periapical view<br>
-							<input type="checkbox" checklist-model="prescription.investigation" value="Occlusal view of mandible" style="margin-left: 40px;">&emsp;Occlusal view of mandible<br>
-							<input type="checkbox" checklist-model="prescription.investigation" value="Occlusal view of maxilla" style="margin-left: 40px;">&emsp;Occlusal view of maxilla<br>
-							<input type="checkbox" checklist-model="prescription.investigation" value="Lateral view of skull" style="margin-left: 40px;">&emsp;Lateral view of skull<br>
-							<input type="checkbox" checklist-model="prescription.investigation" value="PNS view" style="margin-left: 40px;">&emsp;PNS view<br>
+		     			<input type="checkbox" disabled value="x-Ray">&emsp;x-Ray<br>
+		     				<input type="checkbox" checklist-model="prescription.investigation" value="X-Ray - OPG" style="margin-left: 40px;">&emsp;OPG<br>
+							<input type="checkbox" checklist-model="prescription.investigation" value="X-Ray - Periapical view " style="margin-left: 40px;">&emsp;Periapical view<br>
+							<input type="checkbox" checklist-model="prescription.investigation" value="X-Ray - Occlusal view of mandible" style="margin-left: 40px;">&emsp;Occlusal view of mandible<br>
+							<input type="checkbox" checklist-model="prescription.investigation" value="X-Ray - Occlusal view of maxilla" style="margin-left: 40px;">&emsp;Occlusal view of maxilla<br>
+							<input type="checkbox" checklist-model="prescription.investigation" value="X-Ray - Lateral view of skull" style="margin-left: 40px;">&emsp;Lateral view of skull<br>
+							<input type="checkbox" checklist-model="prescription.investigation" value="X-Ray - PNS view" style="margin-left: 40px;">&emsp;PNS view<br>
 		     		</td></tr>
 		     		<tr><td><input type="checkbox" checklist-model="prescription.investigation" value="CT Scan of maxillofacial region">&emsp;CT Scan of maxillofacial region</td></tr>
 					<tr><td><input type="checkbox" checklist-model="prescription.investigation" value="MRI of maxillofacial region">&emsp;MRI of maxillofacial region</td></tr>
@@ -374,10 +405,10 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 					<tr><td><input type="checkbox" checklist-model="prescription.investigation" value="Sinus">&emsp;Sinus</td></tr>
 					<tr><td><input type="checkbox" checklist-model="prescription.investigation" value="FNAC">&emsp;FNAC</td></tr>
 					<tr><td>
-						<input type="checkbox" checklist-model="prescription.investigation" value="Biopsy">&emsp;Biopsy<br>
-							<input type="checkbox" checklist-model="prescription.investigation" value="Fineniddle" style="margin-left: 40px;">&emsp;Fineniddle<br>
-							<input type="checkbox" checklist-model="prescription.investigation" value="Core" style="margin-left: 40px;">&emsp;Core<br>
-							<input type="checkbox" checklist-model="prescription.investigation" value="Brush" style="margin-left: 40px;">&emsp;Brush<br>
+						<input type="checkbox" disabled value="Biopsy">&emsp;Biopsy<br>
+							<input type="checkbox" checklist-model="prescription.investigation" value="Biopsy - Fineniddle" style="margin-left: 40px;">&emsp;Fineniddle<br>
+							<input type="checkbox" checklist-model="prescription.investigation" value="Biopsy - Core" style="margin-left: 40px;">&emsp;Core<br>
+							<input type="checkbox" checklist-model="prescription.investigation" value="Biopsy - Brush" style="margin-left: 40px;">&emsp;Brush<br>
 					</td></tr>
 					<tr><td><input type="checkbox" checklist-model="prescription.investigation" value="Bone scan">&emsp;Bone scan</td></tr>
 					<tr><td><input type="checkbox" checklist-model="prescription.investigation" value="Sinogram">&emsp;Sinogram</td></tr>
@@ -394,20 +425,36 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 			</div>
 		   <div class="panel-body">
 			   <table>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Lichen planus">&emsp;Lichen planus</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Leukoplakia">&emsp;Leukoplakia</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Candidaisis">&emsp;Candidaisis</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Herpes">&emsp;Herpes</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Trigeminal Neuralgia">&emsp;Trigeminal Neuralgia</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Apthous Ulcer">&emsp;Apthous Ulcer</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Burning Mouth Syndrome">&emsp;Burning Mouth Syndrome</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Ptyalsim">&emsp;Ptyalsim</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Xerostomia">&emsp;Xerostomia</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Bell' Palsy">&emsp;Bell' Palsy</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Traumatic Ulcer">&emsp;Traumatic Ulcer</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Geographic Tongue">&emsp;Geographic Tongue</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" value="Hyper pigmentation">&emsp;Hyper pigmentation</td></tr>
-				   <tr><td><input type="checkbox" checklist-model="prescription.diagonosis" checklist-comparator="compareFn" checklist-value="getOtherCheckboxValue(prescription.diagonosis)">&emsp;Others [if any] <input type="text" ng-model="getOtherTextModel(prescription.diagonosis).other.text"></td></tr>
+				   <tr ng-repeat="cc in prescription.onObservation"><td colspan="2">
+					   <div ng-if="isString(cc)"><input type="checkbox" disabled/>&emsp;{{cc}}</div>
+					   <div ng-if="isObject(cc)" ng-if="isObject(cc)"><input type="checkbox" disabled/>&emsp;
+						<span ng-if="!cc.other" ng-repeat="(key, value) in cc">
+							{{key}}
+							<table style="width: 100%;">
+								<tr><td width="50%" style="border-right: 1px solid #CCC;border-bottom: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lt.join(', ')}}</td><td width="50%" style="border-bottom: 1px solid #CCC;padding: 5px;">&nbsp;{{value.rt.join(', ')}}</td></tr>
+								<tr><td width="50%" style="border-right: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lb.join(', ')}}</td><td width="50%" style="padding: 5px;">&nbsp;{{value.rb.join(', ')}}</td></tr>
+							</table>
+						</span>
+					    <span ng-if="cc.other">{{cc.other.text}}</span>
+					   </div>
+				   </td></tr>
+				   <tr><td style="padding-top: 10px;">Disease&emsp;</td><td>
+					   <select class="form-control" style="width: 200px;" data-ng-model="prescription.diagonosis[0].disease">
+						   <option value="">Select Disease</option>
+						   <option value="Aphthous ulcer">Aphthous ulcer</option>
+						   <option value="Angular cheilitis">Angular cheilitis</option>
+						   <option value="Angular stomatitis">Angular stomatitis</option>
+						   <option value="Amalgam tattoo">Amalgam tattoo</option>
+						   <option value="Acute pseudomembranous candidosis">Acute pseudomembranous candidosis</option>
+						   <option value="Atrophic form Lichen planus">Atrophic form Lichen planus</option>
+						   <option value="Angioneurotic edema">Angioneurotic edema</option>
+						   <option value="Anodontia">Anodontia</option>
+						   <option value="Amelogenesi imperfect">Amelogenesi imperfect</option>
+						   <option value="Angina">Angina</option>
+						   <option value="Alteration of Occlusion">Alteration of Occlusion</option>
+					   </select>
+				   </td></tr>
+				   <tr><td style="padding-top: 10px;" colspan="2"><input type="checkbox" checklist-model="prescription.diagonosis" checklist-comparator="compareFn" checklist-value="getOtherCheckboxValue(prescription.diagonosis)">&emsp;Others [if any] <input type="text" ng-model="getOtherTextModel(prescription.diagonosis).other.text"></td></tr>
 			   </table>
 			</div>
 		</div>
@@ -419,67 +466,81 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 		   <div class="panel panel-default" ng-repeat = "medicine in medicines">
 			   <div class="panel-body">
 				   <div class="row">
-					   <div class="col-sm-2">
-						   <select class="form-control" style="width: 120px;" data-ng-model="medicine.medicineType">
-							   <option value="">Select Formulation</option>
-							   <option value="Tablet">Tablet</option>
-							   <option value="Capsule">Capsule</option>
-							   <option value="Injection">Injection</option>
-							   <option value="Syrup">Syrup</option>
-							   <option value="Suspension">Suspension</option>
-							   <option value="Ointment/Gel">Ointment/Gel</option>
-							   <option value="Suppository">Suppository</option>
-							   <option value="Drop">Drop</option>
-							   <option value="Inhaler">Inhaler</option>
-							   <option value="Mouthwash">Mouthwash</option>
-							   <option value="Others">Others</option>
-						   </select>
-					   </div>
-					   <div class="col-sm-2">
-						   <input type="text"
-								  data-ng-model="medicine.medicineName"
-								  data-typeahead-template-url="bind-node.html"
-								  data-typeahead="medItem as medItem.medicineName for medItem in searchMedicine($viewValue, $index)"
-								  data-typeahead-on-select="addMedicine($item, $model, $label, $index)"
-								  class="form-control custom-search" placeholder="Medicine... " style="min-width: 120px;"/>
-					   </div>
-					   <div class="col-sm-2">
-						   <select class="form-control" style="width: 120px;" data-ng-model="medicine.frequency">
-							   <option value="">Select Frequency</option>
-							   <option value="1+1+1">1+1+1</option>
-							   <option value="1+0+1">1+0+1</option>
-							   <option value="0+0+1">0+0+1</option>
-							   <option value="1+0+0">1+0+0</option>
-							   <option value="1+1+1+1">1+1+1+1</option>
-							   <option value="1+1+1+1+1+1">1+1+1+1+1+1</option>
-						   </select>
-					   </div>
-					   <div class="col-sm-2">
-						   <select class="form-control" style="width: 120px;" data-ng-model="medicine.dose">
-							   <option value="">Select Dose</option>
-							   <option value="500">500</option>
-							   <option value="250">250</option>
-							   <option value="400">400</option>
-							   <option value="100">100</option>
-							   <option value="10">10</option>
-							   <option value="20">20</option>
-							   <option value="3">3</option>
-							   <option value="8">8</option>
-							   <option value="5">5</option>
-						   </select>
-					   </div>
-					   <div class="col-sm-2">
-						   <textarea  class="form-control" placeholder="Comments" cols="20" rows="1" data-ng-model="medicine.comment"></textarea>
-					   </div>
-					   <div class="col-sm-1">
-						   <select class="form-control" style="width: 80px;" data-ng-model="medicine.afterMeal">
-							   <option value="After Meal">After Meal</option>
-							   <option value="Before Meal">Before Meal</option>
-						   </select>
-					   </div>
-					   <div class="col-sm-1">
-						   <a href="#"><span class="fa fa-plus fa-2x" style="margin-left: 20px;" ng-click="addMedicineRow()"></span></a>
-					   </div>
+						   <div class="col-sm-2">
+							   <select class="form-control" style="width: 120px;" data-ng-model="medicine.medicineType">
+								   <option value="">Select Formulation</option>
+								   <option value="Tablet">Tablet</option>
+								   <option value="Capsule">Capsule</option>
+								   <option value="Injection">Injection</option>
+								   <option value="Syrup">Syrup</option>
+								   <option value="Suspension">Suspension</option>
+								   <option value="Ointment/Gel">Ointment/Gel</option>
+								   <option value="Suppository">Suppository</option>
+								   <option value="Drop">Drop</option>
+								   <option value="Inhaler">Inhaler</option>
+								   <option value="Mouthwash">Mouthwash</option>
+								   <option value="Others">Others</option>
+							   </select>
+						   </div>
+						   <div class="col-sm-3">
+							   <input type="text"
+									  data-ng-model="medicine.medicineName"
+									  data-typeahead-template-url="bind-node.html"
+									  data-typeahead="medItem as medItem.medicineName for medItem in searchMedicine($viewValue, $index)"
+									  data-typeahead-on-select="addMedicine($item, $model, $label, $index)"
+									  class="form-control custom-search" placeholder="Medicine... " style="min-width: 120px;"/>
+						   </div>
+						   <div class="col-sm-3">
+							   <select class="form-control" style="width: 200px;" data-ng-model="medicine.dose">
+								   <option value="">Select Dose</option>
+								   <option value="500">500</option>
+								   <option value="250">250</option>
+								   <option value="400">400</option>
+								   <option value="100">100</option>
+								   <option value="10">10</option>
+								   <option value="20">20</option>
+								   <option value="3">3</option>
+								   <option value="8">8</option>
+								   <option value="5">5</option>
+							   </select>
+						   </div>
+						   <div class="col-sm-2">
+							   <select class="form-control" style="width: 120px;" data-ng-model="medicine.doseUnit">
+								   <option value="mg">mg</option>
+								   <option value="ml">ml</option>
+							   </select>
+						   </div>
+						   <div class="col-sm-2">
+							   <textarea  class="form-control" placeholder="Total" cols="20" rows="1" data-ng-model="medicine.totalNumber"></textarea>
+						   </div>
+				   </div>
+				   <div class="row" style="margin-top: 5px;">
+						   <div class="col-sm-2">
+							   <select class="form-control" style="width: 120px;" data-ng-model="medicine.frequency">
+								   <option value="">Select Frequency</option>
+								   <option value="1+1+1">1+1+1</option>
+								   <option value="1+0+1">1+0+1</option>
+								   <option value="0+0+1">0+0+1</option>
+								   <option value="1+0+0">1+0+0</option>
+								   <option value="1+1+1+1">1+1+1+1</option>
+								   <option value="1+1+1+1+1+1">1+1+1+1+1+1</option>
+							   </select>
+						   </div>
+						   <div class="col-sm-3">
+							   <textarea  class="form-control" placeholder="Duration" cols="20" rows="1" data-ng-model="medicine.duration"></textarea>
+						   </div>
+						   <div class="col-sm-3">
+							   <select class="form-control" style="width: 200px;" data-ng-model="medicine.afterMeal">
+								   <option value="After Meal">After Meal</option>
+								   <option value="Before Meal">Before Meal</option>
+							   </select>
+						   </div>
+						   <div class="col-sm-3">
+							   <textarea  class="form-control" placeholder="Comments" cols="20" rows="1" data-ng-model="medicine.comment"></textarea>
+						   </div>
+						   <div class="col-sm-1">
+							   <a href="#"><span class="fa fa-plus fa-2x" style="margin-left: 20px;" ng-click="addMedicineRow()"></span></a>
+						   </div>
 				   </div>
 			   </div>
 		   </div>
@@ -515,11 +576,12 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 						<i class="fa fa-medkit"></i>&nbsp;&nbsp;Advice
 					</h3>
 				</div>
-			   	<div class="panel-body">
+
+				<div class="panel-body">
 					<table>
 						<tr><td><input type="checkbox" checklist-model="prescription.advice" value="Take the medicine regularly.">&emsp;Take the medicine regularly.</td></tr>
 						<tr><td><input type="checkbox" checklist-model="prescription.advice" value="Take the firm bite for 1/2 - 1 hour.">&emsp;Take the firm bite for 1/2 - 1 hour.</td></tr>
-						<tr><td><input type="checkbox" checklist-model="prescription.advice" value="Don't take hot, hard and spicy food for 24 hour and avoid gargling.">&emsp;Don't take hot, hard and spicy food for 24 hour and avoid gargling.</td></tr>
+						<tr><td><input type="checkbox" checklist-model="prescription.advice" value="Don&#8217;t take hot, hard and spicy food for 24 hour and avoid gargling.">&emsp;Don't take hot, hard and spicy food for 24 hour and avoid gargling.</td></tr>
 						<tr><td><input type="checkbox" checklist-model="prescription.advice" value="Take the soft and normal diet.">&emsp;Take the soft and normal diet.</td></tr>
 						<tr><td><input type="checkbox" checklist-model="prescription.advice" value="If stitch is given than visit after 7 days for stitch removal.">&emsp;If stitch is given than visit after 7 days for stitch removal.</td></tr>
 						<tr><td><input type="checkbox" checklist-model="prescription.advice" value="Minor swelling and bleeding may be observed in first day of surgery no need to worry. In case of severity immediately contact the OPD In department.">&emsp;Minor swelling and bleeding may be observed in first day of surgery no need to worry. In case of
@@ -530,42 +592,56 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 						<tr><td><input type="checkbox" checklist-model="prescription.advice" checklist-comparator="compareFn" checklist-value="getOtherCheckboxValue(prescription.advice)">&emsp;Others [if any] <input type="text" ng-model="getOtherTextModel(prescription.advice).other.text"></td></tr>
 					</table>
 				</div>
-				
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						<i class="fa fa-medkit"></i>&nbsp;&nbsp;Name of Doctor
-					</h3>
-				</div>
-			   	<div class="panel-body">
 
-				</div>
-				
-				
+
 				<div class="panel-footer">
-					<form class="form-inline">
-						<div class="col-md-1 col-sm-6 col-xs-12">
+					<div class="row form-inline">
+						<div class="col-md-2">
 							<div class="form-group" style="margin-top:3px;">
 							<label>Next Visit</label>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-6 col-xs-12">
+						<div class="col-md-5">
 						  <div class="form-group">
-							<label for="dateInput">Date</label>
-	                         <input type="text" class="datepicker form-control " id="dateInput" name="dateInput"/>       
+							 <label for="dateInput">Date</label>
+							 <input type="text" class="datepicker form-control " id="dateInput"  data-ng-model="prescription.nextVisitDate"/>
 						  </div>
 						</div>
-					   <div class="col-md-3 col-sm-6 col-xs-12">
+					   <div class="col-md-3">
 						  <div class="form-group">
 							<input type="text" class="form-control" id="timeInput" placeholder="Time after" name="timeInput">
 						   </div>
 						</div>
-					   <div class="col-md-2 col-sm-4 col-xs-12">
+					   <div class="col-md-2">
 						  <div class="form-group">
 							<select class="form-control input-sm" id="dayInput" name="dayInput" >
 							<option value="0">Day</option>
 							</select>
 						   </div>
 						</div>
+					</div>
+				</div>
+			</div>
+
+		    <div class="panel panel-default">
+				<div class="panel-heading">
+					  <div class="row">
+						  <div class="col-md-2">Refer to</div>
+						  <div class="col-md-10">
+							  <select class="form-control" style="width: 120px;" data-ng-model="prescription.referTo">
+								  <option value="Anesthesia, Analgesia and Intensive Care Medicine">Anesthesia, Analgesia and Intensive Care Medicine</option>
+								  <option value="Biochemistry">Biochemistry</option>
+								  <option value="Conservative Dentistry and Endodontics">Conservative Dentistry and Endodontics</option>
+								  <option value="Cardiology">Cardiology</option>
+								  <option value="Cardiac Surgery">Cardiac Surgery</option>
+								  <option value="Community Ophthalmology">Community Ophthalmology</option>
+								  <option value="Clinical Pathology">Clinical Pathology</option>
+							  </select>
+						  </div>
+					  </div>
+				</div>
+				<div class="panel-footer">
+					<form class="form-inline">
 						<script>
 							function loadPrintPage() {
 								$("<iframe>")
@@ -575,7 +651,7 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 
 							}
 						</script>
-					  	<input type="button" class="btn btn-primary" onClick="loadPrintPage()" value="Print">
+						<input type="button" class="btn btn-primary" onClick="loadPrintPage()" value="Print">
 						<input type="button" class="btn btn-primary" ng-click="savePrescription()" value="Save">
 					</form>
 				</div>

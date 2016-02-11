@@ -1,6 +1,9 @@
 package disease;
 
+import disease.form.DiseaseMetaValues;
+
 import java.util.HashSet;
+import java.util.Map;
 
 public class DiseaseDTO
 {
@@ -609,13 +612,17 @@ public class DiseaseDTO
 	private int inspecDescripId138;
 	private int inspecDescripId139;
 	private int inspecDescripId140;
-	private String inspecDescripId165_1;
+	private int inspecDescripId165;
 	private String inspecDescripId165_2;
-	private String inspecDescripId166;
-	private String inspecDescripId168_1;
+	private int inspecDescripId166;
+	private int inspecDescripId168;
 	private String inspecDescripId168_2;
-	private String inspecDescripId168_3;
-	private String inspecDescripId168_4;
+	private int inspecDescripId178;
+	private String inspecDescripId178_2;
+	private String inspecDescripId178_3;
+	private String inspecDescripId178_4;
+	private String inspecDescripId178_5;
+	private String inspecDescripId178_6;
 	
 	private String specialCaseId96;
 	private String specialCaseId97;
@@ -911,8 +918,28 @@ public class DiseaseDTO
 	public HashSet<Integer> patSpCaseId;
 	public HashSet<Integer> patTrtmntId;
 	public HashSet<Integer> patDiagonosisId;
-	
-	public int getSpecialCaseId175() {
+
+	private Map requestParameters;
+
+	public Map getRequestParameters() {
+		return requestParameters;
+	}
+
+	public void setRequestParameters(Map requestParameters) {
+		this.requestParameters = requestParameters;
+	}
+
+    private Map<String, DiseaseMetaValues> values;
+
+    public Map<String, DiseaseMetaValues> getValues() {
+        return values;
+    }
+
+    public void setValues(Map<String, DiseaseMetaValues> values) {
+        this.values = values;
+    }
+
+    public int getSpecialCaseId175() {
 		return specialCaseId175;
 	}
 	public void setSpecialCaseId175(int specialCaseId175) {
@@ -4009,12 +4036,12 @@ public class DiseaseDTO
 		return hisDescripId232;
 	}
 
-	public String getInspecDescripId165_1() {
-		return inspecDescripId165_1;
+	public int getInspecDescripId165() {
+		return inspecDescripId165;
 	}
 
-	public void setInspecDescripId165_1(String inspecDescripId165_1) {
-		this.inspecDescripId165_1 = inspecDescripId165_1;
+	public void setInspecDescripId165(int inspecDescripId165) {
+		this.inspecDescripId165 = inspecDescripId165;
 	}
 
 	public String getInspecDescripId165_2() {
@@ -4025,20 +4052,20 @@ public class DiseaseDTO
 		this.inspecDescripId165_2 = inspecDescripId165_2;
 	}
 
-	public String getInspecDescripId166() {
+	public int getInspecDescripId166() {
 		return inspecDescripId166;
 	}
 
-	public void setInspecDescripId166(String inspecDescripId166) {
+	public void setInspecDescripId166(int inspecDescripId166) {
 		this.inspecDescripId166 = inspecDescripId166;
 	}
 
-	public String getInspecDescripId168_1() {
-		return inspecDescripId168_1;
+	public int getInspecDescripId168() {
+		return inspecDescripId168;
 	}
 
-	public void setInspecDescripId168_1(String inspecDescripId168_1) {
-		this.inspecDescripId168_1 = inspecDescripId168_1;
+	public void setInspecDescripId168(int inspecDescripId168) {
+		this.inspecDescripId168 = inspecDescripId168;
 	}
 
 	public String getInspecDescripId168_2() {
@@ -4049,19 +4076,51 @@ public class DiseaseDTO
 		this.inspecDescripId168_2 = inspecDescripId168_2;
 	}
 
-	public String getInspecDescripId168_3() {
-		return inspecDescripId168_3;
+	public int getInspecDescripId178() {
+		return inspecDescripId178;
 	}
 
-	public void setInspecDescripId168_3(String inspecDescripId168_3) {
-		this.inspecDescripId168_3 = inspecDescripId168_3;
+	public void setInspecDescripId178(int inspecDescripId178) {
+		this.inspecDescripId178 = inspecDescripId178;
 	}
 
-	public String getInspecDescripId168_4() {
-		return inspecDescripId168_4;
+	public String getInspecDescripId178_2() {
+		return inspecDescripId178_2;
 	}
 
-	public void setInspecDescripId168_4(String inspecDescripId168_4) {
-		this.inspecDescripId168_4 = inspecDescripId168_4;
+	public void setInspecDescripId178_2(String inspecDescripId178_2) {
+		this.inspecDescripId178_2 = inspecDescripId178_2;
+	}
+
+	public String getInspecDescripId178_3() {
+		return inspecDescripId178_3;
+	}
+
+	public void setInspecDescripId178_3(String inspecDescripId178_3) {
+		this.inspecDescripId178_3 = inspecDescripId178_3;
+	}
+
+	public String getInspecDescripId178_4() {
+		return inspecDescripId178_4;
+	}
+
+	public void setInspecDescripId178_4(String inspecDescripId178_4) {
+		this.inspecDescripId178_4 = inspecDescripId178_4;
+	}
+
+	public String getInspecDescripId178_5() {
+		return inspecDescripId178_5;
+	}
+
+	public void setInspecDescripId178_5(String inspecDescripId178_5) {
+		this.inspecDescripId178_5 = inspecDescripId178_5;
+	}
+
+	public String getInspecDescripId178_6() {
+		return inspecDescripId178_6;
+	}
+
+	public void setInspecDescripId178_6(String inspecDescripId178_6) {
+		this.inspecDescripId178_6 = inspecDescripId178_6;
 	}
 }

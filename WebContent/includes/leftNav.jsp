@@ -24,8 +24,6 @@
                         <span class="nav-label">Dashboards</span>
                         </a>
                     </li>
-                    
-                    
                     <%if(loginDTO.getClientType()==-1 && RoleRepository.isPermitted(loginDTO.getRoleID(), PermissionDTO.PatientSearch)==true){%>
 	                    <%if(loginDTO.getRoleID()!=MyConfig.dutyNurseRole){%>
 		                    <li>

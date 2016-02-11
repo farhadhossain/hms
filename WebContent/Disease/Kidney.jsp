@@ -12,6 +12,7 @@
 <%@page import="disease.DiseaseDTO"%>
 <%@page import="disease.FollowUpDTO"%>
 <%@ page import="utility.MyUtility" %>
+<%@ page import="disease.form.DiseaseMetaData" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -38,10 +39,13 @@ DiseaseService disServ = new DiseaseService();
 DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(Integer.parseInt(userID), Integer.parseInt(diseaseID)); 
 ArrayList<FollowUpDTO> followUpList=disServ.getFollowUpReport(Integer.parseInt(userID), Integer.parseInt(diseaseID));
 
-HashMap<Integer, String> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
+HashMap<Integer, DiseaseMetaData> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
 HashMap<Integer, String> disHistoryParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
 
-HashMap<Integer, String> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
+HashMap<Integer, DiseaseMetaData> disSymptomList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseSymptom);
+HashMap<Integer, String> disSymptomParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseSymptom);
+
+HashMap<Integer, DiseaseMetaData> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
 HashMap<Integer, String> disInspecParentByChild = new HashMap<Integer, String>();
 
 int id = 1;
@@ -146,7 +150,10 @@ String actionNameFollowUp="/NewFindingsKidneyPatient";
 												
 												<%@ include file="../includeDiseaseParts/includeHistory.jsp"%>
                           						<%id++;%>
-                          
+
+												<%@ include file="../includeDiseaseParts/includeSymptom.jsp"%>
+												<%id++;%>
+
 				                         	 	<%@ include file="../includeDiseaseParts/includeInspection.jsp"%>
 												<%id++;%> 
 					                        

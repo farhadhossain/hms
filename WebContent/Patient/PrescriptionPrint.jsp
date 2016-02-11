@@ -6,6 +6,8 @@
 <%@ page import="user.UserDTO" %>
 <%@ page import="user.UserService" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="role.RoleService" %>
+<%@ page import="role.RoleDTO" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -151,6 +153,11 @@ UserDTO  userDTO = new UserService().getUserDTO(loginDTO.getUserID());
 		<table style="width: 100%;">
 		<tr>
 			<td width="35%" style="vertical-align: top;border-right: 1px solid #999;padding-left: 10px;">
+				<div class="row"><div class="col-sm-9"><h4><i class="fa fa-comments"></i>&nbsp;&nbsp;H/O</h4></div></div>
+				<div class="row" ng-repeat="h in prescription.ho">
+					<div ng-if="!h.other" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{h}}</div>
+					<div ng-if="h.other"  class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{h.other.text}}</div>
+				</div>
 				<div class="row"><div class="col-sm-9"><h4><i class="fa fa-comments"></i>&nbsp;&nbsp;Chief Complaint (C/C)</h4></div></div>
 				<div class="row" ng-repeat="cc in prescription.chiefComplain">
 					<div ng-if="isString(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div>
@@ -180,15 +187,37 @@ UserDTO  userDTO = new UserService().getUserDTO(loginDTO.getUserID());
 					</div>
 				</div>
 				<div class="row" style="margin-top: 20px;"><div class="col-sm-9"><h4><i class="fa fa-hospital-o"></i>&nbsp;&nbsp;Investigation</h4></div></div>
-				<div class="row" ng-repeat="cc in prescription.investigation"><div class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div></div>
+				<div class="row" ng-repeat="cc in prescription.investigation">
+					<div ng-if="cc.other" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc.other.text}}</div>
+					<div ng-if="!cc.other" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div>
+				</div>
 				<div class="row" style="margin-top: 20px;"><div class="col-sm-9"><h4><i class="fa fa-stethoscope"></i>&nbsp;&nbsp;Diagonsis</h4></div></div>
-				<div class="row" ng-repeat="cc in prescription.diagonosis"><div class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div></div>
+				<div class="row" ng-repeat="cc in prescription.onObservation">
+					<div ng-if="isString(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div>
+					<div ng-if="isObject(cc)" ng-if="isObject(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}.
+						<span ng-if="!cc.other" ng-repeat="(key, value) in cc">
+							{{key}}
+							<table style="width: 100%;">
+								<tr><td width="50%" style="border-right: 1px solid #CCC;border-bottom: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lt.join(', ')}}</td><td width="50%" style="border-bottom: 1px solid #CCC;padding: 5px;">&nbsp;{{value.rt.join(', ')}}</td></tr>
+								<tr><td width="50%" style="border-right: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lb.join(', ')}}</td><td width="50%" style="padding: 5px;">&nbsp;{{value.rb.join(', ')}}</td></tr>
+							</table>
+						</span>
+						<span ng-if="cc.other">{{cc.other.text}}</span>
+					</div>
+				</div>
+				<div class="row" ng-repeat="cc in prescription.diagonosis">
+					<div ng-if="cc.disease" class="col-sm-9 col-lg-offset-1">{{prescription.onObservation.length+$index+1}}. Disease : {{cc.disease}}</div>
+					<div ng-if="cc.other" class="col-sm-9 col-lg-offset-1">{{prescription.onObservation.length+$index+1}}. {{cc.other.text}}</div>
+				</div>
 			</td>
 			<td width="65%" style="vertical-align: top;padding-left: 10px;">
 				<div class="row"><div class="col-sm-9"><h4><i class="fa fa-medkit"></i>&nbsp;&nbsp;Rx</h4></div></div>
 				<table style="width: 100%;">
 				<tr ng-repeat="med in prescription.medicines">
-					<td class="col-sm-12">{{$index+1}}. {{med.medicineType}}: {{med.medicineName}} ({{med.dose}}mg)<br/>&nbsp;&nbsp;&nbsp; {{med.frequency}} {{med.afterMeal}} <br/>&nbsp;&nbsp;&nbsp; {{med.comment!='null'?med.comment:''}}</td>
+					<td class="col-sm-12" ng-if="med.medicineName!='null'">
+						{{$index+1}}. {{med.medicineType}}: {{med.medicineName}} {{med.dose}} {{med.doseUnit}}.................{{med.totalNumber}}
+						<br/>&nbsp;&nbsp;&nbsp; {{med.frequency}} {{med.duration!='null'?med.duration:''}} {{med.afterMeal}}  {{med.comment!='null'?med.comment:''}}
+					</td>
 				</tr>
 				</table>
 				<div class="row" style="margin-top: 20px;"><div class="col-sm-9"><h4><i class="fa fa-h-square"></i>&nbsp;&nbsp;Advice</h4></div></div>
@@ -197,6 +226,16 @@ UserDTO  userDTO = new UserService().getUserDTO(loginDTO.getUserID());
 						<td ng-if="isString(cc)" class="col-sm-9">{{$index+1}}. {{cc}}</td>
 					</tr>
 				</table>
+				<div class="row" style="margin-top: 20px;"></div>
+				<table style="margin-top: 10px;">
+					<tr style="margin-top: 10px;">
+						<td style="margin-top: 10px;">Next Visit:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>{{prescription.nextVisitDate!='null'?prescription.nextVisitDate:''}}</td>
+					</tr>
+					<tr style="margin-top: 10px;">
+						<td style="margin-top: 10px;">Refer to:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>{{prescription.referTo!='null'?prescription.referTo:''}}</td>
+					</tr>
+				</table>
+
 			</td></tr>
 			</table>
 		</table>
@@ -205,7 +244,11 @@ UserDTO  userDTO = new UserService().getUserDTO(loginDTO.getUserID());
 <div style="position: absolute;right: 20px;bottom: 50px;width: 250px;">
 	<table style="border-top: 1px solid gray;width: 100%">
 		<tr><td style="margin-top: 20px;">Name</td><td><%=userDTO.getEmployeeName()%></td></tr>
-		<tr><td>Designation</td><td></td></tr>
+		<%
+			RoleService service = new RoleService();
+			RoleDTO dto=service.getRoleDTO(userDTO.getRoleID());
+		%>
+		<tr><td>Designation</td><td><%=dto.getRoleName()%></td></tr>
 	</table>
 </div>
 </body>

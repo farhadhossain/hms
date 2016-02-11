@@ -17,7 +17,9 @@
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<%@page import="java.util.HashSet"%><html>
+<%@page import="java.util.HashSet"%>
+<%@ page import="disease.form.DiseaseMetaData" %>
+<html>
 <%
 
 String userID = request.getParameter("userID");
@@ -41,16 +43,19 @@ DiseaseService disServ = new DiseaseService();
 DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(Integer.parseInt(userID), Integer.parseInt(diseaseID)); 
 ArrayList<FollowUpDTO> followUpList=disServ.getFollowUpReport(Integer.parseInt(userID), Integer.parseInt(diseaseID));
 
-HashMap<Integer, String> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
+HashMap<Integer, DiseaseMetaData> disHisto0ryList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
 HashMap<Integer, String> disHistoryParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
 
-HashMap<Integer, String> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
+HashMap<Integer, DiseaseMetaData> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
 HashMap<Integer, String> disInspecParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
 
-HashMap<Integer, String> disPalpationList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseasePalpation);
-HashMap<Integer, String> disPalpationParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseasePalpation);
+HashMap<Integer, DiseaseMetaData> disOtherList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
+HashMap<Integer, String> disOtherParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
 
-HashMap<Integer, String> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseTreatmentPlan);
+HashMap<Integer, DiseaseMetaData> disDiagonosisList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseDiagnosis);
+HashMap<Integer, String> disDiagonosisParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseDiagnosis);
+
+HashMap<Integer, DiseaseMetaData> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseTreatmentPlan);
 HashMap<Integer, String> disTreatmentPlanParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseTreatmentPlan);
 
 HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(Integer.parseInt(diseaseID));
@@ -152,9 +157,8 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 								    	<li role="presentation"><a href="#specificInvestigation" aria-controls="specificInvestigation" role="tab" data-toggle="tab">Specific Investigation</a></li>
 								    	<li role="presentation"><a href="#diagnosis" aria-controls="diagnosis" role="tab" data-toggle="tab">Diagnosis</a></li>
 								    	<li role="presentation"><a href="#treatmentPlan" aria-controls="treatmentPlan" role="tab" data-toggle="tab">Treatment Plan</a></li>
-								    	<li role="presentation"><a href="#specialNotes" aria-controls="specialNotes" role="tab" data-toggle="tab">Special Notes</a></li>
 								    	<li role="presentation"><a href="#complications" aria-controls="complications" role="tab" data-toggle="tab">Complications</a></li>
-								    
+										<li role="presentation"><a href="#specialNotes" aria-controls="specialNotes" role="tab" data-toggle="tab">Special Notes</a></li>
 							  		</ul>
 									
 									<!-- Tab panes -->
@@ -165,7 +169,7 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 											    	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 												    	<%
 														for(int key: disSpecialCaseList.keySet()){ 
-										                    	HashMap<Integer, String> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(Integer.parseInt(diseaseID), key);
+										                    	HashMap<Integer, DiseaseMetaData> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(Integer.parseInt(diseaseID), key);
 										                    	HashMap<Integer, String> disSpecialCaseListDetailsParentByChild = disServ.getParentByChildWithSpCaseDetailsByDisIDAndCaseDetailsID(Integer.parseInt(diseaseID), key);
 										                    	boolean isAnyAvailable=disServ.getIsThisSpecialIdsChildAssigned(Integer.parseInt(userID), Integer.parseInt(diseaseID), key);%>
 										                    	
@@ -192,8 +196,14 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 						    	   			 <div role="tabpanel" class="tab-pane" id="specificInvestigation">
 									    	 	<div class="panel-body">
 											 		<table class="table" style="font-size: 13px;">
-													
-							                        </table>
+														<%
+															int key=29;
+															HashMap<Integer, DiseaseMetaData> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(Integer.parseInt(diseaseID), key);
+															HashMap<Integer, String> disSpecialCaseListDetailsParentByChild = disServ.getParentByChildWithSpCaseDetailsByDisIDAndCaseDetailsID(Integer.parseInt(diseaseID), key);
+															//boolean isAnyAvailable=disServ.getIsThisSpecialIdsChildAssigned(Integer.parseInt(userID), Integer.parseInt(diseaseID), key);
+														%>
+														<%=MyUtility.generateHTML(disSpecialCaseListDetails, disSpecialCaseListDetailsParentByChild, "specialCaseId", patCurDisDTO.patSpCaseId, patCurDisDTO, editAndView)%>
+													</table>
 										    	</div><!--/./form-group--> 
 				    	 					 </div>
 										     <%id++; %> 
@@ -203,7 +213,7 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 											    	<div class="panel-body">
 														<div class="table-responsive">
 															<table class="table" style="font-size: 13px;">
-																
+																<%=MyUtility.generateHTML(disDiagonosisList, disDiagonosisParentByChild, "diagnosisId", patCurDisDTO.patDiagonosisId, patCurDisDTO, editAndView)%>
 															 </table>
 														 </div><!--/./form-group--> 
 													 </div>
@@ -222,43 +232,38 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 													 </div>
 												 <%}%>
 									    	</div>
-									    	<%id++; %>
-									    	<div role="tabpanel" class="tab-pane" id="specialNotes">
-									    		<%if(editAndView==true || (editAndView==false && patCurDisDTO.getSpecialNotes()!=null && patCurDisDTO.getSpecialNotes().length()>0)){%>
-										    		<div class="panel-heading">
-														<h4 class="panel-title">
-														<a data-toggle="collapse" data-parent="#accordion" href="<%= "#collapse"+ id%>" aria-expanded="false" aria-controls="<%= "collapse"+ id%>">
-															Special Notes
-														</a>
-														</h4>
-													</div>
-										    		<div class="panel-body">
-														<div class="table-responsive">
-															<textarea class="form-control" rows="2" name="specialNotes"><%=patCurDisDTO.getSpecialNotes()%></textarea>
-														 </div><!--/./form-group-->
-													 </div>
-												 <%}%>
-											 </div>
-											  <%id++; %>
+
+											<%id++; %>
 										  	 <div role="tabpanel" class="tab-pane" id="complications">
-								    		 	<%if(editAndView==true || (editAndView==false && patCurDisDTO.getComplications()!=null && patCurDisDTO.getComplications().length()>0)){%>				                        	
-									    			<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-toggle="collapse" data-parent="#accordion" href="<%= "#collapse"+ id%>" aria-expanded="false" aria-controls="<%= "collapse"+ id%>">
-																Complications
-															</a>
-														</h4>
-													</div>
+								    		 	<%if(editAndView==true || (editAndView==false && patCurDisDTO.getComplications()!=null && patCurDisDTO.getComplications().length()>0)){%>
 										    		<div class="panel-body">
 														<div class="table-responsive">
 															<table class="table" style="font-size: 13px;">
-																<textarea class="form-control" rows="2" name="complications"><%=patCurDisDTO.getComplications()%></textarea>
-															 </table>
+																<%=MyUtility.generateHTML(disOtherList, disOtherParentByChild, "othersId", patCurDisDTO.patOthersId, patCurDisDTO, editAndView)%>
+															</table>
 														 </div><!--/./form-group--> 
 													 </div>
 												 <%}%>
 										 		</div>
-											 	
+
+												<%id++; %>
+												<div role="tabpanel" class="tab-pane" id="specialNotes">
+													<%if(editAndView==true || (editAndView==false && patCurDisDTO.getSpecialNotes()!=null && patCurDisDTO.getSpecialNotes().length()>0)){%>
+													<div class="panel-heading">
+														<h4 class="panel-title">
+															<a data-toggle="collapse" data-parent="#accordion" href="<%= "#collapse"+ id%>" aria-expanded="false" aria-controls="<%= "collapse"+ id%>">
+																Special Notes
+															</a>
+														</h4>
+													</div>
+													<div class="panel-body">
+														<div class="table-responsive">
+															<textarea class="form-control" rows="2" name="specialNotes"><%=patCurDisDTO.getSpecialNotes()%></textarea>
+														</div><!--/./form-group-->
+													</div>
+													<%}%>
+												</div>
+
 												<input type="submit" value="Submit" class="btn btn-primary" <%if(editAndView==false){%>style="display: none;"<%}%>>
 												<input type="hidden" name="userId" id="userId" value="<%=userID%>">
 											    <input type="hidden" name="diseaseId" id="diseaseId" value="<%=diseaseID%>">

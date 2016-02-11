@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import disease.DiseaseDTO;
+import disease.form.DiseaseMetaData;
 
 public class MyUtilityForReport {
 	
 	
-	public static String getInputString(String inputName, int spaceingColumn, int descripId, String descripName, boolean isChildExists){
+	public static String getInputString(String inputName, int spaceingColumn, int descripId, DiseaseMetaData metaData, boolean isChildExists){
 		String str1="";
 		if(spaceingColumn>0){
 			str1=" style=\"margin-left: "+spaceingColumn+"px;\" ";
@@ -16,10 +17,10 @@ public class MyUtilityForReport {
 		if(isChildExists){
 			str1+=" onchange=\"changeThis('block"+inputName+descripId+"')\"";
 		}
-		return "<input type=\"checkbox\" "+str1+" name=\""+inputName+"\" value=\""+descripId+"\"> "+descripName+"\n";
+		return "<input type=\"checkbox\" "+str1+" name=\""+inputName+"\" value=\""+descripId+"\"> "+metaData.getName()+"\n";
 	}
 	
-	public static String generateHTMLWithOutTextBox(HashMap<Integer, String> diseaseList, HashMap<Integer, String> parentByChild, String inputName){
+	public static String generateHTMLWithOutTextBox(HashMap<Integer, DiseaseMetaData> diseaseList, HashMap<Integer, String> parentByChild, String inputName){
 		HashSet<Integer> insertedId = new HashSet<Integer>();
 		String html="";
 		int spaceingColumn=40;

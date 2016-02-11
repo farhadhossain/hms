@@ -561,7 +561,107 @@ public class DiseaseForm extends ActionForm
 	/**Kidney**/
 	private String lastDateOfDialysis;
 	private String frequencyOfDialysis;
-	
+
+	private int inspecDescripId165;
+	private String inspecDescripId165_2;
+	private int inspecDescripId166;
+	private int inspecDescripId168;
+	private String inspecDescripId168_2;
+	private int inspecDescripId178;
+	private String inspecDescripId178_2;
+	private String inspecDescripId178_3;
+	private String inspecDescripId178_4;
+	private String inspecDescripId178_5;
+	private String inspecDescripId178_6;
+
+	public int getInspecDescripId165() {
+		return inspecDescripId165;
+	}
+
+	public void setInspecDescripId165(int inspecDescripId165) {
+		this.inspecDescripId165 = inspecDescripId165;
+	}
+
+	public String getInspecDescripId165_2() {
+		return inspecDescripId165_2;
+	}
+
+	public void setInspecDescripId165_2(String inspecDescripId165_2) {
+		this.inspecDescripId165_2 = inspecDescripId165_2;
+	}
+
+	public int getInspecDescripId166() {
+		return inspecDescripId166;
+	}
+
+	public void setInspecDescripId166(int inspecDescripId166) {
+		this.inspecDescripId166 = inspecDescripId166;
+	}
+
+	public int getInspecDescripId168() {
+		return inspecDescripId168;
+	}
+
+	public void setInspecDescripId168(int inspecDescripId168) {
+		this.inspecDescripId168 = inspecDescripId168;
+	}
+
+	public String getInspecDescripId168_2() {
+		return inspecDescripId168_2;
+	}
+
+	public void setInspecDescripId168_2(String inspecDescripId168_2) {
+		this.inspecDescripId168_2 = inspecDescripId168_2;
+	}
+
+	public int getInspecDescripId178() {
+		return inspecDescripId178;
+	}
+
+	public void setInspecDescripId178(int inspecDescripId178) {
+		this.inspecDescripId178 = inspecDescripId178;
+	}
+
+	public String getInspecDescripId178_2() {
+		return inspecDescripId178_2;
+	}
+
+	public void setInspecDescripId178_2(String inspecDescripId178_2) {
+		this.inspecDescripId178_2 = inspecDescripId178_2;
+	}
+
+	public String getInspecDescripId178_3() {
+		return inspecDescripId178_3;
+	}
+
+	public void setInspecDescripId178_3(String inspecDescripId178_3) {
+		this.inspecDescripId178_3 = inspecDescripId178_3;
+	}
+
+	public String getInspecDescripId178_4() {
+		return inspecDescripId178_4;
+	}
+
+	public void setInspecDescripId178_4(String inspecDescripId178_4) {
+		this.inspecDescripId178_4 = inspecDescripId178_4;
+	}
+
+	public String getInspecDescripId178_5() {
+		return inspecDescripId178_5;
+	}
+
+	public void setInspecDescripId178_5(String inspecDescripId178_5) {
+		this.inspecDescripId178_5 = inspecDescripId178_5;
+	}
+
+	public String getInspecDescripId178_6() {
+		return inspecDescripId178_6;
+	}
+
+	public void setInspecDescripId178_6(String inspecDescripId178_6) {
+		this.inspecDescripId178_6 = inspecDescripId178_6;
+	}
+
 	public int getSpecialCaseId175() {
 		return specialCaseId175;
 	}

@@ -44,7 +44,7 @@ public class OthersInfo {
 		}else if(diseaseID==19){
 			return "../Disease/MandibleWithTMJLowerFace.jsp?userID="+userID+"&diseaseID="+diseaseID;
 		}else if(diseaseID==20){
-			return "../Disease/OralAndMaxillofacialTrauma.jsp?userID="+userID+"&diseaseID="+diseaseID;
+			return "../Disease/MaxillofacialEmergency.jsp?userID="+userID+"&diseaseID="+diseaseID;
 		}else if(diseaseID==21){
 			return "../Disease/MaxillarySinusitisChOrAcuteFistula.jsp?userID="+userID+"&diseaseID="+diseaseID;
 		}else if(diseaseID==22){
@@ -57,7 +57,12 @@ public class OthersInfo {
 			return "../Disease/TMJAnkylosis.jsp?userID="+userID+"&diseaseID="+diseaseID;
 		}else if(diseaseID==26){
 			return "../Disease/BenignCystTumor.jsp?userID="+userID+"&diseaseID="+diseaseID;
+		}else if(diseaseID==28){
+			return "../Disease/Autoimmune.jsp?userID="+userID+"&diseaseID="+diseaseID;
+		}else if(diseaseID==29){
+			return "../Disease/Others.jsp?userID="+userID+"&diseaseID="+diseaseID;
 		}
+
 		// for 2/3 use this html: <sup>2</sup>/<sub>3</sub>
 		return "#";
 	}	

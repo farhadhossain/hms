@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import disease.form.DiseaseMetaData;
+import utility.DAOResult;
 import utility.MyConfig;
 
 public class GetDiseaseInfoDAO {
@@ -43,18 +45,18 @@ public class GetDiseaseInfoDAO {
 				sql="select * from tbl_personal_info_history where info_id="+diseaseId;
 			}
 			stmt = conn.createStatement();
-	        ResultSet rs=stmt.executeQuery(sql+" order by parent_id asc");
+	        ResultSet rs=stmt.executeQuery(sql+" order by parent_id,id asc");
 	        
 	        while(rs.next()){
-	        	if(rs.getInt(4)>0){
-	        		String str=parentByChild.get(rs.getInt(4));
+	        	if(rs.getInt("parent_id")>0){
+	        		String str=parentByChild.get(rs.getInt("parent_id"));
 	        		if(str==null){
-	        			parentByChild.put(rs.getInt(4), ""+rs.getInt(1));	
+	        			parentByChild.put(rs.getInt("parent_id"), ""+rs.getInt("id"));
 	        		}else{
-	        			parentByChild.put(rs.getInt(4), str+","+rs.getInt(1));
+	        			parentByChild.put(rs.getInt("parent_id"), str+","+rs.getInt("id"));
 	        		}
 	        	}else{
-	        		parentByChild.put(rs.getInt(1), null);
+	        		parentByChild.put(rs.getInt("id"), null);
 	        	}
 	        }
 	        rs.close();
@@ -158,8 +160,8 @@ public class GetDiseaseInfoDAO {
 		return diseaseListByLevel;
 	}
 	
-	public HashMap<Integer, String> getDiseaseDetailsByDisIDAndDisType(int diseaseId, int diseaseInfoType) {
-		HashMap<Integer, String> diseaseDetl = new HashMap<Integer, String>();
+	public HashMap<Integer, DiseaseMetaData> getDiseaseDetailsByDisIDAndDisType(int diseaseId, int diseaseInfoType) {
+		HashMap<Integer, DiseaseMetaData> diseaseDetl = new HashMap<Integer, DiseaseMetaData>();
 		String sql="select * from tbl_disease_history where dis_id="+diseaseId;
 		String columName="name_of_perticular";
 		Connection conn = null;
@@ -196,7 +198,10 @@ public class GetDiseaseInfoDAO {
 	        ResultSet rs=stmt.executeQuery(sql+" order by id asc");
 	        
 	        while(rs.next()){
-	        	diseaseDetl.put(rs.getInt("id"), rs.getString(columName));
+				DiseaseMetaData diseaseMetaData = new DiseaseMetaData();
+				diseaseMetaData.setName(rs.getString(columName));
+				diseaseMetaData.setInputType(DAOResult.hasColumn(rs, "input_type")? rs.getString("input_type"): null);
+	        	diseaseDetl.put(rs.getInt("id"), diseaseMetaData);
 	        }
 	        rs.close();
 		}catch(Exception e){
@@ -207,6 +212,8 @@ public class GetDiseaseInfoDAO {
 		}
 		return diseaseDetl;
 	}
+
+
 
 	public HashMap<Integer, String> getSpecialCaseIdNameList(int diseaseId) {
 		HashMap<Integer, String> diseaseSpecialCaseList = new HashMap<Integer, String>();
@@ -232,8 +239,8 @@ public class GetDiseaseInfoDAO {
 		return diseaseSpecialCaseList;
 	}
 	
-	public HashMap<Integer, String> getSpCaseDetailsByDisIDAndCaseID(int diseaseId, int specialCaseId) {
-		HashMap<Integer, String> diseaseSpecialCaseList = new HashMap<Integer, String>();
+	public HashMap<Integer, DiseaseMetaData> getSpCaseDetailsByDisIDAndCaseID(int diseaseId, int specialCaseId) {
+		HashMap<Integer, DiseaseMetaData> diseaseSpecialCaseList = new HashMap<Integer, DiseaseMetaData>();
 		String sql="select * from tbl_disease_special_case_details where dis_id="+diseaseId+" and sp_case_id="+specialCaseId;
 		
 		Connection conn = null;
@@ -245,7 +252,10 @@ public class GetDiseaseInfoDAO {
 	        ResultSet rs=stmt.executeQuery(sql);
 	        
 	        while(rs.next()){
-	        	diseaseSpecialCaseList.put(rs.getInt(1), rs.getString(4));
+				DiseaseMetaData diseaseMetaData = new DiseaseMetaData();
+				diseaseMetaData.setName(rs.getString("name_of_case_details"));
+				diseaseMetaData.setInputType(DAOResult.hasColumn(rs, "input_type")? rs.getString("input_type"): null);
+				diseaseSpecialCaseList.put(rs.getInt("id"), diseaseMetaData);
 	        }
 	        rs.close();
 		}catch(Exception e){
@@ -270,18 +280,19 @@ public class GetDiseaseInfoDAO {
 	        ResultSet rs=stmt.executeQuery(sql);
 	        
 	        while(rs.next()){
-	        	if(rs.getInt(5)>0){
-	        		String str=parentByChild.get(rs.getInt(5));
+	        	if(rs.getInt("parent_id")>0){
+	        		String str=parentByChild.get(rs.getInt("parent_id"));
 	        		if(str==null){
-	        			parentByChild.put(rs.getInt(5), ""+rs.getInt(1));	
+	        			parentByChild.put(rs.getInt("parent_id"), ""+rs.getInt("id"));
 	        		}else{
-	        			parentByChild.put(rs.getInt(5), str+","+rs.getInt(1));
+	        			parentByChild.put(rs.getInt("parent_id"), str+","+rs.getInt("id"));
 	        		}
-	        	}else{
-	        		parentByChild.put(rs.getInt(1), null);
 	        	}
 	        }
 	        rs.close();
+			for(int key: parentByChild.keySet()){
+				System.out.println("key: "+key+", child: "+parentByChild.get(key));
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{

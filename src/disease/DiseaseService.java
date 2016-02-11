@@ -3,6 +3,7 @@ package disease;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import disease.form.DiseaseMetaData;
 import utility.DAOResult;
 
 public class DiseaseService {
@@ -15,7 +16,7 @@ public class DiseaseService {
 		return new GetDiseaseInfoDAO().getDiseaseDetailsByLevel(diseaseId, diseaseInfoType, level);
 	}
 	
-	public HashMap<Integer, String> getDiseaseDetailsByDisIDAndDisType(int diseaseId, int diseaseInfoType) {
+	public HashMap<Integer, DiseaseMetaData> getDiseaseDetailsByDisIDAndDisType(int diseaseId, int diseaseInfoType) {
 		return new GetDiseaseInfoDAO().getDiseaseDetailsByDisIDAndDisType(diseaseId, diseaseInfoType);
 	}
 	
@@ -28,7 +29,7 @@ public class DiseaseService {
 	}
 	//
 	//
-	public HashMap<Integer, String> getSpCaseDetailsByDisIDAndCaseID(int diseaseId, int specialCaseId) {
+	public HashMap<Integer, DiseaseMetaData> getSpCaseDetailsByDisIDAndCaseID(int diseaseId, int specialCaseId) {
 		return new GetDiseaseInfoDAO().getSpCaseDetailsByDisIDAndCaseID(diseaseId, specialCaseId);
 	}
 	

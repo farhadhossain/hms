@@ -41,19 +41,15 @@ DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(Integer.parseInt(userID), Integ
 ArrayList<FollowUpDTO> followUpList=disServ.getFollowUpReport(Integer.parseInt(userID), Integer.parseInt(diseaseID));
 
 HashMap<Integer, DiseaseMetaData> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
-HashMap<Integer, String> disHistoryParentByChild = new HashMap<Integer, String>();
-	
-HashMap<Integer, DiseaseMetaData> disSymptomList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseSymptom);
-HashMap<Integer, String> disSymptomParentByChild = new HashMap<Integer, String>();
+HashMap<Integer, String> disHistoryParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
 
-HashMap<Integer, DiseaseMetaData> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
-HashMap<Integer, String> disInspecParentByChild = new HashMap<Integer, String>();
-	
-String name="";
+
+HashMap<Integer, DiseaseMetaData> disSymptomList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseSymptom);
+HashMap<Integer, String> disSymptomParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseSymptom);
 
 int id = 1;
 
-String actionNameFollowUp="/NewFindingsEndocrinePatient";
+String actionNameFollowUp="/NewFindingsBloodPatient";
 
 %>
 
@@ -70,7 +66,6 @@ String actionNameFollowUp="/NewFindingsEndocrinePatient";
 <link rel="stylesheet" type="text/css" href="../Assets/Styles/style.css" />
 
     -->
-    
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -95,8 +90,8 @@ String actionNameFollowUp="/NewFindingsEndocrinePatient";
     <script type="text/javascript" src="../Assets/Scripts/highcharts.js"></script>
 	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../Assets/NewAssets/js/bootstrap.min.js"></script>
     <script src="../Assets/NewAssets/js/jquery.metisMenu.js"></script>
     <script src="../Assets/NewAssets/js/jquery.slimscroll.min.js"></script>
@@ -128,7 +123,6 @@ String actionNameFollowUp="/NewFindingsEndocrinePatient";
     
 </head>
 
-
 <body>
     <!--*********************Body part Starts from here************************-->
     <!--***********************************************************************-->
@@ -147,37 +141,32 @@ String actionNameFollowUp="/NewFindingsEndocrinePatient";
 						<div style="clear:both"></div>
    				 			<div class="ibox float-e-margins">
                     			<div class="ibox-title">
-                        			<h5>Endocrine (Thyroid, Pituitary, Adrenal, Pancreases) </h5>
+                        			<h5>Autoimmune <%if(editAndView==false){%><a href="<%=OthersInfo.getPageNameByID(Integer.parseInt(userID), Integer.parseInt(diseaseID))+"&typeID=1"%>"> ( Edit )</a><%}%></h5>
                     			</div><!--/./ibox-title-->
                    				<div class="ibox-content">
-									<html:form action="/PatientEndocrine">
+									<html:form action="/PatientBlood">
 										<div class="form-horizontal">
 											<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 												
 												<%@ include file="../includeDiseaseParts/includeHistory.jsp"%>
-                          						<%id++;%>
-                          						
-					                         	<%@ include file="../includeDiseaseParts/includeInspection.jsp"%>
-												<%id++;%>
-												
+					                        	<%id++;%>
+
 												<%@ include file="../includeDiseaseParts/includeSymptom.jsp"%>
 												<%id++;%>
-																	                        
-					                        	<%@ include file="../Disease/specialNoteAndComplication.jsp"%>
-					                        
-					                            <%@ include file="../includeDiseaseParts/includeNAD.jsp"%>   
-                       					</div>
+
+                       						</div>
                        					
-			                        	<input type="submit" value="Submit" class="btn btn-primary" <%if(editAndView==false){%>style="display: none;"<%}%>>
-										<input type="hidden" name="userId" id="userId" value="<%=userID%>">
-								    	<input type="hidden" name="diseaseId" id="diseaseId" value="<%=diseaseID%>">
-          							</div>
-               					</html:form>
-                				<div style="color:both">&nbsp;</div>
-                				<%@ include file="../Disease/followup.jsp"%>
-                			</div><!--/./ibox-content-->
-               			</div><!--/./ibox float-e-margins-->
-           			</div><!--/./col-lg-12-->
+			                        		<input type="submit" value="Submit" class="btn btn-primary" <%if(editAndView==false){%>style="display: none;"<%}%>>
+											<input type="hidden" name="userId" id="userId" value="<%=userID%>">
+								    		<input type="hidden" name="diseaseId" id="diseaseId" value="<%=diseaseID%>">
+								    
+			                        <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			            			<button type="button" class="btn btn-primary">Save changes</button>-->
+          						</div>
+               				</html:form>
+                   		</div><!--/./ibox-content-->
+               		</div><!--/./ibox float-e-margins-->
+           		</div><!--/./col-lg-12-->
 
    			</div> <!--/./row-->
        	</div><!--/./wrapper wrapper-content animated fadeInRight-->
