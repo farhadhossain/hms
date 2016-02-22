@@ -300,7 +300,7 @@ int size=dtoList.size();
 						                        			<a href="../Patient/PatientExtraction.jsp?accountID=<%=dto.getAccId()%>">Treatment Plan</a><br>
 						                        		<%}else if(dto.getDeptId()==MyConfig.deptIndoor){%>
 						                        			<a href="../Department/IndoorDiseaseUpdateOrView.jsp?accountID=<%=dto.getAccId()%>&generalOnly=true">General Diseases</a><br>
-						                        			<a href="../Department/IndoorDiseaseUpdateOrView.jsp?accountID=<%=dto.getAccId()%>">Special Diseases</a><br>
+						                        			<a href="../Department/IndoorDiseaseUpdateOrView.jsp?accountID=<%=dto.getAccId()%>">Specific Diseases</a><br>
 						                        		<%}else if(dto.getDeptId()==MyConfig.deptEmergency){%>
 						                        			<a href="/Disease/MaxillofacialEmergency.jsp?userID=<%=dto.getAccId()%>&diseaseID=27">Emergency</a><br>
 						                        		<%}%>

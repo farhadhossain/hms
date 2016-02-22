@@ -46,9 +46,9 @@
 			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
 			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
 		</action>
-		
+
 		<action path="/UpdateIndoorDiseaseInfo" name="PatientForm" validate="true" input="/Department/IndoorDiseaseUpdateOrView.jsp" type="patient.action.UpdateIndoorDiseaseInfoAction">
-			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
+			<forward name="success" path="/Department/IndoorDiseaseUpdateOrView.jsp" redirect="true"/>
 			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
 		</action>
 		

@@ -17,6 +17,20 @@
 <%
 String accountID= request.getParameter("accountID");
 String generalOnly= request.getParameter("generalOnly");
+
+if (accountID == null) {
+	//accountID = SessionManager.params.get("accountID");
+	//generalOnly = SessionManager.params.get("generalOnly");
+	accountID = (String)session.getAttribute("accountID");
+	generalOnly = (String)session.getAttribute("generalOnly");
+}
+else{
+	//SessionManager.params.put("accountID", accountID);
+	//SessionManager.params.put("generalOnly", generalOnly);
+	session.setAttribute("accountID", accountID);
+	session.setAttribute("generalOnly", generalOnly);
+}
+
 boolean viewGeneral=false;
 if(generalOnly!=null && generalOnly.length()>0){
 	viewGeneral=true;
