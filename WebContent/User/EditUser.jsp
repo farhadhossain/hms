@@ -127,7 +127,14 @@ UserDTO dto=service.getUserDTO(Integer.parseInt(userID));
 										<input name="employeePhone" type="text" value="<%=dto.getEmployeePhone()%>" id="employeePhone" class="input-small  input-right" />
 									</div>
 								</div>
-								
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Designation</label>
+									<div class="col-sm-4">
+										<input name="designation" type="text" value="<%=dto.getDesignation()%>" id="designation" class="input-small  input-right" />
+									</div>
+								</div>
+
 								<div class="form-group" style="display: none;">
 									<label class="col-sm-4 control-label">Employee Type</label>
 									<div class="col-sm-4">

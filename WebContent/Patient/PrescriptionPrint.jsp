@@ -191,7 +191,7 @@ UserDTO  userDTO = new UserService().getUserDTO(loginDTO.getUserID());
 					<div ng-if="cc.other" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc.other.text}}</div>
 					<div ng-if="!cc.other" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div>
 				</div>
-				<div class="row" style="margin-top: 20px;"><div class="col-sm-9"><h4><i class="fa fa-stethoscope"></i>&nbsp;&nbsp;Diagonsis</h4></div></div>
+				<div class="row" style="margin-top: 20px;"><div class="col-sm-9"><h4><i class="fa fa-stethoscope"></i>&nbsp;&nbsp;Diagnosis</h4></div></div>
 				<div class="row" ng-repeat="cc in prescription.onObservation">
 					<div ng-if="isString(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div>
 					<div ng-if="isObject(cc)" ng-if="isObject(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}.
@@ -244,11 +244,7 @@ UserDTO  userDTO = new UserService().getUserDTO(loginDTO.getUserID());
 <div style="position: absolute;right: 20px;bottom: 50px;width: 250px;">
 	<table style="border-top: 1px solid gray;width: 100%">
 		<tr><td style="margin-top: 20px;">Name</td><td><%=userDTO.getEmployeeName()%></td></tr>
-		<%
-			RoleService service = new RoleService();
-			RoleDTO dto=service.getRoleDTO(userDTO.getRoleID());
-		%>
-		<tr><td>Designation</td><td><%=dto.getRoleName()%></td></tr>
+		<tr><td>Designation</td><td><%=userDTO.getDesignation()==null?"":userDTO.getDesignation()%></td></tr>
 	</table>
 </div>
 </body>

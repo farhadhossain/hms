@@ -18,19 +18,19 @@ DiseaseService disServ = new DiseaseService();
 DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(patientDTO.getAccId(), key); 
 ArrayList<FollowUpDTO> followUpList=disServ.getFollowUpReport(patientDTO.getAccId(), key);
 
-HashMap<Integer, String> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseHistory);
+HashMap<Integer, DiseaseMetaData> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseHistory);
 HashMap<Integer, String> disHistoryParentByChild = disServ.getParentByChildWithDisIDAndDisType(key, MyConfig.diseaseHistory);
 
-HashMap<Integer, String> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseInspection);
+HashMap<Integer, DiseaseMetaData> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseInspection);
 HashMap<Integer, String> disInspecParentByChild = disServ.getParentByChildWithDisIDAndDisType(key, MyConfig.diseaseInspection);
 
-HashMap<Integer, String> disPalpationList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseasePalpation);
+HashMap<Integer, DiseaseMetaData> disPalpationList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseasePalpation);
 HashMap<Integer, String> disPalpationParentByChild = disServ.getParentByChildWithDisIDAndDisType(key, MyConfig.diseasePalpation);
 
-HashMap<Integer, String> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseTreatmentPlan);
+HashMap<Integer, DiseaseMetaData> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseTreatmentPlan);
 HashMap<Integer, String> disTreatmentPlanParentByChild = disServ.getParentByChildWithDisIDAndDisType(key, MyConfig.diseaseTreatmentPlan);
 
-HashMap<Integer, String> disDiagnosisList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseDiagnosis);
+HashMap<Integer, DiseaseMetaData> disDiagnosisList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseDiagnosis);
 HashMap<Integer, String> disDiagnosisParentByChild = disServ.getParentByChildWithDisIDAndDisType(key, MyConfig.diseaseDiagnosis);
 HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(key);
 %>
@@ -80,7 +80,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 
 	<%
 	int keyVal=12;
-	HashMap<Integer, String> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(key, keyVal);
+	HashMap<Integer, DiseaseMetaData> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(key, keyVal);
 	HashMap<Integer, String> disSpecialCaseListDetailsParentByChild = disServ.getParentByChildWithSpCaseDetailsByDisIDAndCaseDetailsID(key, keyVal);
 	boolean isAnyAvailable=disServ.getIsThisSpecialIdsChildAssigned(patientDTO.getAccId(), key, keyVal);
 	if(isAnyAvailable){%>

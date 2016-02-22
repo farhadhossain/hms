@@ -31,7 +31,9 @@ hms.controller('PrescriptionController', function ($scope, $http, $location) {
     $scope.addMedicineRow = function(){
         $scope.medicines.push({});
     };
-
+    $scope.removeMedicineRow = function(index){
+        $scope.medicines.splice(index, 1);
+    };
 
 
     $scope.getPrescription = function (accountID) {

@@ -31,13 +31,14 @@ public class UserDAO
 		    
 		    
 		    
-	        pstmt = conn.prepareStatement("INSERT INTO tbl_user(user_name, user_pass, role_id, employee_name, phone_number, user_type) VALUES (?, ?, ?, ?, ?, ?)");
+	        pstmt = conn.prepareStatement("INSERT INTO tbl_user(user_name, user_pass, role_id, employee_name, phone_number, user_type, designation) VALUES (?, ?, ?, ?, ?, ?, ?)");
 	        pstmt.setString(1, dto.getUserName());
 	        pstmt.setString(2, dto.getPassword());
 	        pstmt.setInt(3, dto.getRoleID());
-	        pstmt.setString(4, dto.getEmployeeName()==null?"":dto.getEmployeeName());
+	        pstmt.setString(4, dto.getEmployeeName() == null ? "" : dto.getEmployeeName());
 	        pstmt.setString(5, dto.getEmployeePhone());
 	        pstmt.setInt(6, dto.getEmployeeType());
+			pstmt.setString(7, dto.getDesignation());
 	        pstmt.execute();
 	        
 	        pstmt.close();
@@ -72,6 +73,7 @@ public class UserDAO
 	        	dto.setEmployeeName(rs.getString("employee_name"));
 	        	dto.setEmployeePhone(rs.getString("phone_number"));
 	        	dto.setEmployeeType(rs.getInt("user_type"));
+				dto.setDesignation(rs.getString("designation"));
 	        	destDTOs.add(dto);
 	        }
 	        rs.close();
@@ -116,6 +118,7 @@ public class UserDAO
 	        	dto.setRoleID(rs.getInt("role_id"));
 	        	dto.setEmployeeName(rs.getString("employee_name"));
 	        	dto.setEmployeePhone(rs.getString("phone_number"));
+				dto.setDesignation(rs.getString("designation"));
 	        	dto.setEmployeeType(rs.getInt("user_type"));
 	        }
 	        rs.close();
@@ -146,13 +149,14 @@ public class UserDAO
 				return daoResult;
 		    }
 		    
-	        pstmt = conn.prepareStatement("UPDATE tbl_user SET user_pass=?, role_id=?, employee_name=?, phone_number=?, user_type=? WHERE id=?");
+	        pstmt = conn.prepareStatement("UPDATE tbl_user SET user_pass=?, role_id=?, employee_name=?, phone_number=?, user_type=?, designation=? WHERE id=?");
 	        pstmt.setString(1, dto.getPassword());
 	        pstmt.setInt(2, dto.getRoleID());
 	        pstmt.setString(3, dto.getEmployeeName());
 	        pstmt.setString(4, dto.getEmployeePhone());
 	        pstmt.setInt(5, dto.getEmployeeType());
-	        pstmt.setInt(6, dto.getUserID());
+			pstmt.setString(6, dto.getDesignation());
+	        pstmt.setInt(7, dto.getUserID());
 	        pstmt.executeUpdate();
 	        
 		}catch(Exception e){

@@ -177,7 +177,19 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 						<div class="row" style="margin-top: 20px;"><div class="col-sm-9"><h4><i class="fa fa-hospital-o"></i>&nbsp;&nbsp;Investigation</h4></div></div>
 						<div class="row" ng-repeat="cc in prescription.investigation"><div class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div></div>
 						<div class="row" style="margin-top: 20px;"><div class="col-sm-9"><h4><i class="fa fa-stethoscope"></i>&nbsp;&nbsp;Diagonsis</h4></div></div>
-						<div class="row" ng-repeat="cc in prescription.diagonosis"><div class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div></div>
+						<div class="row" ng-repeat="cc in prescription.onObservation">
+							<div ng-if="isString(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div>
+							<div ng-if="isObject(cc)" ng-if="isObject(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}.
+						<span ng-if="!cc.other" ng-repeat="(key, value) in cc">
+							{{key}}
+							<table style="width: 100%;">
+								<tr><td width="50%" style="border-right: 1px solid #CCC;border-bottom: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lt.join(', ')}}</td><td width="50%" style="border-bottom: 1px solid #CCC;padding: 5px;">&nbsp;{{value.rt.join(', ')}}</td></tr>
+								<tr><td width="50%" style="border-right: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lb.join(', ')}}</td><td width="50%" style="padding: 5px;">&nbsp;{{value.rb.join(', ')}}</td></tr>
+							</table>
+						</span>
+								<span ng-if="cc.other">{{cc.other.text}}</span>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-8">
 						<div class="row"><div class="col-sm-9"><h4><i class="fa fa-medkit"></i>&nbsp;&nbsp;Rx</h4></div></div>

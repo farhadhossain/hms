@@ -34,6 +34,7 @@ public class UpdateUserAction extends Action{
 			dto.setEmployeeType(form.getEmployeeType());
 			
 			dto.setEmployeePhone(form.getEmployeePhone()==null?"":form.getEmployeePhone());
+			dto.setDesignation(form.getDesignation()!=null?"":form.getDesignation());
 			UserService service = new UserService();
 			DAOResult daoResult=service.updateUserDTO(dto);
 			if(daoResult.isValid()==false){

@@ -11,19 +11,20 @@
 <%@page import="disease.FollowUpDTO"%>
 <%@ page import="utility.MyUtility" %>
 <%@page import="java.util.HashSet"%>
+<%@ page import="disease.form.DiseaseMetaData" %>
 <%
 DiseaseService disServ = new DiseaseService();
 
 DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(patientDTO.getAccId(), key); 
 ArrayList<FollowUpDTO> followUpList=disServ.getFollowUpReport(patientDTO.getAccId(), key);
 
-HashMap<Integer, String> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseHistory);
+HashMap<Integer, DiseaseMetaData> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseHistory);
 HashMap<Integer, String> disHistoryParentByChild = disServ.getParentByChildWithDisIDAndDisType(key, MyConfig.diseaseHistory);
 
-HashMap<Integer, String> disDiagnosisList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseDiagnosis);
+HashMap<Integer, DiseaseMetaData> disDiagnosisList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseDiagnosis);
 HashMap<Integer, String> disDiagnosisParentByChild = disServ.getParentByChildWithDisIDAndDisType(key, MyConfig.diseaseDiagnosis);
 
-HashMap<Integer, String> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseTreatmentPlan);
+HashMap<Integer, DiseaseMetaData> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseTreatmentPlan);
 HashMap<Integer, String> disTreatmentPlanParentByChild = disServ.getParentByChildWithDisIDAndDisType(key, MyConfig.diseaseTreatmentPlan);
 
 HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(key);
@@ -68,7 +69,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 				
 				<%
 				int keyVal=18;
-				HashMap<Integer, String> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(key, keyVal);
+				HashMap<Integer, DiseaseMetaData> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(key, keyVal);
 				HashMap<Integer, String> disSpecialCaseListDetailsParentByChild = disServ.getParentByChildWithSpCaseDetailsByDisIDAndCaseDetailsID(key, keyVal);
 				boolean isAnyAvailable=disServ.getIsThisSpecialIdsChildAssigned(patientDTO.getAccId(), key, keyVal);
 				if(isAnyAvailable){%>

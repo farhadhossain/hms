@@ -33,6 +33,7 @@ public class AddUserAction extends Action{
 			dto.setRoleID(form.getRoleId());
 			dto.setEmployeeName(form.getEmployeeName());
 			dto.setEmployeePhone(form.getEmployeePhone());
+			dto.setDesignation(form.getDesignation());
 			dto.setEmployeeType(form.getEmployeeType());
 			UserService service = new UserService();
 			DAOResult daoResult=service.addUser(dto);

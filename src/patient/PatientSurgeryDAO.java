@@ -291,7 +291,7 @@ public class PatientSurgeryDAO {
 			System.out.println(sql);
 			//stmt.executeUpdate(sql);
 
-			sql="update tbl_patient set surgical_status = 4 where id="+dto.getUserID();
+			sql="update tbl_patient set surgical_status = 4, is_discharged=1, date_of_disch=NOW() where id="+dto.getUserID();
 			System.out.println(sql);
 			stmt.execute(sql);
 

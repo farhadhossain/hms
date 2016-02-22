@@ -10,6 +10,7 @@ public class UserDTO
 	private String employeeName;
 	private String employeePhone;
 	private int employeeType;
+	private String designation;
 	
 	public int getUserID() {
 		return userID;
@@ -53,5 +54,12 @@ public class UserDTO
 	public int getEmployeeType() {
 		return employeeType;
 	}
-	
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
 }

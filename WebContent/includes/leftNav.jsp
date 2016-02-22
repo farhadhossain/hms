@@ -39,7 +39,7 @@
 		                <li>
 	                        <a href='../Patient/ExtractionList.jsp'>
 	                        	<i class="fa fa-pie-chart"></i> 
-	                        	<span class="nav-label">Duty Nurse </span>
+	                        	<span class="nav-label">Patient Management </span>
 	                        </a>                
 	                    </li>
 	                <%}%>   

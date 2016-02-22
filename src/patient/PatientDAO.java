@@ -111,22 +111,16 @@ public class PatientDAO
 					sql+=" and reg_number like '%"+nameTicketPhone+"%'";
 				}
 			}
-			if(roleID!=MyConfig.frontDeskRole || roleID!=MyConfig.dutyNurseRole){
-				sql+=" and ( ";
-			}else{
-                sql+=" and ";
-            }
 
 			if(roleID==MyConfig.diagnosisRoomRole){
-				sql+="  current_status="+MyConfig.deptDiagnosisRoom;
+				sql+=" and (current_status="+MyConfig.deptDiagnosisRoom;
+				sql+=" or current_status="+MyConfig.deptEmergency +")";
 			}else if(roleID==MyConfig.minorOTOrOutdoorRole){
-				sql+="  current_status="+MyConfig.deptOutdoorOrMinorOT;
+				sql+=" and (current_status="+MyConfig.deptOutdoorOrMinorOT;
+				sql+=" or current_status="+MyConfig.deptEmergency +")";
 			}else if(roleID==MyConfig.SurgeonRole || roleID==MyConfig.AssistantSurgeonRole || roleID==MyConfig.AnesthetistRole || roleID==MyConfig.DoctorForBed){
-				sql+="  current_status="+MyConfig.deptIndoor;
-			}
-
-			if(roleID!=MyConfig.frontDeskRole || roleID!=MyConfig.dutyNurseRole){
-				sql+=" or current_status="+MyConfig.deptEmergency+")";
+				sql+=" and (current_status="+MyConfig.deptIndoor;
+				sql+=" or current_status="+MyConfig.deptEmergency +")";
 			}
 
 			sql+=" order by date_of_rec desc";

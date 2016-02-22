@@ -538,8 +538,11 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 						   <div class="col-sm-3">
 							   <textarea  class="form-control" placeholder="Comments" cols="20" rows="1" data-ng-model="medicine.comment"></textarea>
 						   </div>
-						   <div class="col-sm-1">
+						   <div class="col-sm-1" ng-if="$index==0">
 							   <a href="#"><span class="fa fa-plus fa-2x" style="margin-left: 20px;" ng-click="addMedicineRow()"></span></a>
+						   </div>
+						   <div class="col-sm-1" ng-if="$index!=0">
+							   <a href="#"><span class="fa fa-minus fa-2x" style="margin-left: 20px;" ng-click="removeMedicineRow($index)"></span></a>
 						   </div>
 				   </div>
 			   </div>

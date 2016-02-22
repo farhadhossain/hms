@@ -11,6 +11,7 @@ public class UserForm extends ActionForm
 	private String employeeName;
 	private String employeePhone;
 	private int employeeType;
+	private String designation;
 	
 	public int getUserID() {
 		return userID;
@@ -55,5 +56,12 @@ public class UserForm extends ActionForm
 	public int getRoleId() {
 		return roleId;
 	}
-	
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
 }
