@@ -9,6 +9,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="patient.PatientSurgeryService" %>
 <%@ page import="patient.PatientSurgeryDTO" %>
+<%@ page import="user.UserDTO" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -154,9 +155,20 @@ PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(
 				<tr><td colspan="2">
 				</td></tr>
 
-				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Name of surgeon:</label></td></tr>
-				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Name of assistant surgeon:</label></td></tr>
-				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Name of anesthesiologist:</label></td></tr>
+				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Name of surgeon:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<% for(UserDTO user:surgeryDTO.getSurgeonList()){
+						out.println(user.getEmployeeName());
+					} %>
+				</td></tr>
+				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Name of assistant surgeon:</label>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<% for(UserDTO user:surgeryDTO.getAssistSurgList()){
+						out.println(user.getEmployeeName());
+					} %></td></tr>
+				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Name of anesthesiologist:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<% for(UserDTO user:surgeryDTO.getAnesthetistList()){
+						out.println(user.getEmployeeName());
+					} %></td></tr>
 
 
 				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">TREATMENT ON DISCHARGE:</label></td></tr>

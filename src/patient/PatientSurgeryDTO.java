@@ -1,6 +1,11 @@
 package patient;
 
 
+import user.UserDTO;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class PatientSurgeryDTO {
 
 	private int surgicalID;
@@ -26,6 +31,10 @@ public class PatientSurgeryDTO {
 	private int[] anesthetistIDList;
 	public String responsibleDoctorBed;
 	public String updatePerform;
+
+	private List<UserDTO> surgeonList = new ArrayList<UserDTO>();
+	private List<UserDTO> assistSurgList = new ArrayList<UserDTO>();
+	private List<UserDTO> anesthetistList = new ArrayList<UserDTO>();
 	
 	
 	public int getUserID() {
@@ -108,5 +117,29 @@ public class PatientSurgeryDTO {
 
 	public void setOperationalNotes(String operationalNotes) {
 		this.operationalNotes = operationalNotes;
+	}
+
+	public List<UserDTO> getSurgeonList() {
+		return surgeonList;
+	}
+
+	public void setSurgeonList(List<UserDTO> surgeonList) {
+		this.surgeonList = surgeonList;
+	}
+
+	public List<UserDTO> getAssistSurgList() {
+		return assistSurgList;
+	}
+
+	public void setAssistSurgList(List<UserDTO> assistSurgList) {
+		this.assistSurgList = assistSurgList;
+	}
+
+	public List<UserDTO> getAnesthetistList() {
+		return anesthetistList;
+	}
+
+	public void setAnesthetistList(List<UserDTO> anesthetistList) {
+		this.anesthetistList = anesthetistList;
 	}
 }

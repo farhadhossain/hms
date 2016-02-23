@@ -1,5 +1,6 @@
 package patient;
 
+import user.UserDTO;
 import utility.DAOResult;
 import utility.MyConfig;
 
@@ -138,7 +139,7 @@ public class PatientSurgeryDAO {
 		}catch(Exception e){
 			System.out.println(e.toString());
 			daoResult.setValid(false);
-			daoResult.setMessage("Error: Database error: "+e.toString());
+			daoResult.setMessage("Error: Database error: " + e.toString());
 			return daoResult;
 		}finally{
 			try{stmt.close();}catch(Exception e){}
@@ -175,6 +176,45 @@ public class PatientSurgeryDAO {
 	        	dto.updatePerform=rs.getString("update_perform");
 	        }
 	        rs.close();
+			rs = stmt.executeQuery("select d.doctor_id,u.* from tbl_patient_surgery_doctor d join tbl_user u on d.doctor_id = u.id where d.surgical_history_id="+dto.getSurgicalID()+" and d.role_id="+MyConfig.SurgeonRole);
+			rs.last();
+			dto.setSurgeonIDList(new int[rs.getRow()]);
+			rs.beforeFirst();
+			int i=0;
+			while(rs.next()){
+			  dto.getSurgeonIDList()[i]=rs.getInt("doctor_id");
+			  UserDTO userDTO= new UserDTO();
+			  userDTO.setEmployeeName(rs.getString("employee_name"));
+			  dto.getSurgeonList().add(userDTO);
+			  i++;
+			}
+			rs.close();
+			rs = stmt.executeQuery("select d.doctor_id,u.* from tbl_patient_surgery_doctor d join tbl_user u on d.doctor_id = u.id where d.surgical_history_id="+dto.getSurgicalID()+" and d.role_id="+MyConfig.AssistantSurgeonRole);
+			rs.last();
+			dto.setAssistSurgIDList(new int[rs.getRow()]);
+			rs.beforeFirst();
+			i = 0;
+			while(rs.next()){
+				dto.getAssistSurgIDList()[i]=rs.getInt("doctor_id");
+				UserDTO userDTO= new UserDTO();
+				userDTO.setEmployeeName(rs.getString("employee_name"));
+				dto.getAssistSurgList().add(userDTO);
+				i++;
+			}
+			rs.close();
+			rs = stmt.executeQuery("select d.doctor_id,u.* from tbl_patient_surgery_doctor d join tbl_user u on d.doctor_id = u.id where d.surgical_history_id="+dto.getSurgicalID()+" and d.role_id="+MyConfig.AnesthetistRole);
+			rs.last();
+			dto.setAnesthetistIDList(new int[rs.getRow()]);
+			rs.beforeFirst();
+			i= 0;
+			while(rs.next()){
+				dto.getAnesthetistIDList()[i]=rs.getInt("doctor_id");
+				UserDTO userDTO= new UserDTO();
+				userDTO.setEmployeeName(rs.getString("employee_name"));
+				dto.getAnesthetistList().add(userDTO);
+				i++;
+			}
+			rs.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
