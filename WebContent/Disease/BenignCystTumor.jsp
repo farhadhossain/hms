@@ -159,8 +159,8 @@ String actionNameFollowUp="/NewFindingsBenignCystTumorPatient";
 										  </ul>
 										
 										  <!-- Tab panes -->
-										  <html:form action="/PatientMalignantTumor">
-										  <div class="tab-content" style="height: 100%; overflow: auto;">
+										  <html:form action="/PatientBeginCyst">
+										  <div class="tab-content" style="overflow: auto;">
 										    <div role="tabpanel" class="tab-pane active" id="history" >
 										    	<div class="panel-body">
 											    	<%if(editAndView==true || (editAndView==false && patCurDisDTO.patHisId.isEmpty()==false)){%>
@@ -188,7 +188,7 @@ String actionNameFollowUp="/NewFindingsBenignCystTumorPatient";
 		                            						<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 		                              							<div class="panel-body">
 																	<!-- Start of Third Level -->
-								                        			<div class="panel-group" id="levelThree_accordion" role="tablist" aria-multiselectable="true">
+								                        			<div class="panel-group" id="levelThree accordion" role="tablist" aria-multiselectable="true">
 								                        				<div class="panel panel-default">
 						                            						<div class="panel-heading" role="tab" id="headingTwo_headingOne_headingOne">
 						                              							<h4 class="panel-title">
@@ -511,7 +511,7 @@ String actionNameFollowUp="/NewFindingsBenignCystTumorPatient";
 									    	
 										  </div>
 									  </html:form>
-									  
+											<%@ include file="../Disease/followup.jsp"%>
 								</div>
 
                    		</div><!--/./ibox-content-->

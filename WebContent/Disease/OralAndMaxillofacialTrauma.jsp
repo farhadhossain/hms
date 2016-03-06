@@ -155,7 +155,7 @@ String actionNameFollowUp="/NewFindingsOralAnMaxillofacialPatient";
 									
 									<!-- Tab panes -->
 							  		<html:form action="/PatientOralAndMaxillofacialTrauma">
-						        		<div class="tab-content" style="height: 100%; overflow: auto;">
+						        		<div class="tab-content" style="overflow: auto;">
 								    		<div role="tabpanel" class="tab-pane active" id="history" >
 									    		<div class="panel-body">
 										    		<%if(editAndView==true || (editAndView==false && patCurDisDTO.patHisId.isEmpty()==false)){%>
@@ -357,7 +357,7 @@ String actionNameFollowUp="/NewFindingsOralAnMaxillofacialPatient";
 									    	
 									  		</div>
 							  			</html:form>
-								  
+										<%@ include file="../Disease/followup.jsp"%>
 									</div>	
                 			                			
                    			</div><!--/./ibox-content-->

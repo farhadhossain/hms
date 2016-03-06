@@ -147,7 +147,7 @@ String actionNameFollowUp="/NewFindingsMaxillSinFistulaPatient";
 									
 									<!-- Tab panes -->
 							  		<html:form action="/PatientMaxillarySinusitisChOrAcuteFistula">
-						        		<div class="tab-content" style="height: 100%; overflow: auto;">
+						        		<div class="tab-content" style="overflow: auto;">
 								    		<div role="tabpanel" class="tab-pane active" id="history" >
 									    		<div class="panel-body">
 										    		<%if(editAndView==true || (editAndView==false && patCurDisDTO.patHisId.isEmpty()==false)){%>
@@ -180,8 +180,15 @@ String actionNameFollowUp="/NewFindingsMaxillSinFistulaPatient";
 						    	   			 <div role="tabpanel" class="tab-pane" id="specificInvestigation">
 									    	 	<div class="panel-body">
 											 		<table class="table" style="font-size: 13px;">
-													
-							                        </table>
+														<%
+															int key=33;
+															HashMap<Integer, DiseaseMetaData> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(Integer.parseInt(diseaseID), key);
+															HashMap<Integer, String> disSpecialCaseListDetailsParentByChild = disServ.getParentByChildWithSpCaseDetailsByDisIDAndCaseDetailsID(Integer.parseInt(diseaseID), key);
+															//boolean isAnyAvailable=disServ.getIsThisSpecialIdsChildAssigned(Integer.parseInt(userID), Integer.parseInt(diseaseID), key);
+														%>
+														<%=MyUtility.generateHTML(disSpecialCaseListDetails, disSpecialCaseListDetailsParentByChild, "specialCaseId", patCurDisDTO.patSpCaseId, patCurDisDTO, editAndView)%>
+
+													</table>
 										    	</div><!--/./form-group--> 
 				    	 					 </div>
 										     <%id++; %> 
@@ -254,7 +261,7 @@ String actionNameFollowUp="/NewFindingsMaxillSinFistulaPatient";
 									    	
 									  		</div>
 							  			</html:form>
-								  
+									<%@ include file="../Disease/followup.jsp"%>
 									</div>
 								
                				</div><!--/./ibox-content-->

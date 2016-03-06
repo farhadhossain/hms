@@ -13,6 +13,7 @@
 <%@page import="java.util.Calendar" %>
 <%@page import="utility.MyConfig"%>
 <%@page import="utility.MyUtilityForReport"%>
+<%@ page import="disease.form.DiseaseMetaData" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -182,7 +183,7 @@ if(diseaseId==null){%>
 								</div>
 								
 								<%
-								HashMap<Integer, String> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(firstDisease, MyConfig.diseaseTreatmentPlan);
+								HashMap<Integer, DiseaseMetaData> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(firstDisease, MyConfig.diseaseTreatmentPlan);
 								HashMap<Integer, String> disTreatmentPlanParentByChild = disServ.getParentByChildWithDisIDAndDisType(firstDisease, MyConfig.diseaseTreatmentPlan);
 								%>
 								<div class="form-group" id="treatmentPlanOnly">
@@ -217,7 +218,7 @@ if(diseaseId==null){%>
   </body>
 </html>
 <%}else{
-	HashMap<Integer, String> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseId), MyConfig.diseaseTreatmentPlan);
+	HashMap<Integer, DiseaseMetaData> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseId), MyConfig.diseaseTreatmentPlan);
 	HashMap<Integer, String> disTreatmentPlanParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseId), MyConfig.diseaseTreatmentPlan);
 	if(disTreatmentPlanList.size()>0){%>
 		<label class="col-sm-4 control-label">Treatment Plan</label>

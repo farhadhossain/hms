@@ -11,27 +11,36 @@
 <%@page import="patientOthers.PatientOthersService"%>
 <%@page import="patientOthers.PatientOthersDTO"%>
 <%@page import="disease.DiseaseService"%>
+<%@ page import="disease.form.DiseaseMetaData" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 <html>
 <%
-String userID = request.getParameter("userID");
+
+	String userID = request.getParameter("userID");
+	if(userID==null){
+		userID=(String)session.getAttribute("userID");
+	}else{
+		session.setAttribute("userID", userID);
+	}
 
 PatientOthersService patOthersServ = new PatientOthersService();
 DiseaseService disServ = new DiseaseService();
 
 PatientOthersDTO patPhyExmDTO = patOthersServ.getPatientPhyExmInfoDTOByID(Integer.parseInt(userID)); 
 
-HashMap<Integer, String> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(14, MyConfig.diseaseInspection);
-HashMap<Integer, String> disPalpationList = disServ.getDiseaseDetailsByDisIDAndDisType(14, MyConfig.diseasePalpation);
-String name="";
+HashMap<Integer, DiseaseMetaData> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(14, MyConfig.diseaseInspection);
+HashMap<Integer, DiseaseMetaData> disPalpationList = disServ.getDiseaseDetailsByDisIDAndDisType(14, MyConfig.diseasePalpation);
+
+DiseaseMetaData name = new DiseaseMetaData();
+//String name="";
 %>
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title><%=SessionManager.title%></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -86,10 +95,10 @@ String name="";
 				                <div class = "container-fluid">
 				                	<ul class="nav nav-tabs">
 				                	
-				               			<li role="presentation"><a href="../PatientOthers/PatientPersonalHistory.jsp?userID=<%=userID%>">Social & Personal</a></li>
-								  		<li role="presentation"><a href="../PatientOthers/Investigation.jsp?userID=<%=userID%>">Investigation</a></li>
+				               			<li role="presentation"><a href="../PatientOthers/PatientPersonalHistory.jsp?userID=<%=userID%>">History</a></li>
+								  		<%--<li role="presentation"><a href="../PatientOthers/Investigation.jsp?userID=<%=userID%>">Investigation</a></li>--%>
 									  	<li role="presentation" class="active"><a href="../PatientOthers/PatinetPhysicalExamination.jsp?userID=<%=userID%>">Physical Examination</a></li>
-									  	<li role="presentation"><a href="../PatientOthers/PreAnestheticEvaluation.jsp?userID=<%=userID%>">Pre-Anesthetic Evaluation</a></li>
+									  	<%--<li role="presentation"><a href="../PatientOthers/PreAnestheticEvaluation.jsp?userID=<%=userID%>">Pre-Anesthetic Evaluation</a></li>--%>
 									  	<li role="presentation"><a href="../PatientOthers/GeneralSurvey.jsp?userID=<%=userID%>">General Survey</a></li>
 										<li role="presentation" class="dropdown">
 											<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
@@ -122,7 +131,7 @@ String name="";
                         			<h5>Physical Examination</h5>
                     			</div><!--/./ibox-title-->
                    				<div class="ibox-content">
-									<html:form action="/PatientPreAnsEve">
+									<html:form action="/PatientPhyExmHistory">
 										<div class="form-horizontal">
 											<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 												<div class="panel panel-default">
@@ -302,9 +311,9 @@ String name="";
 																						name=disInspectionList.get(key);%>
 																						<td style="font-size: 13px; padding: 10px;">
 																							<%if(key==21){%>
-																								<%=name%> <input type="text" name="inspecOthers" value="<%=patPhyExmDTO.getInspecOthers()%>">
+																								<%=name.getName()%> <input type="text" name="inspecOthers" value="<%=patPhyExmDTO.getInspecOthers()%>">
 																							<%}else{%>
-																								<input type="checkbox" name="inspectionId" value="<%=key%>" <%if(patPhyExmDTO.patInspectionId.contains(key)==true){%>checked="checked"<%}%>> <%=name%>
+																								<input type="checkbox" name="inspectionId" value="<%=key%>" <%if(patPhyExmDTO.patInspectionId.contains(key)==true){%>checked="checked"<%}%>> <%=name.getName()%>
 																							<%}%>
 																						</td>
 																					<%}%>
@@ -322,9 +331,9 @@ String name="";
 																						name=disPalpationList.get(key);%>
 																						<td style="font-size: 13px; padding: 10px;">
 																							<%if(key==15){%>
-																								<%=name%> <input type="text" name="palpaOthers" value="<%=patPhyExmDTO.getPalpaOthers()%>">
+																								<%=name.getName()%> <input type="text" name="palpaOthers" value="<%=patPhyExmDTO.getPalpaOthers()%>">
 																							<%}else{%>
-																								<input type="checkbox" name="palpationId" value="<%=key%>" <%if(patPhyExmDTO.patPalpationId.contains(key)==true){%>checked="checked"<%}%>> <%=name%>
+																								<input type="checkbox" name="palpationId" value="<%=key%>" <%if(patPhyExmDTO.patPalpationId.contains(key)==true){%>checked="checked"<%}%>> <%=name.getName()%>
 																							<%}%>
 																						</td>
 																					<%}%>

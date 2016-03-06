@@ -97,8 +97,8 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 	<header class="banner" role="banner">
 		
 		<div class="row">
-		   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			 <img class="img-responsive" src="../Assets/Images/banner.jpg">
+		   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+			 <img width="100%" src="../Assets/Images/banner.jpg">
 		   </div>
 		</div>
 		

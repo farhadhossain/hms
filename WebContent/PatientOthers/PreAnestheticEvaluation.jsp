@@ -15,21 +15,29 @@
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<%@page import="disease.DiseaseDTO"%><html>
+<%@page import="disease.DiseaseDTO"%>
+<%@ page import="disease.form.DiseaseMetaData" %>
+<html>
 <%
-String userID = request.getParameter("userID");
+
+	String userID = request.getParameter("userID");
+	if(userID==null){
+		userID=(String)session.getAttribute("userID");
+	}else{
+		session.setAttribute("userID", userID);
+	}
 
 PatientOthersService patOthersServ = new PatientOthersService();
 
 PatientOthersDTO patCurInfoDTO = patOthersServ.getPatientOthersDTOByID(Integer.parseInt(userID)); 
 
-HashMap<Integer, String> patPreAnestheticEvaluationList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfPreAnestheticEvaluation);
+HashMap<Integer, DiseaseMetaData> patPreAnestheticEvaluationList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfPreAnestheticEvaluation);
 HashMap<Integer, String> disPreAnestheticEvaluationListParentByChild = patOthersServ.getParentByChildWithInfoId(MyConfig.infoHistoryOfPreAnestheticEvaluation);
 
-HashMap<Integer, String> patIntraOralExaminationList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfPreAnEvIntraOralExamination);
+HashMap<Integer, DiseaseMetaData> patIntraOralExaminationList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfPreAnEvIntraOralExamination);
 HashMap<Integer, String> disIntraOralExaminationListParentByChild = patOthersServ.getParentByChildWithInfoId(MyConfig.infoHistoryOfPreAnEvIntraOralExamination);
 
-HashMap<Integer, String> patExtraOralExaminationList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfPreAnEvExtraOralExamination);
+HashMap<Integer, DiseaseMetaData> patExtraOralExaminationList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfPreAnEvExtraOralExamination);
 HashMap<Integer, String> disExtraOralExaminationListParentByChild = patOthersServ.getParentByChildWithInfoId(MyConfig.infoHistoryOfPreAnEvExtraOralExamination);
 
 
@@ -104,7 +112,7 @@ String name="";
 				                <div class = "container-fluid">
 				                	<ul class="nav nav-tabs">
 				                	
-				               			<li role="presentation"><a href="../PatientOthers/PatientPersonalHistory.jsp?userID=<%=userID%>">Social & Personal</a></li>
+				               			<%--<li role="presentation"><a href="../PatientOthers/PatientPersonalHistory.jsp?userID=<%=userID%>">Social & Personal</a></li>
 								  		<li role="presentation"><a href="../PatientOthers/Investigation.jsp?userID=<%=userID%>">Investigation</a></li>
 									  	<li role="presentation"><a href="../PatientOthers/PatinetPhysicalExamination.jsp?userID=<%=userID%>">Physical Examination</a></li>
 									  	<li role="presentation" class="active"><a href="../PatientOthers/PreAnestheticEvaluation.jsp?userID=<%=userID%>">Pre-Anesthetic Evaluation</a></li>
@@ -126,8 +134,8 @@ String name="";
 									      		<li role="presentation"><a href="../PatientOthers/PatientDrugAnMedication.jsp?userID=<%=userID%>">Drug History</a></li>
 									      		<li role="presentation"><a href="../PatientOthers/AddMedication.jsp?userID=<%=userID %>">Add New</a></li>
 									    	</ul>
-									  	</li>
-									  
+									  	</li>--%>
+
 									</ul>
 				                </div>
 				                
@@ -155,7 +163,7 @@ String name="";
                               							<div class="panel-body">
 															<div class="table-responsive">
                                  								<table class="table" style="font-size: 13px;">
-																	<tr><td style="border: none;">Current problem <input type="text" name="curProb" value="<%=patCurInfoDTO.getCurProb()==null?"":patCurInfoDTO.getCurProb()%>"></td></tr>
+																	<%--<tr><td style="border: none;">Current problem <input type="text" name="curProb" value="<%=patCurInfoDTO.getCurProb()==null?"":patCurInfoDTO.getCurProb()%>"></td></tr>
 																	<tr><td style="border: none;">Other known problem <input type="text" name="otherKnownProb" value="<%=patCurInfoDTO.getOtherKnownProb()%>"></td></tr>
 																	<tr><td style="border: none;">Treatment/medicines for the problem <input type="text" name="curProbTreatment" value="<%=patCurInfoDTO.getCurProbTreatment() %>"></td></tr>
 																	<tr><td style="border: none;">&emsp;&emsp;Dose <input type="text" name="curDose" value="<%=patCurInfoDTO.getCurDose() %>"></td></tr>
@@ -168,8 +176,15 @@ String name="";
 																	<tr><td style="border: none;">&emsp;&emsp; Duration <input type="text" name="curDrugsDur" value="<%=patCurInfoDTO.getCurDrugsDur() %>"></td></tr>
 																	<tr><td style="border: none;">&emsp;&emsp; Effectiveness <input type="text" name="curDrugsEffectiveness" value="<%=patCurInfoDTO.getCurDrugsEffectiveness() %>"></td></tr>
 																	<tr><td style="border: none;">&emsp;&emsp; Side effect <input type="text" name="curDrugsSideEffect" value="<%=patCurInfoDTO.getCurDrugsSideEffect() %>"></td></tr>
-																	<%=MyUtility.generateHTML(patPreAnestheticEvaluationList, disPreAnestheticEvaluationListParentByChild, "infoId", patCurInfoDTO.patInfoId, patCurInfoDTO)%>
-										                         </table>
+																	<%=MyUtility.generateHTML(patPreAnestheticEvaluationList, disPreAnestheticEvaluationListParentByChild, "infoId", patCurInfoDTO.patInfoId, patCurInfoDTO)%>--%>
+																		<tr><td style="border: none;">Diagnosis: <input type="text" name="diagnosis" value=""></td></tr>
+																		<tr><td style="border: none;">Past Medical History: <input type="text" name="pastMedHis" value=""></td></tr>
+																		<tr><td style="border: none;">History of Allergy: <input type="text" name="allergyHis" value=""></td></tr>
+																		<tr><td style="border: none;">Habits: <input type="text" name="habits" value=""></td></tr>
+																		<tr><td style="border: none;">Complications of Anesthesia: <input type="text" name="complAnnesthesia" value=""></td></tr>
+																		<tr><td style="border: none;">Post operative complication: <input type="text" name="postOptCompl" value=""></td></tr>
+																		<tr><td style="border: none;">Systemic disease: <input type="text" name="pastMedHis" value=""></td></tr>
+																</table>
 									                         </div><!--/./form-group--> 
                            								 </div>
                            							 </div>

@@ -1,5 +1,5 @@
 			                        	
-	<%if(editAndView==true || (editAndView==false && patCurDisDTO.getComplications()!=null && patCurDisDTO.getComplications().length()>0)){%>				                        	
+	<%if(editAndView==true || (editAndView==false && patCurDisDTO.getComplications()!=null && patCurDisDTO.getComplications().length()>0)){%>
 		<div class="panel panel-default">
 			<div class="panel-heading" role="tab" id="<%= "heading" + id%>">
 				<h4 class="panel-title">
@@ -19,7 +19,7 @@
 			 </div>
 		</div><!--/./panel panel-default-->
 	<%}%>
-	
+
 	<%id++;%>
 	
 	<%if(editAndView==true || (editAndView==false && patCurDisDTO.getSpecialNotes()!=null && patCurDisDTO.getSpecialNotes().length()>0)){%>

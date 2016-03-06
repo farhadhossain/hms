@@ -24,6 +24,14 @@ if(loginDTO!=null){
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <%
+
+	String userID = request.getParameter("userID");
+	if(userID==null){
+		userID=(String)session.getAttribute("userID");
+	}else{
+		session.setAttribute("userID", userID);
+	}
+
 int TOTAL_PAGES=1;
 int PAGE_SIZE=30;
 
@@ -304,8 +312,13 @@ int size=dtoList.size();
 						                        		<%}else if(dto.getDeptId()==MyConfig.deptEmergency){%>
 						                        			<a href="/Disease/MaxillofacialEmergency.jsp?userID=<%=dto.getAccId()%>&diseaseID=27">Emergency</a><br>
 						                        		<%}%>
-						                        		
-						                        		<%if(loginDTO.getRoleID()==MyConfig.DoctorForBed || loginDTO.getRoleID()==MyConfig.deptIndoor || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.AnesthetistRole){%>
+														<%if(dto.getDeptId()==MyConfig.deptIndoor){%>
+															<a target="_blank" href="../PatientOthers/Investigation.jsp?userID=<%=dto.getAccId()%>">General Investigation</a><br>
+														<%}%>
+														<%if(dto.getDeptId()==MyConfig.deptIndoor){%>
+															<a target="_blank" href="../PatientOthers/PreAnestheticEvaluation.jsp?userID=<%=dto.getAccId()%>">Pre-Anesthatic Evaluation</a><br>
+														<%}%>
+														<%if(loginDTO.getRoleID()==MyConfig.DoctorForBed || loginDTO.getRoleID()==MyConfig.deptIndoor || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.AnesthetistRole){%>
 								                       		<a target="_blank" href="../Report/PatientInfoAll.jsp?accountID=<%=dto.getAccId()%>">View Findings</a><br>
 								                    	<%}%>
 

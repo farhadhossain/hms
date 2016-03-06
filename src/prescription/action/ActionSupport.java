@@ -4,7 +4,7 @@ import org.apache.struts2.components.Include;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import prescription.PrescriptionDAO;
-import sun.org.mozilla.javascript.internal.json.JsonParser;
+//import sun.org.mozilla.javascript.internal.json.JsonParser;
 
 import java.io.IOException;
 

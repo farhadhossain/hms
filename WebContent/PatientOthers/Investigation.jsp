@@ -15,17 +15,25 @@
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<%@page import="disease.DiseaseDTO"%><html>
+<%@page import="disease.DiseaseDTO"%>
+<%@ page import="disease.form.DiseaseMetaData" %>
+<html>
 <%
-String userID = request.getParameter("userID");
+
+	String userID = request.getParameter("userID");
+	if(userID==null){
+		userID=(String)session.getAttribute("userID");
+	}else{
+		session.setAttribute("userID", userID);
+	}
 
 PatientOthersService patOthersServ = new PatientOthersService();
 
 PatientOthersDTO patCurInfoDTO = patOthersServ.getPatientOthersDTOByID(Integer.parseInt(userID)); 
 
-HashMap<Integer, String> patBloodList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfBlood);
+HashMap<Integer, DiseaseMetaData> patBloodList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfBlood);
 
-HashMap<Integer, String> patOthersList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfOthers);
+HashMap<Integer, DiseaseMetaData> patOthersList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfOthers);
 HashMap<Integer, String> disOthersListParentByChild = patOthersServ.getParentByChildWithInfoId(MyConfig.infoHistoryOfOthers);
 
 String name="";
@@ -95,7 +103,7 @@ String name="";
             	<div class="row">
             		<div class="col-lg-12">
             			<div class="row border-bottom">
-			            <nav class="navbar navbar-static-top navbar-inverse" role="navigation" style="margin-bottom: 0">
+			            <%--<nav class="navbar navbar-static-top navbar-inverse" role="navigation" style="margin-bottom: 0">
 			                <div class = "container-fluid">
 			                	<ul class="nav nav-tabs">
 			                	
@@ -126,7 +134,7 @@ String name="";
 								</ul>
 			                </div>
 			                
-			            </nav><!--/./navbar navbar-static-top-->
+			            </nav>--%><!--/./navbar navbar-static-top-->
 		            
         			</div><!--/./row border-bottom-->
             		

@@ -49,7 +49,7 @@ HashMap<Integer, String> disSymptomParentByChild = disServ.getParentByChildWithD
 
 int id = 1;
 
-String actionNameFollowUp="/NewFindingsBloodPatient";
+String actionNameFollowUp="/NewFindingsAutoImmunePatient";
 
 %>
 
@@ -144,7 +144,7 @@ String actionNameFollowUp="/NewFindingsBloodPatient";
                         			<h5>Autoimmune <%if(editAndView==false){%><a href="<%=OthersInfo.getPageNameByID(Integer.parseInt(userID), Integer.parseInt(diseaseID))+"&typeID=1"%>"> ( Edit )</a><%}%></h5>
                     			</div><!--/./ibox-title-->
                    				<div class="ibox-content">
-									<html:form action="/PatientBlood">
+									<html:form action="/PatientAutoImmune">
 										<div class="form-horizontal">
 											<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 												
@@ -163,7 +163,10 @@ String actionNameFollowUp="/NewFindingsBloodPatient";
 			                        <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			            			<button type="button" class="btn btn-primary">Save changes</button>-->
           						</div>
+
                				</html:form>
+
+									<%@ include file="../Disease/followup.jsp"%>
                    		</div><!--/./ibox-content-->
                		</div><!--/./ibox float-e-margins-->
            		</div><!--/./col-lg-12-->

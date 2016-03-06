@@ -77,19 +77,25 @@
 	                        </a>                
 	                    </li>
 	                    
-	                    <li>
+	                   <%-- <li>
 	                        <a href='../Others/Prescription.jsp'>
 	                        	<i class="fa fa-stethoscope"></i> 
 	                        	<span class="nav-label">Prescription</span>
 	                        </a>                
-	                    </li>
+	                    </li>--%>
 	                    
-	                    <li>
+	                    <%--<li>
 	                        <a href='../Others/OTPlan.jsp'>
 	                        	<i class="fa fa-ambulance"></i> 
 	                        	<span class="nav-label">OT Plan</span>
 	                        </a>                
-	                    </li>
+	                    </li>--%>
+						<li>
+							<a href='../Others/LogBook.jsp'>
+								<i class="fa fa-ambulance"></i>
+								<span class="nav-label">Log Book</span>
+							</a>
+						</li>
 	                    
 	                    <li>
 	                        <a href='../Others/DrugList.jsp' target="_blank">

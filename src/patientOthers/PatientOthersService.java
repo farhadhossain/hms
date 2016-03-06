@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import disease.form.DiseaseMetaData;
 import utility.DAOResult;
 
 public class PatientOthersService {
@@ -11,10 +12,9 @@ public class PatientOthersService {
 	public HashMap<Integer, String> getParentByChildWithInfoId(int infoId){
 		return new PatientOthersDAO().getParentByChildWithInfoId(infoId);
 	}
-	public HashMap<Integer, String> getSocialAndPersonalHistoryDetailsByID(int infoId){
+	public HashMap<Integer, DiseaseMetaData> getSocialAndPersonalHistoryDetailsByID(int infoId){
 		return new PatientOthersDAO().getSocialAndPersonalHistoryDetailsByID(infoId);
 	}
-	
 	public HashMap<Integer, String> getDrugGroup(){
 		return new PatientOthersDAO().getDrugGroup();
 	}

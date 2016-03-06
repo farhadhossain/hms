@@ -27,12 +27,12 @@ PatientOthersService patOthersServ = new PatientOthersService();
 
 PatientOthersDTO patCurInfoDTO = patOthersServ.getPatientOthersDTOByID(Integer.parseInt(accountID)); 
 HashMap<Integer, String> diseaseList = new DiseaseService().getSysDiseaseInfo(-1);
-HashMap<Integer, String> patExposureToList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoExposureTo);
-HashMap<Integer, String> patHabitsList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHabits);
-HashMap<Integer, String> patMenstrualHistoryList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoMenstrualHistory);
-HashMap<Integer, String> patObstetricalHistoryList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoObstetricalHistory);
-HashMap<Integer, String> patFamilyRelevantDiseaseHistoryList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoFamilyRelevantDiseaseHistory);
-HashMap<Integer, String> patHistoryOfImmunizationList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfImmunization);
+HashMap<Integer, DiseaseMetaData> patExposureToList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoExposureTo);
+HashMap<Integer, DiseaseMetaData> patHabitsList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHabits);
+HashMap<Integer, DiseaseMetaData> patMenstrualHistoryList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoMenstrualHistory);
+HashMap<Integer, DiseaseMetaData> patObstetricalHistoryList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoObstetricalHistory);
+HashMap<Integer, DiseaseMetaData> patFamilyRelevantDiseaseHistoryList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoFamilyRelevantDiseaseHistory);
+HashMap<Integer, DiseaseMetaData> patHistoryOfImmunizationList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfImmunization);
 HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 %>
 <html lang="en">

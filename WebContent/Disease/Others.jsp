@@ -144,7 +144,7 @@ String actionNameFollowUp="/NewFindingsBloodPatient";
                         			<h5>Others <%if(editAndView==false){%><a href="<%=OthersInfo.getPageNameByID(Integer.parseInt(userID), Integer.parseInt(diseaseID))+"&typeID=1"%>"> ( Edit )</a><%}%></h5>
                     			</div><!--/./ibox-title-->
                    				<div class="ibox-content">
-									<html:form action="/PatientBlood">
+									<html:form action="/PatientOther">
 										<div class="form-horizontal">
 											<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 												

@@ -6,9 +6,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+
+import disease.form.DiseaseMetaData;
 import utility.DAOResult;
 import utility.MyConfig;
-
 
 public class PatientOthersDAO
 {
@@ -46,8 +47,8 @@ public class PatientOthersDAO
 		return parentByChild;
 	}	
 	
-	public HashMap<Integer, String> getSocialAndPersonalHistoryDetailsByID(int infoID) {
-		HashMap<Integer, String> diseaseDetl = new HashMap<Integer, String>();
+	public HashMap<Integer, DiseaseMetaData> getSocialAndPersonalHistoryDetailsByID(int infoID) {
+		HashMap<Integer, DiseaseMetaData> diseaseDetl = new HashMap<Integer, DiseaseMetaData>();
 		String sql="select * from tbl_personal_info_history where info_id="+infoID;
 		
 		Connection conn = null;
@@ -55,10 +56,15 @@ public class PatientOthersDAO
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
-	        ResultSet rs=stmt.executeQuery(sql+" order by id asc");
+	        /*ResultSet rs=stmt.executeQuery(sql+" order by id asc");*/
+			ResultSet rs=stmt.executeQuery(sql);
 	        
 	        while(rs.next()){
-	        	diseaseDetl.put(rs.getInt("id"), rs.getString("name_of_perticular"));
+	        	//diseaseDetl.put(rs.getInt("id"), rs.getString("name_of_perticular"));
+				DiseaseMetaData diseaseMetaData = new DiseaseMetaData();
+				diseaseMetaData.setName(rs.getString("name_of_perticular"));
+				diseaseMetaData.setInputType(DAOResult.hasColumn(rs, "input_type")? rs.getString("input_type"): null);
+				diseaseDetl.put(rs.getInt("id"), diseaseMetaData);
 	        }
 	        rs.close();
 		}catch(Exception e){
@@ -69,7 +75,7 @@ public class PatientOthersDAO
 		}
 		return diseaseDetl;
 	}
-	
+
 	public HashMap<Integer, String> getDrugGroup() {
 		HashMap<Integer, String> drugGroup = new HashMap<Integer, String>();
 		String sql="select * from tbl_drug_group";

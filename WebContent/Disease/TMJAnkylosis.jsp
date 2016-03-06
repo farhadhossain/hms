@@ -59,6 +59,11 @@ HashMap<Integer, DiseaseMetaData> disDiagnosisList = disServ.getDiseaseDetailsBy
 HashMap<Integer, String> disDiagnosisParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseDiagnosis);
 
 HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(Integer.parseInt(diseaseID));
+
+HashMap<Integer, DiseaseMetaData> disOtherList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
+HashMap<Integer, String> disOtherParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
+
+
 int id = 1;
 
 String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
@@ -161,8 +166,8 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 							  		</ul>
 									
 									<!-- Tab panes -->
-							  		<html:form action="/PatientMalignantTumor">
-						        		<div class="tab-content" style="height: 100%; overflow: auto;">
+							  		<html:form action="/PatientTMJAnKylosis">
+						        		<div class="tab-content" style="overflow: auto;">
 								    		<div role="tabpanel" class="tab-pane active" id="history" >
 									    		<div class="panel-body">
 										    		<%if(editAndView==true || (editAndView==false && patCurDisDTO.patHisId.isEmpty()==false)){%>
@@ -232,12 +237,14 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 											 		<div class="table-responsive">
                               							<table class="table" style="font-size: 13px;">
 															<%
-															int key=16;
-															HashMap<Integer, DiseaseMetaData> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(Integer.parseInt(diseaseID), key);
-								                    		HashMap<Integer, String> disSpecialCaseListDetailsParentByChild = disServ.getParentByChildWithSpCaseDetailsByDisIDAndCaseDetailsID(Integer.parseInt(diseaseID), key);
-															boolean isAnyAvailable=disServ.getIsThisSpecialIdsChildAssigned(Integer.parseInt(userID), Integer.parseInt(diseaseID), key);%>
+																int key=35;
+																HashMap<Integer, DiseaseMetaData> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(Integer.parseInt(diseaseID), key);
+																HashMap<Integer, String> disSpecialCaseListDetailsParentByChild = disServ.getParentByChildWithSpCaseDetailsByDisIDAndCaseDetailsID(Integer.parseInt(diseaseID), key);
+																//boolean isAnyAvailable=disServ.getIsThisSpecialIdsChildAssigned(Integer.parseInt(userID), Integer.parseInt(diseaseID), key);
+															%>
 															<%=MyUtility.generateHTML(disSpecialCaseListDetails, disSpecialCaseListDetailsParentByChild, "specialCaseId", patCurDisDTO.patSpCaseId, patCurDisDTO, editAndView)%>
-							                         	</table>
+
+														</table>
 						                         	</div><!--/./form-group--> 
 										    	</div><!--/./form-group--> 
 					    	 				</div>
@@ -297,7 +304,8 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 										    		<div class="panel-body">
 														<div class="table-responsive">
 															<table class="table" style="font-size: 13px;">
-																<textarea class="form-control" rows="2" name="complications"><%=patCurDisDTO.getComplications()%></textarea>
+																<%--<textarea class="form-control" rows="2" name="complications"><%=patCurDisDTO.getComplications()%></textarea>--%>
+																	<%=MyUtility.generateHTML(disOtherList, disOtherParentByChild, "othersId", patCurDisDTO.patOthersId, patCurDisDTO, editAndView)%>
 															 </table>
 														 </div><!--/./form-group--> 
 													 </div>
@@ -311,7 +319,7 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 									    	
 									  		</div>
 							  			</html:form>
-								  
+									<%@ include file="../Disease/followup.jsp"%>
 									</div>
                 			
 	                   		</div><!--/./ibox-content-->

@@ -15,20 +15,29 @@
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<%@page import="disease.DiseaseDTO"%><html>
+<%@page import="disease.DiseaseDTO"%>
+<%@ page import="disease.form.DiseaseMetaData" %>
+<html>
 <%
-String userID = request.getParameter("userID");
+
+	String userID = request.getParameter("userID");
+	if(userID==null){
+		userID=(String)session.getAttribute("userID");
+	}else{
+		session.setAttribute("userID", userID);
+	}
 
 PatientOthersService patOthersServ = new PatientOthersService();
 
 PatientOthersDTO patCurInfoDTO = patOthersServ.getPatientOthersDTOByID(Integer.parseInt(userID)); 
 
-HashMap<Integer, String> patGeneralAssessmentOfIllnessList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoGeneralAssessmentOfIllness);
-HashMap<Integer, String> patMentalStateAndIntelligenceList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoMentalStateAndIntelligence);
-HashMap<Integer, String> patMentalStateList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoMentalState);
-HashMap<Integer, String> patFaciesList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoFacies);
+HashMap<Integer, DiseaseMetaData> patGeneralAssessmentOfIllnessList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoGeneralAssessmentOfIllness);
+HashMap<Integer, DiseaseMetaData> patMentalStateAndIntelligenceList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoMentalStateAndIntelligence);
+HashMap<Integer, DiseaseMetaData> patMentalStateList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoMentalState);
+HashMap<Integer, DiseaseMetaData> patFaciesList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoFacies);
 
 String name="";
+	//DiseaseMetaData name = new DiseaseMetaData();
 %>
 
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><html:base/>
@@ -99,10 +108,10 @@ String name="";
 				                <div class = "container-fluid">
 				                	<ul class="nav nav-tabs">
 				                	
-				               			<li role="presentation"><a href="../PatientOthers/PatientPersonalHistory.jsp?userID=<%=userID%>">Social & Personal</a></li>
-								  		<li role="presentation"><a href="../PatientOthers/Investigation.jsp?userID=<%=userID%>">Investigation</a></li>
+				               			<li role="presentation"><a href="../PatientOthers/PatientPersonalHistory.jsp?userID=<%=userID%>">History</a></li>
+								  		<%--<li role="presentation"><a href="../PatientOthers/Investigation.jsp?userID=<%=userID%>">Investigation</a></li>--%>
 									  	<li role="presentation"><a href="../PatientOthers/PatinetPhysicalExamination.jsp?userID=<%=userID%>">Physical Examination</a></li>
-									  	<li role="presentation"><a href="../PatientOthers/PreAnestheticEvaluation.jsp?userID=<%=userID%>">Pre-Anesthetic Evaluation</a></li>
+									  	<%--<li role="presentation"><a href="../PatientOthers/PreAnestheticEvaluation.jsp?userID=<%=userID%>">Pre-Anesthetic Evaluation</a></li>--%>
 									  	<li role="presentation" class="active"><a href="../PatientOthers/GeneralSurvey.jsp?userID=<%=userID%>">General Survey</a></li>
 										<li role="presentation" class="dropdown">
 											<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
