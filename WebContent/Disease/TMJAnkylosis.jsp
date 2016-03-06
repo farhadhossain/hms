@@ -292,25 +292,17 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 												 <%}%>
 											 </div>
 											  <%id++; %>
-										  	 <div role="tabpanel" class="tab-pane" id="complications">
-								    		 	<%if(editAndView==true || (editAndView==false && patCurDisDTO.getComplications()!=null && patCurDisDTO.getComplications().length()>0)){%>				                        	
-									    			<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-toggle="collapse" data-parent="#accordion" href="<%= "#collapse"+ id%>" aria-expanded="false" aria-controls="<%= "collapse"+ id%>">
-																Complications
-															</a>
-														</h4>
-													</div>
-										    		<div class="panel-body">
-														<div class="table-responsive">
-															<table class="table" style="font-size: 13px;">
-																<%--<textarea class="form-control" rows="2" name="complications"><%=patCurDisDTO.getComplications()%></textarea>--%>
-																	<%=MyUtility.generateHTML(disOtherList, disOtherParentByChild, "othersId", patCurDisDTO.patOthersId, patCurDisDTO, editAndView)%>
-															 </table>
-														 </div><!--/./form-group--> 
-													 </div>
-												 <%}%>
-										 		</div>
+											<div role="tabpanel" class="tab-pane" id="complications">
+												<%if(editAndView==true || (editAndView==false && patCurDisDTO.getComplications()!=null && patCurDisDTO.getComplications().length()>0)){%>
+												<div class="panel-body">
+													<div class="table-responsive">
+														<table class="table" style="font-size: 13px;">
+															<%=MyUtility.generateHTML(disOtherList, disOtherParentByChild, "othersId", patCurDisDTO.patOthersId, patCurDisDTO, editAndView)%>
+														</table>
+													</div><!--/./form-group-->
+												</div>
+												<%}%>
+											</div>
 											 	
 												<input type="submit" value="Submit" class="btn btn-primary" <%if(editAndView==false){%>style="display: none;"<%}%>>
 												<input type="hidden" name="userId" id="userId" value="<%=userID%>">

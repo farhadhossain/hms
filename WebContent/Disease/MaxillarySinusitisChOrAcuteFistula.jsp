@@ -46,6 +46,13 @@ HashMap<Integer, DiseaseMetaData> disHistoryList = disServ.getDiseaseDetailsByDi
 HashMap<Integer, String> disHistoryParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
 
 HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(Integer.parseInt(diseaseID));
+
+HashMap<Integer, DiseaseMetaData> disDiagnosisList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseDiagnosis);
+HashMap<Integer, String> disDiagnosisParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseDiagnosis);
+
+HashMap<Integer, DiseaseMetaData> disTreatmentPlanList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseTreatmentPlan);
+HashMap<Integer, String> disTreatmentPlanParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseTreatmentPlan);
+
 int id = 1;
 String actionNameFollowUp="/NewFindingsMaxillSinFistulaPatient";
 %>
@@ -198,8 +205,8 @@ String actionNameFollowUp="/NewFindingsMaxillSinFistulaPatient";
 											    	<div class="panel-body">
 														<div class="table-responsive">
 															<table class="table" style="font-size: 13px;">
-																
-															 </table>
+																<%=MyUtility.generateHTML(disDiagnosisList, disDiagnosisParentByChild, "diagnosisId", patCurDisDTO.patDiagonosisId, patCurDisDTO, editAndView)%>
+															</table>
 														 </div><!--/./form-group--> 
 													 </div>
 												 <%}%>
@@ -211,8 +218,8 @@ String actionNameFollowUp="/NewFindingsMaxillSinFistulaPatient";
 											    	<div class="panel-body">
 														<div class="table-responsive">
 															<table class="table" style="font-size: 13px;">
-																
-															 </table>
+																<%=MyUtility.generateHTML(disTreatmentPlanList, disTreatmentPlanParentByChild, "treatmentId", patCurDisDTO.patTrtmntId, patCurDisDTO, editAndView)%>
+															</table>
 														 </div><!--/./form-group--> 
 													 </div>
 												 <%}%>
