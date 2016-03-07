@@ -644,7 +644,7 @@ public class MyUtility {
 			}else if(descripId==162){
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+patCurDisDTO.getInspecDescripId162()+"\">\n";
 			}else if(descripId==165){
-				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId165() , new String[]{"Swelling","Ulcer","Perforation","Sinus","Necrosis","Abscess"}, editAndView);
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId165() , new String[]{"Swelling","Ulcer","Perforation","Sinus","Necrosis","Osteomilitis","Abscess"}, editAndView);
 				tail+="&emsp;Others <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getInspecDescripId165_2()+"\">\n";
 			}else if(descripId==166){
 				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId166(), new String[]{"Smooth superficial", "Round", "Mobile", "Lobuleted", "Circumscribed", "Busselation", "Solid cystic", "Soft fluctuant", "Compressible"}, editAndView);
@@ -1387,7 +1387,7 @@ public class MyUtility {
 			}else if(descripId==94){
 				tail=generateSelectBox(name, patOthersDTO.getInfoId94(), new String[]{"Posteroanterior view","Reverse Towne�s view","Towne�s view","Lateral view","Oblique view","Occipitomental view","30� Occipitomental view","Submentovertex view","OPG view","Cephalometry view"});
 			}else if(descripId==95){
-				tail=generateSelectBox(name, patOthersDTO.getInfoId95(), new String[]{"Periapical view","Occlusal view"});
+				tail=generateSelectBox(name, patOthersDTO.getInfoId95(), new String[]{"Periapical view","Occlusal view of upper jaw","Occlusal view of lower jaw"});
 			}else if(descripId==92){
 				tail=generateSelectBox(name, patOthersDTO.getInfoId92(), new String[]{"Arthography","Sialography"});
 			}else if(descripId==75){
@@ -1404,9 +1404,25 @@ public class MyUtility {
 			}else if(descripId==86){
 				tail=generateSelectBox(name, patOthersDTO.getInfoId86(), new String[]{"Endoscope","Sinuscope"});
 			}else if(descripId==87){
-				tail=generateSelectBox(name, patOthersDTO.getInfoId87(), new String[]{"Excisional biopsy","Incisional biopsy","Brush biopsy","Frozen section biopsy","Fine needle aspiration biopsy","Ultrasound guided FNAC"});
+				tail=generateSelectBox(name, patOthersDTO.getInfoId87(), new String[]{"Excisional biopsy","Incisional biopsy","Brush biopsy","Frozen section biopsy","Fine needle aspiration biopsy","Ultrasound guided FNAC","Core biopsy"});
 			}else if(descripId==99){
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+patOthersDTO.getInfoId99()+"\">\n";
+			}else if(descripId==219){
+				tail="<input type=\"text\" name=\""+name+"\" value=\""+patOthersDTO.getInfoId219()+"\">\n";
+			}else if(descripId==205){
+				tail="<input type=\"text\" name=\""+name+"\" value=\""+patOthersDTO.getInfoId205()+"\">\n";
+			}else if(descripId==210){
+				tail="<input type=\"text\" name=\""+name+"\" value=\""+patOthersDTO.getInfoId210()+"\">\n";
+			}else if(descripId==200){
+				tail="<input type=\"text\" name=\""+name+"\" value=\""+patOthersDTO.getInfoId200()+"\">\n";
+			}else if(descripId==197){
+				tail="<input type=\"text\" name=\""+name+"\" value=\""+patOthersDTO.getInfoId197()+"\">\n";
+			}else if(descripId==190){
+				tail="<input type=\"text\" name=\""+name+"\" value=\""+patOthersDTO.getInfoId190()+"\">\n";
+			}else if(descripId==169){
+				tail="<input type=\"text\" name=\""+name+"\" value=\""+patOthersDTO.getInfoId169()+"\">\n";
+			}else if(descripId==182){
+				tail="<input type=\"text\" name=\""+name+"\" value=\""+patOthersDTO.getInfoId182()+"\">\n";
 			}else if(descripId==100){
 				tail="<br>&emsp;&emsp;Quentity <input type=\"text\" name=\""+name+"_1"+"\" value=\""+patOthersDTO.getInfoId100_1()+"\">\n";
 				tail+="<br>&emsp;&emsp;Duration <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patOthersDTO.getInfoId100_2()+"\">\n";

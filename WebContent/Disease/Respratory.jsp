@@ -44,7 +44,7 @@ HashMap<Integer, DiseaseMetaData> disHistoryList = disServ.getDiseaseDetailsByDi
 HashMap<Integer, String> disHistoryParentByChild = new HashMap<Integer, String> ();
 
 HashMap<Integer, DiseaseMetaData> disSymptomList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseSymptom);
-HashMap<Integer, String> disSymptomParentByChild= new HashMap<Integer, String> ();
+HashMap<Integer, String> disSymptomParentByChild= disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseSymptom);
 
 HashMap<Integer, DiseaseMetaData> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
 HashMap<Integer, String> disInspecParentByChild = new HashMap<Integer, String> ();
@@ -180,8 +180,32 @@ String actionNameFollowUp="/NewFindingsRespratoryPatient";
 										<%id++;%>
 					                          
 					                    <%@ include file="../includeDiseaseParts/includePalpation.jsp"%>
-										<%id++;%>  
-										
+										<%id++;%>
+                                        <%if(editAndView==true || (editAndView==false && patCurDisDTO.patSympId.isEmpty()==false)){%>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="<%= "heading" + id%>">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="<%= "#collapse"+ id%>" aria-expanded="false" aria-controls="<%= "collapse"+ id%>">
+                                                        Percussion
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="<%= "collapse"+ id%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="<%= "heading"+ id%>">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <%
+                                                            HashMap<Integer, DiseaseMetaData> disPurcussionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
+                                                            HashMap<Integer, String> disPurcussParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseOthers);
+                                                        %>
+                                                        <table class="table" style="font-size: 13px;">
+                                                            <%=MyUtility.generateHTML(disPurcussionList, disPurcussParentByChild, "othersId", patCurDisDTO.patOthersId, patCurDisDTO, editAndView)%>
+                                                        </table>
+                                                    </div><!--/./form-group-->
+                                                </div>
+                                            </div>
+                                        </div><!--/./panel panel-default-->
+                                        <%}%>
+                                        <%id++;%>
 										<%@ include file="../includeDiseaseParts/includeAuscultation.jsp"%>
 										<%id++;%>
 					                    

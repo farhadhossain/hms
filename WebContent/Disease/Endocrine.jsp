@@ -44,7 +44,7 @@ HashMap<Integer, DiseaseMetaData> disHistoryList = disServ.getDiseaseDetailsByDi
 HashMap<Integer, String> disHistoryParentByChild = new HashMap<Integer, String>();
 	
 HashMap<Integer, DiseaseMetaData> disSymptomList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseSymptom);
-HashMap<Integer, String> disSymptomParentByChild = new HashMap<Integer, String>();
+HashMap<Integer, String> disSymptomParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseSymptom);
 
 HashMap<Integer, DiseaseMetaData> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
 HashMap<Integer, String> disInspecParentByChild = new HashMap<Integer, String>();
@@ -157,8 +157,8 @@ String actionNameFollowUp="/NewFindingsEndocrinePatient";
 												<%@ include file="../includeDiseaseParts/includeHistory.jsp"%>
                           						<%id++;%>
                           						
-					                         	<%@ include file="../includeDiseaseParts/includeInspection.jsp"%>
-												<%id++;%>
+					                         	<%--<%@ include file="../includeDiseaseParts/includeInspection.jsp"%>
+												<%id++;%>--%>
 												
 												<%@ include file="../includeDiseaseParts/includeSymptom.jsp"%>
 												<%id++;%>

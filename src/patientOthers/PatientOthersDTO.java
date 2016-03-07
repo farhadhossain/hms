@@ -78,6 +78,14 @@ public class PatientOthersDTO
 		curDrugsEffectiveness="";
 		curDrugsSideEffect="";
 		infoId154="";
+		infoId219="";
+		infoId205="";
+		infoId210="";
+		infoId200="";
+		infoId197="";
+		infoId190="";
+		infoId169="";
+		infoId182="";
 		setOccupation("");
 	}
 	
@@ -129,8 +137,58 @@ public class PatientOthersDTO
 	private int infoId97;
 	private int infoId75;
 	private int infoId76;
+
+	public String getInfoId197() {
+		return infoId197;
+	}
+
+	public void setInfoId197(String infoId197) {
+		this.infoId197 = infoId197;
+	}
+
+	private String infoId197;
+
+	public String getInfoId190() {
+		return infoId190;
+	}
+
+	public void setInfoId190(String infoId190) {
+		this.infoId190 = infoId190;
+	}
+
+	private String infoId190;
+
+	public String getInfoId169() {
+		return infoId169;
+	}
+
+	public void setInfoId169(String infoId169) {
+		this.infoId169 = infoId169;
+	}
+
+	private String infoId169;
+
+	public String getInfoId182() {
+		return infoId182;
+	}
+
+	public void setInfoId182(String infoId182) {
+		this.infoId182 = infoId182;
+	}
+
+	private String infoId182;
 	private String infoId98_1;
 	private String infoId98_2;
+
+	public String getInfoId219() {
+		return infoId219;
+	}
+
+	public void setInfoId219(String infoId219) {
+		this.infoId219 = infoId219;
+	}
+
+	private String infoId219;
 	private int infoId86;
 	private int infoId87;
 	
@@ -150,11 +208,41 @@ public class PatientOthersDTO
 	private String curDrugsSideEffect;
 	
 	private String infoId99;
+
+	public String getInfoId205() {
+		return infoId205;
+	}
+
+	public void setInfoId205(String infoId205) {
+		this.infoId205 = infoId205;
+	}
+
+	private String infoId205;
 	private String infoId100_1;
 	private String infoId100_2;
 	private String infoId101;
 	private String infoId121;
 	private String infoId125;
+
+	public String getInfoId200() {
+		return infoId200;
+	}
+
+	public void setInfoId200(String infoId200) {
+		this.infoId200 = infoId200;
+	}
+
+	private String infoId200;
+
+	public String getInfoId210() {
+		return infoId210;
+	}
+
+	public void setInfoId210(String infoId210) {
+		this.infoId210 = infoId210;
+	}
+
+	private String infoId210;
 	private int infoId136;
 	private int infoId137;
 	private int infoId139;
