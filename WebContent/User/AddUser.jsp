@@ -144,7 +144,7 @@ if(loginDTO!=null){
 								</div>
 								
 								<div class="form-group">
-									<label class="col-sm-4 control-label">Role</label>
+									<label class="col-sm-4 control-label">Primary Role</label>
 									<div class="col-sm-4">
 										<select name="roleId" style="margin-left: 26px;">
 				                    		<option value="-1">None</option>
@@ -156,7 +156,32 @@ if(loginDTO!=null){
 					                    		<option value="<%=dto.getRoleID()%>"><%=dto.getRoleName()%></option>
 					                    	<%}%>
 				                    	</select>
+											<%--<%
+												/*RoleService service = new RoleService();
+												ArrayList<RoleDTO> dtoList= service.getAllRoles(null);*/
+												for(int i=0; i<dtoList.size(); i++){
+													RoleDTO dto=dtoList.get(i);%>
+											<input name="roleList[]" type="checkbox" value="<%=dto.getRoleID()%>"><%=" "+dto.getRoleName()%><br />
+											<%}%>
+--%>
 									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Role Lists:</label>
+									<div class="col-sm-4">&nbsp;</div>
+
+									<%
+
+										/*RoleService service = new RoleService();
+                                        ArrayList<RoleDTO> dtoList= service.getAllRoles(null);*/
+										for(int i=0; i<dtoList.size(); i++){
+											RoleDTO dto=dtoList.get(i);%>
+									<div class="col-sm-4">&nbsp;</div>
+									<div class="col-sm-8">
+										<input name="roleList[]" type="checkbox" value="<%=dto.getRoleID()%>"><%=" "+dto.getRoleName()%><br />
+									</div>
+									<%}%>
 								</div>
 								
 								<div class="form-group">

@@ -56,7 +56,13 @@ public class AddNewPatientAction extends Action{
 			dto.setBedNumber(form.getBedNumber());
 			dto.setCabinNumber(form.getCabinNumber());
 			dto.setBloodGroup(form.getBloodGroup());
-			
+			//dto.setImageName(form.getFile1());
+			try {
+				//form.validateFileUpload(p_mapping,p_request);
+				System.out.println("*************************** image name = " + form.getFile1().toString() + " ******************************");
+			}catch (Exception e){
+				System.out.println("problems --------- "+e.toString());
+			}
 			PatientService service = new PatientService();
 			DAOResult daoResult= service.addNewPatient(dto, loginDTO.getUserID());
 			if(daoResult.isValid()==false){

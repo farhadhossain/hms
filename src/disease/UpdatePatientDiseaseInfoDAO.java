@@ -498,10 +498,18 @@ public class UpdatePatientDiseaseInfoDAO {
 						tail_1=", input_value"; tail_2=", '"+dto.getHisDescripId136()+"'";
 					}else if(dto.getHistoryId()[i]==139){
 						tail_1=", input_value"; tail_2=", '"+dto.getHisDescripId139()+"'";
-					}else if(dto.getHistoryId()[i]==140){
+					}/*else if(dto.getHistoryId()[i]==140){
 						tail_1=", input_value, input_value_2"; tail_2=", "+dto.getHisDescripId140_1()+", '"+dto.getHisDescripId140_2()+"'";
-					}else if(dto.getHistoryId()[i]==141){
+					}*/else if(dto.getHistoryId()[i]==141){
 						tail_1=", input_value, input_value_2"; tail_2=", "+dto.getHisDescripId141_1()+", '"+dto.getHisDescripId141_2()+"'";
+					}else if(dto.getHistoryId()[i]==296){
+						tail_1=", input_value"; tail_2=", '"+dto.getEyeOpening()+"'";
+					}else if(dto.getHistoryId()[i]==297){
+						tail_1=", input_value"; tail_2=", '"+dto.getVerbalResponse()+"'";
+					}else if(dto.getHistoryId()[i]==298){
+						tail_1=", input_value"; tail_2=", '"+dto.getMotorResponse()+"'";
+					}else if(dto.getHistoryId()[i]==299){
+						tail_1=", input_value"; tail_2=", '"+dto.getTotalScore()+"'";
 					}else if(dto.getHistoryId()[i]==148){
 						tail_1=", input_value"; tail_2=", '"+dto.getHisDescripId148()+"'";
 					}else if(dto.getHistoryId()[i]==162){
@@ -722,16 +730,47 @@ public class UpdatePatientDiseaseInfoDAO {
 						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId162()+"'";
 					}else if(dto.getInspectionId()[i]==163){
 						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId163()+"'";
+					}else if(dto.getInspectionId()[i]==163){
+						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId163()+"'";
 					}else if(dto.getInspectionId()[i]==165){
 						tail_1=", input_value, input_value_2"; tail_2=", '"+dto.getInspecDescripId165()+"', '"+dto.getInspecDescripId165_2()+"'";
 					}else if(dto.getInspectionId()[i]==166){
 						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId166()+"'";
+					}else if(dto.getInspectionId()[i]==290){
+						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId290()+"'";
+					}else if(dto.getInspectionId()[i]==332){
+						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId332()+"'";
+					}else if(dto.getInspectionId()[i]==351){
+						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId351()+"'";
+					}else if(dto.getInspectionId()[i]==355){
+						tail_1=", input_value";tail_2=", '"+dto.getInspecDescripId355()+"'";
+					}else if(dto.getInspectionId()[i]==356){
+						tail_1=", input_value";tail_2=", '"+dto.getInspecDescripId356()+"'";
+					}else if(dto.getInspectionId()[i]==532){
+						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId532()+"'";
+					}else if(dto.getInspectionId()[i]==533){
+						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId533()+"'";
+					}else if(dto.getInspectionId()[i]==534){
+						tail_1=", input_value"; tail_2=", '"+dto.getInspecDescripId534()+"'";
 					}else if(dto.getInspectionId()[i]==168){
 						tail_1=", input_value, input_value_2";
 						tail_2=", '"+dto.getInspecDescripId168()+"', '"+dto.getInspecDescripId168_2()+"'";
 					}else if(dto.getInspectionId()[i]==178){
 						tail_1=", input_value, input_value_2, input_value_3, input_value_4, input_value_5, input_value_6";
 						tail_2=", '"+dto.getInspecDescripId178()+"', '"+dto.getInspecDescripId178_2()+"', '"+dto.getInspecDescripId178_3()+"', '"+dto.getInspecDescripId178_4()+"', '"+dto.getInspecDescripId178_5()+"', '"+dto.getInspecDescripId178_6()+"'";
+					}else if(dto.getInspectionId()[i]==487){
+						System.out.println("***********************"+dto.getInspecDescripId487_1()+"*********************");
+						tail_1=", input_value, input_value_2, input_value_3, input_value_4"; tail_2=", '"+dto.getInspecDescripId487_1()+"', '"+dto.getInspecDescripId487_2()+"', '"+dto.getInspecDescripId487_3()+"', '"+dto.getInspecDescripId487_4()+"'";
+					}else if(dto.getInspectionId()[i]==488){
+						tail_1=", input_value, input_value_2, input_value_3, input_value_4"; tail_2=", '"+dto.getInspecDescripId488_1()+"', '"+dto.getInspecDescripId488_2()+"', '"+dto.getInspecDescripId488_3()+"', '"+dto.getInspecDescripId488_4()+"'";
+					}else if(dto.getInspectionId()[i]==489){
+						tail_1=", input_value, input_value_2, input_value_3, input_value_4"; tail_2=", '"+dto.getInspecDescripId489_1()+"', '"+dto.getInspecDescripId489_2()+"', '"+dto.getInspecDescripId489_3()+"', '"+dto.getInspecDescripId489_4()+"'";
+					}else if(dto.getInspectionId()[i]==490){
+						tail_1=", input_value, input_value_2, input_value_3, input_value_4"; tail_2=", '"+dto.getInspecDescripId490_1()+"', '"+dto.getInspecDescripId490_2()+"', '"+dto.getInspecDescripId490_3()+"', '"+dto.getInspecDescripId490_4()+"'";
+					}else if(dto.getInspectionId()[i]==536){
+						tail_1=", input_value, input_value_2";tail_2=", '"+dto.getInspecDescripId536_1()+"', '"+dto.getInspecDescripId536_2()+"'";
+					}else if(dto.getInspectionId()[i]==537){
+						tail_1=", input_value, input_value_2";tail_2=", '"+dto.getInspecDescripId537_1()+"', '"+dto.getInspecDescripId537_2()+"'";
 					}
 					stmt.execute("insert into tbl_patient_disease_inspection(patient_id, inspection_id"+tail_1+") values("+dto.getUserId()+", "+dto.getInspectionId()[i]+tail_2+")");
 					tail_1="";

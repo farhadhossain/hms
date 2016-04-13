@@ -103,12 +103,24 @@ public class GetPatientDiseaseInfoDAO {
 					disDTO.setHisDescripId136(rs.getString("input_value"));
 				}else if(historyId==139){
 					disDTO.setHisDescripId139(rs.getString("input_value"));
-				}else if(historyId==140){
+				}/*else if(historyId==140){
 					disDTO.setHisDescripId140_1(rs.getString("input_value")==null?1:Integer.parseInt(rs.getString("input_value")));
 					disDTO.setHisDescripId140_2(rs.getString("input_value_2"));
-				}else if(historyId==141){
+				}*/else if(historyId==141){
 					disDTO.setHisDescripId141_1(rs.getString("input_value")==null?1:Integer.parseInt(rs.getString("input_value")));
 					disDTO.setHisDescripId141_2(rs.getString("input_value_2"));
+				}else if(historyId==296){
+					System.out.println("************************ Eye Opening = "+rs.getInt("input_value")+ "*****************************");
+					disDTO.setEyeOpening(rs.getInt("input_value"));
+				}else if(historyId==297){
+					//System.out.println("************************ Eye Opening = "+rs.getInt("input_value")+ "*****************************");
+					disDTO.setVerbalResponse(rs.getInt("input_value"));
+				}else if(historyId==298){
+					//System.out.println("************************ Eye Opening = "+rs.getInt("input_value")+ "*****************************");
+					disDTO.setMotorResponse(rs.getInt("input_value"));
+				}else if(historyId==299){
+					//System.out.println("************************ Eye Opening = "+rs.getInt("input_value")+ "*****************************");
+					disDTO.setTotalScore(rs.getString("input_value"));
 				}else if(historyId==148){
 					disDTO.setHisDescripId148(rs.getString("input_value"));
 				}else if(historyId==162){
@@ -901,6 +913,24 @@ public class GetPatientDiseaseInfoDAO {
 					disDTO.setInspecDescripId165_2(rs.getString("input_value_2"));
 				}else if(inspectionId==166){
 					disDTO.setInspecDescripId166(rs.getInt("input_value"));
+				}else if(inspectionId==290){
+					System.out.println("************************ T Classification = "+rs.getInt("input_value")+ "*****************************");
+					disDTO.setInspecDescripId290(rs.getInt("input_value"));
+				}else if(inspectionId==332){
+					disDTO.setInspecDescripId332(rs.getInt("input_value"));
+				}else if(inspectionId==351){
+					disDTO.setInspecDescripId351(rs.getInt("input_value"));
+				}else if(inspectionId==355){
+					/*String tClass [] = new String[]{"","TX", "T0", "Tis", "T1", "T2", "T3", "T4a", "T4b"};
+					String nClass [] = new String[]{"","NX", "N0", "N1", "N2", "N2a", "N2b", "N2c", "N3"};
+					String mClass [] = new String[]{"","MX", "M0", "M1"};
+					if(disDTO.getInspecDescripId290() == 1 || disDTO.getInspecDescripId332() == 1 || disDTO.getInspecDescripId351() == 1)
+						disDTO.setInspecDescripId355("test");
+					else
+						disDTO.setInspecDescripId355(tClass[disDTO.getInspecDescripId290()-1]+""+nClass[disDTO.getInspecDescripId332()-1]+""+mClass[disDTO.getInspecDescripId351() - 1]);*/
+					disDTO.setInspecDescripId355(rs.getString("input_value"));
+				}else if(inspectionId==356){
+					disDTO.setInspecDescripId356(rs.getString("input_value"));
 				}else if(inspectionId==168){
 					disDTO.setInspecDescripId168(rs.getInt("input_value"));
 					disDTO.setInspecDescripId168_2(rs.getString("input_value_2"));
@@ -911,8 +941,33 @@ public class GetPatientDiseaseInfoDAO {
 					disDTO.setInspecDescripId178_4(rs.getString("input_value_4"));
 					disDTO.setInspecDescripId178_5(rs.getString("input_value_5"));
 					disDTO.setInspecDescripId178_6(rs.getString("input_value_6"));
+				}else if(inspectionId==487){
+					disDTO.setInspecDescripId487_1(rs.getString("input_value"));
+					disDTO.setInspecDescripId487_2(rs.getString("input_value_2"));
+					disDTO.setInspecDescripId487_3(rs.getString("input_value_3"));
+					disDTO.setInspecDescripId487_4(rs.getString("input_value_4"));
+				}else if(inspectionId==488){
+					disDTO.setInspecDescripId488_1(rs.getString("input_value"));
+					disDTO.setInspecDescripId488_2(rs.getString("input_value_2"));
+					disDTO.setInspecDescripId488_3(rs.getString("input_value_3"));
+					disDTO.setInspecDescripId488_4(rs.getString("input_value_4"));
+				}else if(inspectionId==489){
+					disDTO.setInspecDescripId489_1(rs.getString("input_value"));
+					disDTO.setInspecDescripId489_2(rs.getString("input_value_2"));
+					disDTO.setInspecDescripId489_3(rs.getString("input_value_3"));
+					disDTO.setInspecDescripId489_4(rs.getString("input_value_4"));
+				}else if(inspectionId==490){
+					disDTO.setInspecDescripId490_1(rs.getString("input_value"));
+					disDTO.setInspecDescripId490_2(rs.getString("input_value_2"));
+					disDTO.setInspecDescripId490_3(rs.getString("input_value_3"));
+					disDTO.setInspecDescripId490_4(rs.getString("input_value_4"));
+				}else if(inspectionId==536){
+					disDTO.setInspecDescripId536_1(rs.getString("input_value"));
+					disDTO.setInspecDescripId536_2(rs.getString("input_value_2"));
+				}else if(inspectionId==537){
+					disDTO.setInspecDescripId537_1(rs.getString("input_value"));
+					disDTO.setInspecDescripId537_2(rs.getString("input_value_2"));
 				}
-
 				disDTO.patInspId.add(inspectionId);
 
 				DiseaseMetaValues metaValues = new DiseaseMetaValues();
@@ -1069,9 +1124,9 @@ public class GetPatientDiseaseInfoDAO {
 				disDTO.setOmTimeframe(rs.getString("omTimeframe"));
 				disDTO.setOmIntensity(rs.getString("omIntensity"));
 				disDTO.setOmMechanism(rs.getString("omMechanism")); 
-				disDTO.setEyeOpening(rs.getString("eyeOpening"));
-				disDTO.setVerbalResponse(rs.getString("verbalResponse")); 
-				disDTO.setMotorResponse(rs.getString("motorResponse"));
+				disDTO.setEyeOpening(rs.getInt("eyeOpening"));
+				disDTO.setVerbalResponse(rs.getInt("verbalResponse"));
+				disDTO.setMotorResponse(rs.getInt("motorResponse"));
 				disDTO.setTotalScore(rs.getString("totalScore"));
 				disDTO.setComments(rs.getString("comments"));
 				disDTO.setMechanismOfInjury(rs.getString("mechanismOfInjury"));

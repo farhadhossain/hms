@@ -1,21 +1,18 @@
 package user.action;
 
-import org.apache.struts.action.Action;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import login.LoginDTO;
-
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionForward;
-
+import org.apache.struts.action.ActionMapping;
 import user.UserDTO;
 import user.UserService;
 import user.form.UserForm;
 import utility.DAOResult;
-import utility.LogGeneration;
 import utility.SessionManager;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 
@@ -26,11 +23,19 @@ public class AddUserAction extends Action{
 		
 		String target = "success";
 		if(loginDTO!=null){
+			String role_list = "";
 			UserForm form = (UserForm) p_form;
 			UserDTO dto = new UserDTO();
 			dto.setUserName(form.getUserName().trim());
 			dto.setPassword(form.getPassword().trim());
 			dto.setRoleID(form.getRoleId());
+			for(int i = 0; i<form.getRoleList().length;i++) {
+				role_list += form.getRoleList()[i]+";";
+				System.out.println("******************** Role List = " + form.getRoleList()[i] + " *******************");
+			}
+			if((role_list.contains(";"+dto.getRoleID()+";") || role_list.startsWith(dto.getRoleID()+";")) == Boolean.FALSE)
+				role_list += dto.getRoleID()+";";
+			dto.setRoleList(role_list);
 			dto.setEmployeeName(form.getEmployeeName());
 			dto.setEmployeePhone(form.getEmployeePhone());
 			dto.setDesignation(form.getDesignation());

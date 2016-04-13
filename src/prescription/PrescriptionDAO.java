@@ -31,6 +31,9 @@ public class PrescriptionDAO {
             conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
             stmt = conn.createStatement();
 
+            System.out.println("*********************** Id = "+dto.getId()+" *********************************");
+            System.out.println("*********************** diagnosis = "+dto.getDiagonosis()+" *********************************");
+
             if(dto.getId()>0){
                 stmt.execute("DELETE from prescription where id = "+dto.getId());
             }
@@ -86,7 +89,9 @@ public class PrescriptionDAO {
                 dto.setHo(rs.getString("ho"));
                 dto.setInvestigation(rs.getString("investigation"));
                 dto.setOnObservation(rs.getString("onObservation"));
+                System.out.println("*********************** O/E = "+dto.getOnObservation()+" *********************************");
                 dto.setDiagonosis(rs.getString("diagonosis"));
+                System.out.println("*********************** diagnosis = "+dto.getDiagonosis()+" *********************************");
                 dto.setAdvice(rs.getString("advice"));
                 dto.setChiefComplain(rs.getString("chiefComplain"));
                 dto.setPatientID(rs.getInt("patientId"));

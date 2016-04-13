@@ -5,6 +5,16 @@ public class LoginDTO
   private int userID;
   private String m_userName;
   private String m_passWord;
+
+    public String getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(String roleList) {
+        this.roleList = roleList;
+    }
+
+    private String roleList;
   private int roleID;
   private int clientType;
   public String roleName;

@@ -42,13 +42,39 @@ public class PatientDTO
 	private String bloodGroup;
 	private int otherDeptRefId;
 	private int surgicalStatus;
-	
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
 	public String imageName;
 	public int dischargeStatus;	
 	public HashSet<Integer> diseaseTypeHash;
+
+	public String getAddedBy() {
+		return addedBy;
+	}
+
+	public void setAddedBy(String addedBy) {
+		this.addedBy = addedBy;
+	}
+
 	public String addedBy;
 	public String date_of_adm;
 	public String date_of_disch;
+
+	public String getReferredBy() {
+		return referredBy;
+	}
+
+	public void setReferredBy(String referredBy) {
+		this.referredBy = referredBy;
+	}
+
 	public String referredBy;
 
 

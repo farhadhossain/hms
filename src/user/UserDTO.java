@@ -11,7 +11,16 @@ public class UserDTO
 	private String employeePhone;
 	private int employeeType;
 	private String designation;
-	
+	private String roleList;
+
+	public String getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(String roleList) {
+		this.roleList = roleList;
+	}
+
 	public int getUserID() {
 		return userID;
 	}

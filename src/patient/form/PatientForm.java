@@ -1,6 +1,13 @@
 package patient.form;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.upload.FormFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 
 public class PatientForm extends ActionForm
 {
@@ -19,6 +26,16 @@ public class PatientForm extends ActionForm
 	private String bedNumber;
 	private String cabinNumber;
 	private String bloodGroup;
+
+	public FormFile getFile1() {
+		return file1;
+	}
+
+	public void setFile1(FormFile file1) {
+		this.file1 = file1;
+	}
+
+	private FormFile file1;
 	private int otherDeptRefId;
 	private int bedDoctorID;
 	private int surgicalStatus;
@@ -133,4 +150,23 @@ public class PatientForm extends ActionForm
 	public void setSurgicalStatus(int surgicalStatus) {
 		this.surgicalStatus = surgicalStatus;
 	}
+
+	/*public ActionErrors validateFileUpload(ActionMapping mapping, HttpServletRequest request) {
+		ActionErrors errors = new ActionErrors();
+		FormFile file1 = this.getFile1();
+		System.out.println(file1.getContentType());
+		String dataFileName = file1.getFileName();
+		if (file1 == null) {
+			errors.add( ActionErrors.GLOBAL_ERROR, new ActionError("invalid.file"));
+		}else if (dataFileName == null || dataFileName.length() == 0) {
+			errors.add( ActionErrors.GLOBAL_ERROR, new ActionError("file.required"));
+		} else if (!dataFileName.matches("[a-zA-Z0-9\\s\\-]+\\.pdf")) {
+			errors.add( ActionErrors.GLOBAL_ERROR, new ActionError("filename.invalid"));
+		} else if (file1.getFileSize()>2097152) { //2mb
+			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("file.size.invalid"));
+		}
+
+		return errors;
+	}*/
+
 }

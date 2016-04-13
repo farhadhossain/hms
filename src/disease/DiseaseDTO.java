@@ -34,7 +34,7 @@ public class DiseaseDTO
 		palpaDescripId58_2="";
 		palpaDescripId67_1="";
 		inspecDescripId72="";
-		
+
 		hisDescripId131="";
 		hisDescripId136="";
 		hisDescripId139="";
@@ -48,9 +48,9 @@ public class DiseaseDTO
 		omTimeframe="";
 		omIntensity="";
 		omMechanism=""; 
-		eyeOpening="";
-		verbalResponse=""; 
-		motorResponse="";
+		//eyeOpening="";
+		//verbalResponse="";
+		//motorResponse="";
 		totalScore="";
 		comments="";
 		mechanismOfInjury="";
@@ -85,6 +85,22 @@ public class DiseaseDTO
 		hisDescripId178_2="";
 		hisDescripId178_3="";
 		hisDescripId178_4="";
+		inspecDescripId487_1="";
+		inspecDescripId487_2="";
+		inspecDescripId487_3="";
+		inspecDescripId487_4="";
+		inspecDescripId488_1="";
+		inspecDescripId488_2="";
+		inspecDescripId488_3="";
+		inspecDescripId488_4="";
+		inspecDescripId489_1="";
+		inspecDescripId489_2="";
+		inspecDescripId489_3="";
+		inspecDescripId489_4="";
+		inspecDescripId490_1="";
+		inspecDescripId490_2="";
+		inspecDescripId490_3="";
+		inspecDescripId490_4="";
 		hisDescripId181="";
 		specialCaseId4="";
 		specialCaseId9_1="";
@@ -323,6 +339,10 @@ public class DiseaseDTO
 		treatmentId157="";
 		treatmentId167="";
 		diagnosisId129="";
+		inspecDescripId536_1="";
+		inspecDescripId536_2="";
+		inspecDescripId537_1="";
+		inspecDescripId537_2="";
 	}
 	
 	
@@ -551,7 +571,57 @@ public class DiseaseDTO
 	private String specialCaseId207_2;
 	private int specialCaseId208;
 	private String specialCaseId209;
-	private String specialCaseId210;	
+	private String specialCaseId210;
+
+	public int getInspecDescripId290() {
+
+		return inspecDescripId290;
+	}
+
+	public void setInspecDescripId290(int inspecDescripId290) {
+		this.inspecDescripId290 = inspecDescripId290;
+	}
+
+	private int inspecDescripId290;
+
+	public int getInspecDescripId332() {
+		return inspecDescripId332;
+	}
+
+	public void setInspecDescripId332(int inspecDescripId332) {
+		this.inspecDescripId332 = inspecDescripId332;
+	}
+
+	public int getInspecDescripId351() {
+		return inspecDescripId351;
+	}
+
+	public void setInspecDescripId351(int inspecDescripId351) {
+		this.inspecDescripId351 = inspecDescripId351;
+	}
+
+	private int inspecDescripId332;
+	private int inspecDescripId351;
+
+	public String getInspecDescripId355() {
+		return inspecDescripId355;
+	}
+
+	public void setInspecDescripId355(String inspecDescripId355) {
+		this.inspecDescripId355 = inspecDescripId355;
+	}
+
+	private String inspecDescripId355;
+
+	public String getInspecDescripId356() {
+		return inspecDescripId356;
+	}
+
+	public void setInspecDescripId356(String inspecDescripId356) {
+		this.inspecDescripId356 = inspecDescripId356;
+	}
+
+	private String inspecDescripId356;
 	
 	/** ORO-FACIAL CLEFT **/
 	private String hisDescripId194;
@@ -775,9 +845,9 @@ public class DiseaseDTO
 	private String omTimeframe;
 	private String omIntensity;
 	private String omMechanism; 
-	private String eyeOpening;
-	private String verbalResponse; 
-	private String motorResponse;
+	private int eyeOpening;
+	private int verbalResponse;
+	private int motorResponse;
 	private String totalScore;
 	private String comments;
 	
@@ -852,6 +922,34 @@ public class DiseaseDTO
 	
 	private int inspecDescripId69;
 	private String inspecDescripId72;
+
+	public int getInspecDescripId532() {
+		return inspecDescripId532;
+	}
+
+	public void setInspecDescripId532(int inspecDescripId532) {
+		this.inspecDescripId532 = inspecDescripId532;
+	}
+
+	public int getInspecDescripId533() {
+		return inspecDescripId533;
+	}
+
+	public void setInspecDescripId533(int inspecDescripId533) {
+		this.inspecDescripId533 = inspecDescripId533;
+	}
+
+	public int getInspecDescripId534() {
+		return inspecDescripId534;
+	}
+
+	public void setInspecDescripId534(int inspecDescripId534) {
+		this.inspecDescripId534 = inspecDescripId534;
+	}
+
+	private int inspecDescripId532;
+	private int inspecDescripId533;
+	private int inspecDescripId534;
 	private int inspecDescripId74;
 	private int inspecDescripId75;
 	private int inspecDescripId77;
@@ -906,6 +1004,192 @@ public class DiseaseDTO
 	/**Kidney**/
 	private String lastDateOfDialysis;
 	private String frequencyOfDialysis;
+
+	public String getInspecDescripId487_1() {
+		return inspecDescripId487_1;
+	}
+
+	public void setInspecDescripId487_1(String inspecDescripId487_1) {
+		this.inspecDescripId487_1 = inspecDescripId487_1;
+	}
+
+	public String getInspecDescripId487_2() {
+		return inspecDescripId487_2;
+	}
+
+	public void setInspecDescripId487_2(String inspecDescripId487_2) {
+		this.inspecDescripId487_2 = inspecDescripId487_2;
+	}
+
+	public String getInspecDescripId487_3() {
+		return inspecDescripId487_3;
+	}
+
+	public void setInspecDescripId487_3(String inspecDescripId487_3) {
+		this.inspecDescripId487_3 = inspecDescripId487_3;
+	}
+
+	public String getInspecDescripId487_4() {
+		return inspecDescripId487_4;
+	}
+
+	public void setInspecDescripId487_4(String inspecDescripId487_4) {
+		this.inspecDescripId487_4 = inspecDescripId487_4;
+	}
+
+	public String getInspecDescripId488_1() {
+		return inspecDescripId488_1;
+	}
+
+	public void setInspecDescripId488_1(String inspecDescripId488_1) {
+		this.inspecDescripId488_1 = inspecDescripId488_1;
+	}
+
+	public String getInspecDescripId488_2() {
+		return inspecDescripId488_2;
+	}
+
+	public void setInspecDescripId488_2(String inspecDescripId488_2) {
+		this.inspecDescripId488_2 = inspecDescripId488_2;
+	}
+
+	public String getInspecDescripId488_3() {
+		return inspecDescripId488_3;
+	}
+
+	public void setInspecDescripId488_3(String inspecDescripId488_3) {
+		this.inspecDescripId488_3 = inspecDescripId488_3;
+	}
+
+	public String getInspecDescripId488_4() {
+		return inspecDescripId488_4;
+	}
+
+	public void setInspecDescripId488_4(String inspecDescripId488_4) {
+		this.inspecDescripId488_4 = inspecDescripId488_4;
+	}
+
+	public String getInspecDescripId489_1() {
+		return inspecDescripId489_1;
+	}
+
+	public void setInspecDescripId489_1(String inspecDescripId489_1) {
+		this.inspecDescripId489_1 = inspecDescripId489_1;
+	}
+
+	public String getInspecDescripId489_2() {
+		return inspecDescripId489_2;
+	}
+
+	public void setInspecDescripId489_2(String inspecDescripId489_2) {
+		this.inspecDescripId489_2 = inspecDescripId489_2;
+	}
+
+	public String getInspecDescripId489_3() {
+		return inspecDescripId489_3;
+	}
+
+	public void setInspecDescripId489_3(String inspecDescripId489_3) {
+		this.inspecDescripId489_3 = inspecDescripId489_3;
+	}
+
+	public String getInspecDescripId489_4() {
+		return inspecDescripId489_4;
+	}
+
+	public void setInspecDescripId489_4(String inspecDescripId489_4) {
+		this.inspecDescripId489_4 = inspecDescripId489_4;
+	}
+
+	public String getInspecDescripId490_1() {
+		return inspecDescripId490_1;
+	}
+
+	public void setInspecDescripId490_1(String inspecDescripId490_1) {
+		this.inspecDescripId490_1 = inspecDescripId490_1;
+	}
+
+	public String getInspecDescripId490_2() {
+		return inspecDescripId490_2;
+	}
+
+	public void setInspecDescripId490_2(String inspecDescripId490_2) {
+		this.inspecDescripId490_2 = inspecDescripId490_2;
+	}
+
+	public String getInspecDescripId490_3() {
+		return inspecDescripId490_3;
+	}
+
+	public void setInspecDescripId490_3(String inspecDescripId490_3) {
+		this.inspecDescripId490_3 = inspecDescripId490_3;
+	}
+
+	public String getInspecDescripId490_4() {
+		return inspecDescripId490_4;
+	}
+
+	public void setInspecDescripId490_4(String inspecDescripId490_4) {
+		this.inspecDescripId490_4 = inspecDescripId490_4;
+	}
+
+	/**Orthognathic Surgery**/
+	private String inspecDescripId487_1;
+	private String inspecDescripId487_2;
+	private String inspecDescripId487_3;
+	private String inspecDescripId487_4;
+
+	private String inspecDescripId488_1;
+	private String inspecDescripId488_2;
+	private String inspecDescripId488_3;
+	private String inspecDescripId488_4;
+
+	private String inspecDescripId489_1;
+	private String inspecDescripId489_2;
+	private String inspecDescripId489_3;
+	private String inspecDescripId489_4;
+
+	private String inspecDescripId490_1;
+	private String inspecDescripId490_2;
+	private String inspecDescripId490_3;
+	private String inspecDescripId490_4;
+
+	public String getInspecDescripId536_1() {
+		return inspecDescripId536_1;
+	}
+
+	public void setInspecDescripId536_1(String inspecDescripId536_1) {
+		this.inspecDescripId536_1 = inspecDescripId536_1;
+	}
+
+	public String getInspecDescripId536_2() {
+		return inspecDescripId536_2;
+	}
+
+	public void setInspecDescripId536_2(String inspecDescripId536_2) {
+		this.inspecDescripId536_2 = inspecDescripId536_2;
+	}
+
+	public String getInspecDescripId537_1() {
+		return inspecDescripId537_1;
+	}
+
+	public void setInspecDescripId537_1(String inspecDescripId537_1) {
+		this.inspecDescripId537_1 = inspecDescripId537_1;
+	}
+
+	public String getInspecDescripId537_2() {
+		return inspecDescripId537_2;
+	}
+
+	public void setInspecDescripId537_2(String inspecDescripId537_2) {
+		this.inspecDescripId537_2 = inspecDescripId537_2;
+	}
+
+	private String inspecDescripId536_1;
+	private String inspecDescripId536_2;
+	private String inspecDescripId537_1;
+	private String inspecDescripId537_2;
 	
 	
 	public HashSet<Integer> patHisId;
@@ -2426,22 +2710,22 @@ public class DiseaseDTO
 		return hisDescripId141_2;
 	}
 	
-	public void setEyeOpening(String eyeOpening) {
+	public void setEyeOpening(int eyeOpening) {
 		this.eyeOpening = eyeOpening;
 	}
-	public String getEyeOpening() {
+	public int getEyeOpening() {
 		return eyeOpening;
 	}
-	public void setVerbalResponse(String verbalResponse) {
+	public void setVerbalResponse(int verbalResponse) {
 		this.verbalResponse = verbalResponse;
 	}
-	public String getVerbalResponse() {
+	public int getVerbalResponse() {
 		return verbalResponse;
 	}
-	public void setMotorResponse(String motorResponse) {
+	public void setMotorResponse(int motorResponse) {
 		this.motorResponse = motorResponse;
 	}
-	public String getMotorResponse() {
+	public int getMotorResponse() {
 		return motorResponse;
 	}
 	public void setTotalScore(String totalScore) {

@@ -131,7 +131,9 @@ public class PatientDAO
 	        while(rs.next()){
 	        	PatientDTO dto = new PatientDTO();
 	        	
-	        	dto.addedBy=rs.getString(1);
+	        	//dto.addedBy=rs.getString(1);
+				System.out.println("************************* "+rs.getString(20)+" **********************");
+				dto.setAddedBy(rs.getString(1));
 	        	dto.setAccId(rs.getInt("id"));
 	        	dto.setPin(rs.getString("pin"));
 	        	dto.setDeptId(rs.getInt("current_status"));
@@ -150,7 +152,8 @@ public class PatientDAO
 	        	dto.date_of_adm = rs.getString("date_of_adm");
 	        	dto.date_of_disch = rs.getString("date_of_disch");
 	        	dto.setOtherDeptRefId(rs.getInt("other_dept_ref_id"));
-	        	dto.referredBy=rs.getString(18);
+	        	//dto.referredBy=rs.getString(18);
+				dto.setReferredBy(rs.getString(20));
 	        	
 	        	/*dto.diseaseTypeHash = new HashSet<Integer>();
 	        	if(dto.getDeptId()==MyConfig.deptIndoor){
@@ -198,6 +201,7 @@ public class PatientDAO
 	        	patientDTO.setSex(rs.getString("sex"));
 	        	patientDTO.setTelephoneNum(rs.getString("tel_num"));
 	        	patientDTO.setPresentAdd(rs.getString("present_add"));
+				System.out.println("******************* present address = "+patientDTO.getPresentAdd()+"***************************");
 	        	patientDTO.setPermanentAdd(rs.getString("permanent_add"));
 	        	patientDTO.setDateOfRec(rs.getString("date_of_rec"));
 	        	patientDTO.setTicketNumber(rs.getString("ticket_number"));
@@ -208,7 +212,9 @@ public class PatientDAO
 	        	patientDTO.setBloodGroup(rs.getString("blood_group")); 
 	        	patientDTO.setOtherDeptRefId(rs.getInt("other_dept_ref_id"));
 	        	patientDTO.imageName=rs.getString("image_name");
+				System.out.println("******************* Image = "+patientDTO.imageName+"***************************");
 	        	patientDTO.date_of_adm=rs.getString("date_of_rec");
+				patientDTO.setBedDoctorID(rs.getInt("bed_doctor_id"));
 	        }
 	        rs.close();
 	        
@@ -440,7 +446,8 @@ public class PatientDAO
 			while(rs.next()){
 				PatientDTO dto = new PatientDTO();
 
-				dto.addedBy=rs.getString(1);
+				//dto.addedBy=rs.getString(1);
+				dto.setAddedBy(rs.getString(1));
 				dto.setAccId(rs.getInt("id"));
 				dto.setPin(rs.getString("pin"));
 				dto.setDeptId(rs.getInt("current_status"));
@@ -462,7 +469,8 @@ public class PatientDAO
 				dto.setWordNumber(rs.getString("word_number"));
 				dto.setCabinNumber(rs.getString("cabin_number"));
 				dto.setBedNumber(rs.getString("bed_number"));
-				dto.referredBy=rs.getString("bedDoc");
+				//dto.referredBy=rs.getString("bedDoc");
+				dto.setReferredBy(rs.getString("bedDoc"));
 
 	        	/*dto.diseaseTypeHash = new HashSet<Integer>();
 	        	if(dto.getDeptId()==MyConfig.deptIndoor){

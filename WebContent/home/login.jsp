@@ -1,4 +1,6 @@
 <%@ page language="Java" %>
+<%@ page import="role.RoleDTO"%>
+<%@ page import="role.RoleService"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@page import="utility.SessionManager"%>
@@ -76,7 +78,7 @@ response.setDateHeader ("Expires", -1);
             	<html:form action="/login" onsubmit="return validationResult();" >
             	<div class="m-t form-signin">
 		
-					<%if(session.getAttribute(SessionManager.LoginStatus)!=null && session.getAttribute(SessionManager.LoginStatus).equals("Login Id / Password do not match")){%><div class="alert alert-error"><%=session.getAttribute(SessionManager.LoginStatus)%></div>
+					<%if(session.getAttribute(SessionManager.LoginStatus)!=null && (session.getAttribute(SessionManager.LoginStatus).equals("Login Id / Password do not match") ||session.getAttribute(SessionManager.LoginStatus).equals("You are not authorized to log in"))){%><div class="alert alert-error"><%=session.getAttribute(SessionManager.LoginStatus)%></div>
 						       	<%session.removeAttribute(SessionManager.LoginStatus);}%>
 		
 			
@@ -86,6 +88,24 @@ response.setDateHeader ("Expires", -1);
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control"  name="passWord" id="passWord" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label>Log_in Role</label>
+                    <select name="roleId">
+                            <%
+                                RoleService service = new RoleService();
+                                ArrayList<RoleDTO> dtoList= service.getAllRoles(null);
+                                for(int i=0; i<dtoList.size(); i++){
+                                    RoleDTO dto=dtoList.get(i);%>
+                         <%--
+                                <%
+                                    if(dto.getRoleName().trim().equalsIgnoreCase("admin") || dto.getRoleName().trim().equalsIgnoreCase("Front Desk") || dto.getRoleName().trim().equalsIgnoreCase("Duty Nurse") || dto.getRoleName().trim().equalsIgnoreCase("Doctor (for Bed)"))
+                                        continue;
+                                %>
+                         --%>
+                            <option value="<%=dto.getRoleID()%>"><%=dto.getRoleName()%></option>
+                            <%}%>
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b" value="Sign in">Login</button>
 

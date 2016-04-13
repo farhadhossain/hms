@@ -22,15 +22,16 @@
 	
 	<action-mappings>
 		
-		<action path="/login" name="LoginForm" validate="true" input="login.jsp" type="login.action.LoginAction">
-			<forward name="success" path="/Dashboard/Dashboard.jsp" redirect="true"/>
+		<action path="/login" name="LoginForm" validate="true" input="/home/login.jsp" type="login.action.LoginAction">
+			<!--<forward name="success" path="/Dashboard/Dashboard.jsp" redirect="true"/>-->
+			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
 			<forward name="failure" path="/" redirect="true"/>
 		</action>
 		
 		<action path="/Logout" type="logout.LogoutAction" validate="false" scope="request">
 			<forward name="success" path="/" redirect="true"/>
 		</action>
-		
+
 		<action path="/NewExtraction" name="ExtractionForm" validate="true" input="/Patient/PatientExtraction.jsp" type="extraction.action.AddPatientExtractionAction">
 			<forward name="success" path="/Patient/SearchPatient.jsp" redirect="true"/>
 			<forward name="failure" path="/Patient/SearchPatient.jsp" redirect="true"/>
@@ -75,6 +76,11 @@
 		<action path="/PatientBlood" name="DiseaseForm" validate="true" input="/Disease/Blood.jsp" type="disease.action.AddPatientDisease">
 			<forward name="success" path="/Disease/Blood.jsp" redirect="true"/>
 			<forward name="failure" path="/Disease/Blood.jsp" redirect="true"/>
+		</action>
+
+		<action path="/PatientRenal" name="DiseaseForm" validate="true" input="/Disease/Renal.jsp" type="disease.action.AddPatientDisease">
+			<forward name="success" path="/Disease/Renal.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/Renal.jsp" redirect="true"/>
 		</action>
 
 		<action path="/PatientSalivaryGland" name="DiseaseForm" validate="true" input="/Disease/SalivaryGland.jsp" type="disease.action.AddPatientDisease">
@@ -222,6 +228,14 @@
 		
 		
 		<!-- FollowUp Disease Page Control Here ** start-->
+		<action path="/NewFindingsRenal" name="PatientForm" validate="true" input="/Disease/Renal.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/Renal.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/Renal.jsp" redirect="true"/>
+		</action>
+		<action path="/NewFindingsOrthognathic" name="PatientForm" validate="true" input="/Disease/OrthognathicSurgery.jsp" type="disease.action.AddNewFindingsAction">
+			<forward name="success" path="/Disease/OrthognathicSurgery.jsp" redirect="true"/>
+			<forward name="failure" path="/Disease/OrthognathicSurgery.jsp" redirect="true"/>
+		</action>
 		<action path="/NewFindingsMalignantTumorPatient" name="PatientForm" validate="true" input="/Disease/MalignantTumor.jsp" type="disease.action.AddNewFindingsAction">
 			<forward name="success" path="/Disease/MalignantTumor.jsp" redirect="true"/>
 			<forward name="failure" path="/Disease/MalignantTumor.jsp" redirect="true"/>

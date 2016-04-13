@@ -146,7 +146,7 @@ UserDTO dto=service.getUserDTO(Integer.parseInt(userID));
 								</div>
 								
 								<div class="form-group">
-									<label class="col-sm-4 control-label">Role</label>
+									<label class="col-sm-4 control-label">Primary Role:</label>
 									<div class="col-sm-4">
 										<select name="roleId" style="margin-left: 26px;">
 				                    		<option value="-1">None</option>
@@ -158,9 +158,28 @@ UserDTO dto=service.getUserDTO(Integer.parseInt(userID));
 					                    		<option <%if(dto.getRoleID()==roleDTO.getRoleID()){%>selected="selected"<%}%> value="<%=roleDTO.getRoleID()%>"><%=roleDTO.getRoleName()%></option>
 					                    	<%}%>
 				                    	</select>
+										<%--
+										<br />
+										<%
+											for(int i=0; i<dtoList.size(); i++){
+												RoleDTO roleDTO=dtoList.get(i);%>
+										<input name="roleList[]" type="checkbox" value="<%=roleDTO.getRoleID()%>" <%if(dto.getRoleList() != null && (dto.getRoleList().contains(";"+roleDTO.getRoleID()+";") || dto.getRoleList().startsWith(roleDTO.getRoleID()+";"))){%> checked <%}%>><%=" "+roleDTO.getRoleName()%><br />
+										<%}%>
+										--%>
 									</div>
 								</div>
-								
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Role Lists:</label>
+									<div class="col-sm-4">&nbsp;</div>
+									<%
+										for(int i=0; i<dtoList.size(); i++){
+											RoleDTO roleDTO=dtoList.get(i);%>
+									<div class="col-sm-4">&nbsp;</div>
+									<div class="col-sm-8">
+										<input name="roleList[]" type="checkbox" value="<%=roleDTO.getRoleID()%>" <%if(dto.getRoleList() != null && (dto.getRoleList().contains(";"+roleDTO.getRoleID()+";") || dto.getRoleList().startsWith(roleDTO.getRoleID()+";"))){%> checked <%}%>><%=" "+roleDTO.getRoleName()%><br />
+									</div>
+									<%}%>
+								</div>
 								<div class="form-group">
 									<label class="col-sm-4 control-label"></label>
 									<div class="col-sm-8">

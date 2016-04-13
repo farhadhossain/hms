@@ -9,7 +9,6 @@ import org.apache.struts.action.ActionForward;
 
 import utility.SessionManager;
 
-
 public class LogoutAction extends Action{
 	public ActionForward execute(ActionMapping p_mapping, ActionForm p_form, HttpServletRequest p_request, HttpServletResponse p_response){
 		String target="success";

@@ -37,15 +37,28 @@ public class MyUtility {
 			str1=" disabled=\"disabled\" ";
 		}
 		String tail="";
-		tail="<select name=\""+selectBoxName+"\" id=\""+selectBoxName+"\" "+str1+" style=\"width: 90px;\">\n";
-		for(int i=0;i<showNames.length;i++){
-			if(seBoxIdenti==(i+1)){
-				tail+="<option selected=\"selected\" value=\""+(i+1)+"\">"+showNames[i]+"</option>\n";
-			}else{
-				tail+="<option value=\""+(i+1)+"\">"+showNames[i]+"</option>\n";
+		if(selectBoxName.endsWith("-factor")==Boolean.FALSE) {
+			tail = "<select name=\"" + selectBoxName + "\" id=\"" + selectBoxName + "\" " + str1 + " style=\"width: 90px;\">\n";
+			for(int i=0;i<showNames.length;i++){
+				if(seBoxIdenti==(i+1)){
+					tail+="<option selected=\"selected\" value=\""+(i+1)+"\">"+showNames[i]+"</option>\n";
+				}else{
+					tail+="<option value=\""+(i+1)+"\">"+showNames[i]+"</option>\n";
+				}
 			}
+			tail+="</select>\n";
 		}
-		tail+="</select>\n";
+		else {
+			if(selectBoxName.equalsIgnoreCase("T-factor"))
+				tail = "<select ng-change=\"tnmGenerator(" + selectBoxName + ")\" ng-options=\"x for x in tList\" ng-model=\"" + selectBoxName + "\" id=\"" + selectBoxName + "\" " + str1 + " style=\"width: 90px;\">\n";
+			else if(selectBoxName.equalsIgnoreCase("N-factor"))
+				tail = "<select ng-change=\"tnmGenerator(" + selectBoxName + ")\" ng-options=\"x for x in nList\" ng-model=\"" + selectBoxName + "\" id=\"" + selectBoxName + "\" " + str1 + " style=\"width: 90px;\">\n";
+			else
+				tail = "<select ng-change=\"tnmGenerator(" + selectBoxName + ")\" ng-options=\"x for x in mList\" ng-model=\"" + selectBoxName + "\" id=\"" + selectBoxName + "\" " + str1 + " style=\"width: 90px;\">\n";
+
+			tail+="</select>\n";
+		}
+
 		return tail;
 	}
 	
@@ -66,6 +79,7 @@ public class MyUtility {
 	public static String getInputString(String inputName, int spaceingColumn, int descripId, DiseaseMetaData metaData, boolean isChecked, DiseaseDTO patCurDisDTO, boolean isChildExists, boolean editAndView){
 		String tableName="";
 		String str1="";
+
 		if(spaceingColumn>0){
 			str1=" style=\"margin-left: "+spaceingColumn+"px;\" ";
 		}
@@ -547,6 +561,7 @@ public class MyUtility {
 		}else if(inputName.equals("inspectionId")){
 			tableName = "tbl_patient_disease_inspection";
 			String name="inspecDescripId"+descripId;
+
 			if(descripId==4){
 				tail="<input type=\"text\" name=\"heightVsPressure\" value=\""+patCurDisDTO.getHeightVsPressure()+"\">\n";
 			}else if(descripId==6){
@@ -649,12 +664,91 @@ public class MyUtility {
 			}else if(descripId==166){
 				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId166(), new String[]{"Smooth superficial", "Round", "Mobile", "Lobuleted", "Circumscribed", "Busselation", "Solid cystic", "Soft fluctuant", "Compressible"}, editAndView);
 			}else if(descripId==168){
-				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId168(), new String[]{"Exophytic", "Ulcer infiltrative", "Rerrulouy", "Papillary", "Nodular", "Pigmented", "Deep excavatating ulcer with diffuse peripheral extension", "Leukoplakia"}, editAndView);
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId168(), new String[]{"Exophytic", "Ulceroinfiltrative", "Rerrulouy", "Papillary", "Lodular", "Pigmented", "Deep excavatating ulcer with diffuse peripheral extension", "Leukoplakia"}, editAndView);
 				tail+="&emsp;Others <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getInspecDescripId168_2()+"\">\n<br>";
 			}else if(descripId==178){
-				tail="<div class=\"fourth-child\">Skin size : <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getInspecDescripId178_2()+"\"> X <input type=\"text\" name=\""+name+"_3"+"\" value=\""+patCurDisDTO.getInspecDescripId178_3()+"\"></div>";
-				tail+="<div class=\"fourth-child\">Mucosa : <input type=\"text\" name=\""+name+"_4"+"\" value=\""+patCurDisDTO.getInspecDescripId178_4()+"\"> X <input type=\"text\" name=\""+name+"_5"+"\" value=\""+patCurDisDTO.getInspecDescripId178_5()+"\"></div>";
-				tail+="<div class=\"fourth-child\">Muscle name:<input type=\"text\" name=\""+name+"_6"+"\" value=\""+patCurDisDTO.getInspecDescripId178_6()+"\"></div>";
+				tail="<div class=\"fourth-child\">Skin size : <input type=\"text\" name=\""+name+"_2"+"\" value=\""+(patCurDisDTO.getInspecDescripId178_2()==null?"":patCurDisDTO.getInspecDescripId178_2())+"\"> X <input type=\"text\" name=\""+name+"_3"+"\" value=\""+(patCurDisDTO.getInspecDescripId178_3()==null?"":patCurDisDTO.getInspecDescripId178_3())+"\"></div>";
+				tail+="<div class=\"fourth-child\">Mucosa : <input type=\"text\" name=\""+name+"_4"+"\" value=\""+(patCurDisDTO.getInspecDescripId178_4()==null?"":patCurDisDTO.getInspecDescripId178_4())+"\"> X <input type=\"text\" name=\""+name+"_5"+"\" value=\""+(patCurDisDTO.getInspecDescripId178_5()==null?"":patCurDisDTO.getInspecDescripId178_5())+"\"></div>";
+				tail+="<div class=\"fourth-child\">Muscle name:<input type=\"text\" name=\""+name+"_6"+"\" value=\""+(patCurDisDTO.getInspecDescripId178_6()==null?"":patCurDisDTO.getInspecDescripId178_6())+"\"></div>";
+			}else if(descripId==290){
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId290(), new String[]{"","TX", "T0", "Tis", "T1", "T2", "T3", "T4a", "T4b"}, editAndView);
+			}else if(descripId==332){
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId332(), new String[]{"","NX", "N0", "N1", "N2", "N2a", "N2b", "N2c", "N3"}, editAndView);
+			}else if(descripId==351){
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId351(), new String[]{"","MX", "M0", "M1"}, editAndView);
+			}else if(descripId==355){
+				if(str1.contains(" checked=\"checked\" ")==Boolean.FALSE)
+					str1+=" checked=\"checked\" ";
+				String val355 = "";
+				String tClass [] = new String[]{"","TX", "T0", "Tis", "T1", "T2", "T3", "T4a", "T4b"};
+				String nClass [] = new String[]{"","NX", "N0", "N1", "N2", "N2a", "N2b", "N2c", "N3"};
+				String mClass [] = new String[]{"","MX", "M0", "M1"};
+				if(patCurDisDTO.getInspecDescripId290() != 1 && patCurDisDTO.getInspecDescripId332() != 1 && patCurDisDTO.getInspecDescripId351() != 1)
+					val355 = tClass[patCurDisDTO.getInspecDescripId290()-1]+""+nClass[patCurDisDTO.getInspecDescripId332()-1]+""+mClass[patCurDisDTO.getInspecDescripId351() - 1];
+					patCurDisDTO.setInspecDescripId355(val355);
+				tail="<input type=\"text\" name=\""+name+"\" value=\""+val355+"\" ng-readonly=\"true\">";
+			}else if(descripId==356){
+				if(str1.contains(" checked=\"checked\" ")==Boolean.FALSE)
+					str1+=" checked=\"checked\" ";
+				String val = "";
+				String tnmVal = patCurDisDTO.getInspecDescripId355();
+				if(tnmVal == null || tnmVal.trim().equals("") || tnmVal.trim().equals("null"))
+					val = "Incomplete Information";
+				else {
+					if(tnmVal.trim().equalsIgnoreCase("TisN0M0"))
+						val = "Stage 0";
+					else if(tnmVal.trim().equalsIgnoreCase("T1N0M0"))
+						val = "Stage I";
+					else if(tnmVal.trim().equalsIgnoreCase("T2N0M0"))
+						val = "Stage II";
+					else if(tnmVal.trim().equalsIgnoreCase("T3N0M0") || tnmVal.trim().equalsIgnoreCase("T1N1M0") || tnmVal.trim().equalsIgnoreCase("T2N1M0") || tnmVal.trim().equalsIgnoreCase("T3N1M0"))
+						val = "Stage III";
+					else if(tnmVal.trim().equalsIgnoreCase("T4aN0M0") || tnmVal.trim().equalsIgnoreCase("T4aN1M0") || tnmVal.trim().equalsIgnoreCase("T1N2M0") || tnmVal.trim().equalsIgnoreCase("T2N2M0") || tnmVal.trim().equalsIgnoreCase("T3N2M0") || tnmVal.trim().equalsIgnoreCase("T4aN2M0"))
+						val = "Stage IVA";
+					else if((tnmVal.trim().toLowerCase().startsWith("t4b") && tnmVal.trim().toLowerCase().endsWith("m0")) || tnmVal.toLowerCase().trim().endsWith("n3m0"))
+						val = "Stage IVB";
+					else if(tnmVal.trim().toLowerCase().endsWith("m1"))
+						val = "Stage IVC";
+					else
+						val = "No Rules Defined";
+				}
+				patCurDisDTO.setInspecDescripId356(val);
+				tail="<input type=\"text\" name=\""+name+"\" value=\""+val+"\" ng-readonly=\"true\">";
+			}
+			// Orthognathic Surgery
+			else if(descripId==532){
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId532(), new String[]{"right", "left", "both"}, editAndView);
+			}else if(descripId==533){
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId533(), new String[]{"right", "left", "both"}, editAndView);
+			}else if(descripId==534){
+				tail=generateSelectBox(name, patCurDisDTO.getInspecDescripId534(), new String[]{"right", "left", "both"}, editAndView);
+			}else if(descripId==487){
+				System.out.println("*************** 487 = "+patCurDisDTO.getInspecDescripId487_1()+"*********************");
+				tail+="<table border=\"1\" rules=\"all\" frame=\"void\" style=\"margin-left: 40px;\">";
+				tail+="<tr><td class=\"tableData2\" style=\"margin: 2pt;\"><input type=\"text\" class=\"input-small\" style=\"text-align: right\" name=\"inspecDescripId487_1\" value=\""+patCurDisDTO.getInspecDescripId487_1()+"\"></td><td><input type=\"text\" class=\"input-small\" name=\"inspecDescripId487_2\" value=\""+patCurDisDTO.getInspecDescripId487_2()+"\"></td></tr>";
+				tail+="<tr><td class=\"tableData2\" style=\"margin: 2pt;\"><input type=\"text\" class=\"input-small\" style=\"text-align: right\" name=\"inspecDescripId487_3\" value=\""+patCurDisDTO.getInspecDescripId487_3()+"\"></td><td><input type=\"text\" class=\"input-small\" name=\"inspecDescripId487_4\" value=\""+patCurDisDTO.getInspecDescripId487_4()+"\"></td></tr>";
+				tail+="</table>";
+			}else if(descripId==488){
+				tail+="<table border=\"1\" rules=\"all\" frame=\"void\" style=\"margin-left: 40px;\">";
+				tail+="<tr><td class=\"tableData2\" style=\"margin: 2pt;\"><input type=\"text\" class=\"input-small\" style=\"text-align: right\" name=\"inspecDescripId488_1\" value=\""+patCurDisDTO.getInspecDescripId488_1()+"\"></td><td><input type=\"text\" class=\"input-small\" name=\"inspecDescripId488_2\" value=\""+patCurDisDTO.getInspecDescripId488_2()+"\"></td></tr>";
+				tail+="<tr><td class=\"tableData2\" style=\"margin: 2pt;\"><input type=\"text\" class=\"input-small\" style=\"text-align: right\" name=\"inspecDescripId488_3\" value=\""+patCurDisDTO.getInspecDescripId488_3()+"\"></td><td><input type=\"text\" class=\"input-small\" name=\"inspecDescripId488_4\" value=\""+patCurDisDTO.getInspecDescripId488_4()+"\"></td></tr>";
+				tail+="</table>";
+			}else if(descripId==489){
+				tail+="<table border=\"1\" rules=\"all\" frame=\"void\" style=\"margin-left: 40px;\">";
+				tail+="<tr><td class=\"tableData2\" style=\"margin: 2pt;\"><input type=\"text\" class=\"input-small\" style=\"text-align: right\" name=\"inspecDescripId489_1\" value=\""+patCurDisDTO.getInspecDescripId489_1()+"\"></td><td><input type=\"text\" class=\"input-small\" name=\"inspecDescripId489_2\" value=\""+patCurDisDTO.getInspecDescripId489_2()+"\"></td></tr>";
+				tail+="<tr><td class=\"tableData2\" style=\"margin: 2pt;\"><input type=\"text\" class=\"input-small\" style=\"text-align: right\" name=\"inspecDescripId489_3\" value=\""+patCurDisDTO.getInspecDescripId489_3()+"\"></td><td><input type=\"text\" class=\"input-small\" name=\"inspecDescripId489_4\" value=\""+patCurDisDTO.getInspecDescripId489_4()+"\"></td></tr>";
+				tail+="</table>";
+			}else if(descripId==490){
+				tail+="<table border=\"1\" rules=\"all\" frame=\"void\" style=\"margin-left: 40px;\">";
+				tail+="<tr><td class=\"tableData2\" style=\"margin: 2pt;\"><input type=\"text\" class=\"input-small\" style=\"text-align: right\" name=\"inspecDescripId490_1\" value=\""+patCurDisDTO.getInspecDescripId490_1()+"\"></td><td><input type=\"text\" class=\"input-small\" name=\"inspecDescripId490_2\" value=\""+patCurDisDTO.getInspecDescripId490_2()+"\"></td></tr>";
+				tail+="<tr><td class=\"tableData2\" style=\"margin: 2pt;\"><input type=\"text\" class=\"input-small\" style=\"text-align: right\" name=\"inspecDescripId490_3\" value=\""+patCurDisDTO.getInspecDescripId490_3()+"\"></td><td><input type=\"text\" class=\"input-small\" name=\"inspecDescripId490_4\" value=\""+patCurDisDTO.getInspecDescripId490_4()+"\"></td></tr>";
+				tail+="</table>";
+			}else if(descripId==536){
+				tail="<input type=\"text\" name=\""+name+"_1"+"\" value=\""+patCurDisDTO.getInspecDescripId536_1()+"\">\n mm/Discrepancy ";
+				tail+="<input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getInspecDescripId536_2()+"\">\n <br>";
+			}else if(descripId==537){
+				tail="<input type=\"text\" name=\""+name+"_1"+"\" value=\""+patCurDisDTO.getInspecDescripId537_1()+"\">\n mm/Discrepancy ";
+				tail+="<input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getInspecDescripId537_2()+"\">\n <br>";
 			}
 		}else if(inputName.equals("diagnosisId")){
 			tableName = "tbl_patient_disease_diagnosis";
@@ -826,18 +920,44 @@ public class MyUtility {
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+patCurDisDTO.getHisDescripId136()+"\">\n";
 			}else if(descripId==139){
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+patCurDisDTO.getHisDescripId139()+"\">\n";
-			}else if(descripId==140){
-				tail=generateSelectBox(name, patCurDisDTO.getHisDescripId140_1(), new String[]{"Lacerations","Abrasions","Avulsions","Contusions","Fracture of cranium","Depression of skull"}, editAndView);
-				tail+="<br><br>&emsp;&emsp;The glas gow coma SCALE<br>\n";
-				tail+="<table border=\"1\" style=\"margin-left: 40px; font-size: 12px;\">";
-				tail+="<tr><td class=\"tableData2\">--</td><td>Score</td></tr>";
-				tail+="<tr><td class=\"tableData2\">Eye Opening</td><td><input type=\"text\" name=\"eyeOpening\" value=\""+patCurDisDTO.getEyeOpening()+"\"></td></tr>";
-				tail+="<tr><td class=\"tableData2\">Verbal Response</td><td><input type=\"text\" name=\"verbalResponse\" value=\""+patCurDisDTO.getVerbalResponse()+"\"></td></tr>";
-				tail+="<tr><td class=\"tableData2\">Motor Response</td><td><input type=\"text\" name=\"motorResponse\" value=\""+patCurDisDTO.getMotorResponse()+"\"></td></tr>";
-				tail+="<tr><td class=\"tableData2\">Total Score</td><td><input type=\"text\" name=\"totalScore\" value=\""+patCurDisDTO.getTotalScore()+"\"></td></tr>";
-				tail+="</table>";
-				tail+="<br>&emsp;&emsp;Comments <input type=\"text\" name=\"comments\" value=\""+patCurDisDTO.getComments()+"\">\n";
-				tail+="<br>&emsp;&emsp;Others <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getHisDescripId140_2()+"\">\n";
+			}else if(descripId==296){
+				if(str1.contains(" checked=\"checked\" ")==Boolean.FALSE)
+					str1+=" checked=\"checked\" ";
+				tail = generateSelectBox("eyeOpening", patCurDisDTO.getEyeOpening(), new String[]{"","1","2","3","4"}, editAndView);
+			}else if(descripId==297){
+				if(str1.contains(" checked=\"checked\" ")==Boolean.FALSE)
+					str1+=" checked=\"checked\" ";
+				tail = generateSelectBox("verbalResponse", patCurDisDTO.getVerbalResponse(), new String[]{"","1","2","3","4","5"}, editAndView);
+			}else if(descripId==298){
+				if(str1.contains(" checked=\"checked\" ")==Boolean.FALSE)
+					str1+=" checked=\"checked\" ";
+				tail = generateSelectBox("motorResponse", patCurDisDTO.getMotorResponse(), new String[]{"","1","2","3","4","5","6"}, editAndView);
+			}else if(descripId==299){
+				if(str1.contains(" checked=\"checked\" ")==Boolean.FALSE)
+					str1+=" checked=\"checked\" ";
+				String val = "";
+				if(patCurDisDTO.getEyeOpening() != 1 && patCurDisDTO.getVerbalResponse() != 1 && patCurDisDTO.getMotorResponse() != 1){
+					val = ""+(patCurDisDTO.getEyeOpening()+patCurDisDTO.getVerbalResponse()+patCurDisDTO.getMotorResponse()-3);
+				}
+				if(val.trim().startsWith("-") == Boolean.TRUE)
+					val = "";
+				patCurDisDTO.setTotalScore(val);
+				tail = "<input readonly=\"readonly\" type=\"text\" name=\"totalScore\" value=\""+val+"\">\n";
+			}else if(descripId==300){
+				if(str1.contains(" checked=\"checked\" ")==Boolean.FALSE)
+					str1+=" checked=\"checked\" ";
+				String val = "";
+				String totalScore = patCurDisDTO.getTotalScore();
+				if(totalScore.trim().equalsIgnoreCase(""))
+					val = "Incomplete Information";
+				else if(Integer.parseInt(totalScore.trim()) >= 3 && Integer.parseInt(totalScore.trim()) <= 8)
+					val = "Severe brain injury";
+				else if(Integer.parseInt(totalScore.trim()) >= 9 && Integer.parseInt(totalScore.trim()) <= 13)
+					val = "Moderate brain injury";
+				else if(Integer.parseInt(totalScore.trim()) >= 14 && Integer.parseInt(totalScore.trim()) <= 15)
+					val = "Mild brain injury";
+				patCurDisDTO.setComments(val);
+				tail = "<input readonly=\"readonly\" type=\"text\" name=\"comments\" value=\""+val+"\">\n";
 			}else if(descripId==141){
 				tail=generateSelectBox(name, patCurDisDTO.getHisDescripId141_1(), new String[]{"Airway obstruction","Breathing difficulty","Tracheal position shifting","Flail chest","Cardiac temponade","Hemothorax","Pneumothorax"}, editAndView);
 				tail+="<br>&emsp;&emsp;Others <input type=\"text\" name=\""+name+"_2"+"\" value=\""+patCurDisDTO.getHisDescripId141_2()+"\">\n";

@@ -12,6 +12,16 @@ public class LoginForm extends ActionForm
   private String m_userName;
   private String m_passWord;
 
+  public int getRoleId() {
+    return roleId;
+  }
+
+  public void setRoleId(int roleId) {
+    this.roleId = roleId;
+  }
+
+  int roleId;
+
   public String getuserName() {
 	  return m_userName;
   }

@@ -149,14 +149,14 @@
           PatientDTO dto = dtoList.get(i);%>
         <tr>
           <td><%=(i+1) %></td>
-          <td><%= dto.getWordNumber() %></td>
+          <td><%= dto.getWordNumber()%></td>
           <td><%= dto.getBedNumber() +" / "+ dto.getCabinNumber() %></td>
           <td>
-            Name: <%=dto.getName()%><br>
-            Age: <%=dto.getAge()%><br>
+            Name: <%=dto.getName() %><br>
+            Age: <%=dto.getAge() %><br>
             Phone: <%=dto.getTelephoneNum()%><br>
           </td>
-          <td><%= dto.date_of_adm %></td>
+          <td><%= dto.date_of_adm==null?"":dto.date_of_adm %></td>
           <td></td>
           <td>
             <%if(dto.imageName!=null && dto.imageName.length()>0){%>
@@ -176,7 +176,7 @@
             Discahrged
             <%}%>
           </td>
-          <td><%=dto.referredBy %></td>
+          <td><%=dto.referredBy==null?"":dto.referredBy %></td>
 
         </tr>
         <%}%>

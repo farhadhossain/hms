@@ -8,6 +8,16 @@ public class UserForm extends ActionForm
 	private String userName;
 	private String password;
 	private int roleId;
+
+	public int[] getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(int[] roleList) {
+		this.roleList = roleList;
+	}
+
+	private int [] roleList;
 	private String employeeName;
 	private String employeePhone;
 	private int employeeType;

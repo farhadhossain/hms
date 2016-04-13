@@ -6,15 +6,6 @@ if(loginDTO!=null){
 	}
 }
 %>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.StringTokenizer"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="utility.OthersInfo"%>
-<%@page import="status.StatusService"%>
-<%@page import="disease.DiseaseService"%>
-<%@page import="patient.PatientService"%>
-<%@page import="patient.PatientDTO"%>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>

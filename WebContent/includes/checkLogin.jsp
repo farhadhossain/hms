@@ -1,4 +1,4 @@
-<%@ page import="utility.SessionManager, login.LoginDTO, role.RoleRepository, permission.PermissionDTO" %>
+<%@ page import="login.LoginDTO, permission.PermissionDTO, role.RoleRepository, utility.SessionManager" %>
 <%
 response.setHeader("Cache-Control","no-cache"); 
 response.setHeader("Pragma","no-cache"); 

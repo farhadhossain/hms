@@ -5,7 +5,7 @@ package disease.form;
  */
 public class DiseaseMetaValues {
 
-    private String  param1="";
+    private String param1="";
     private String param2="";
     private String param3="";
     private String param4="";

@@ -1,9 +1,8 @@
 <%@ include file="../includes/checkLogin.jsp"%>
 <!doctype html>
 <html ng-app="hms">
-<%@page import="patient.PatientService"%>
 <%@page import="patient.PatientDTO"%>
-<%@ page import="java.text.SimpleDateFormat" %>
+<%@page import="patient.PatientService"%>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -12,6 +11,8 @@
 String accountID= request.getParameter("accountID");
 PatientService patientServ = new PatientService();
 PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
+	int userID = loginDTO.getRoleID();
+	System.out.println("*********************** userId = "+userID+"*************************");
 %>
 <head>
 	<link rel="stylesheet" type="text/css" href="../Assets/Styles/bootstrap.css">
@@ -420,7 +421,7 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">
-					<i class="fa fa-stethoscope"></i>&nbsp;&nbsp;Diagonsis
+					<i class="fa fa-stethoscope"></i>&nbsp;&nbsp;Diagnsis
 				</h3>
 			</div>
 		   <div class="panel-body">

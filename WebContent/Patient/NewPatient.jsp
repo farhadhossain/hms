@@ -6,14 +6,8 @@ if(loginDTO!=null){
 	}
 }
 %>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.StringTokenizer"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="utility.OthersInfo"%>
 <%@page import="status.StatusService"%>
-<%@page import="disease.DiseaseService"%>
-<%@page import="utility.MyConfig"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -69,6 +63,7 @@ if(loginDTO!=null){
     <script src="../Assets/NewAssets/js/pace.min.js"></script>
 
 	<script>
+
 	function isNumber(s)
     {
       for(var i=0;i<s.length;i++)
@@ -183,7 +178,7 @@ if(loginDTO!=null){
 			        }%>
 					
                     <div class="ibox-content">
-						<html:form action="/NewPatient"  onsubmit="return validationResult();" enctype="multipart/form-data">
+						<html:form action="/NewPatient" method="post" onsubmit="return validationResult();" enctype="multipart/form-data">
 							<div class="form-horizontal">
 						`		
 								<div class="form-group">
@@ -291,7 +286,8 @@ if(loginDTO!=null){
 								<div class="form-group">
 									<label class="col-sm-4 control-label">Image</label>
 									<div class="col-sm-4">
-										<input type="file" id="file1" name="file1" size="20" onchange="AlertFilesize('file1');">
+										<%--<input type="file" id="file1" name="file1" size="20" onchange="AlertFilesize('file1');">--%>
+											<input type="file" id="file1" name="file1" property="file1" size="2000">
 									</div>
 								</div>
 							

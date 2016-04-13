@@ -24,6 +24,7 @@ public class UpdateUserAction extends Action{
 		LoginDTO loginDTO=(LoginDTO)p_request.getSession().getAttribute(SessionManager.LoginStatus);
 		String target = "success";
 		if(loginDTO!=null){
+			String role_list = "";
 			UserForm form = (UserForm) p_form;
 			UserDTO dto = new UserDTO();
 			dto.setUserID(form.getUserID());
@@ -32,9 +33,13 @@ public class UpdateUserAction extends Action{
 			dto.setEmployeeName(form.getEmployeeName()==null?"":form.getEmployeeName());
 			dto.setRoleID(form.getRoleId());
 			dto.setEmployeeType(form.getEmployeeType());
-			
+			for(int i = 0; i<form.getRoleList().length;i++) {
+				role_list += form.getRoleList()[i]+";";
+				System.out.println("******************** Updating Role List = " + form.getRoleList()[i] + " *******************");
+			}
+			dto.setRoleList(role_list);
 			dto.setEmployeePhone(form.getEmployeePhone()==null?"":form.getEmployeePhone());
-			dto.setDesignation(form.getDesignation()!=null?"":form.getDesignation());
+			dto.setDesignation(form.getDesignation()==null?"":form.getDesignation());
 			UserService service = new UserService();
 			DAOResult daoResult=service.updateUserDTO(dto);
 			if(daoResult.isValid()==false){

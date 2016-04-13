@@ -179,7 +179,7 @@
                     			<div class="form-group">
                             		<label class="col-sm-4 control-label">Name of Operations: <span class="red">*</span></label>
                             		<div class="col-sm-6">
-                            			<input name="nameOfOp" class="form-control" type="text" value="<%=patientSurgeryDTO.getNameOfOp()%>">
+                            			<input name="nameOfOp" class="form-control" type="text" value="<%=patientSurgeryDTO.getNameOfOp()==null?"":patientSurgeryDTO.getNameOfOp()%>">
                             		</div>
                             		<div class="col-sm-2"></div>
                     			</div>
@@ -188,7 +188,7 @@
                     			<div class="form-group">
                             		<label class="col-sm-4 control-label">Date of Operations: <span class="red">*</span></label>
                             		<div class="col-sm-6">
-                            			<input type="text" class="form-control" name="dateOfOp" id="dateOfOp" style="width: 100px;" value="<%=patientSurgeryDTO.getDateOfOp()%>">
+                            			<input type="text" class="form-control" name="dateOfOp" id="dateOfOp" style="width: 100px;" value="<%=patientSurgeryDTO.getDateOfOp()==null?"":patientSurgeryDTO.getDateOfOp()%>">
                             		</div>	
                             		<div class="col-sm-2"></div>
                     			</div>

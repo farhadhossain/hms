@@ -89,6 +89,19 @@ String surgicalStatus = request.getParameter("surgicalStatus")==null?"":request.
        		document.getElementById('otherDeptRefDetails').style.display = 'none';
        	}	
     }
+
+	function validationResult(){
+		var f = document.forms[0];
+		if(f.regNumber.value==null || f.regNumber.value==''){
+			alert("Please enter a registration number");
+			return false;
+		}
+		if(f.wordNumber.value==null || f.wordNumber.value==''){
+			alert("Please enter a word number");
+			return false;
+		}
+		return true;
+	}
     </script>
 	
 	
@@ -126,7 +139,7 @@ String surgicalStatus = request.getParameter("surgicalStatus")==null?"":request.
                     </div><!--/./ibox-title-->
 					
 					<div class="ibox-content">
-						<html:form action="/EditPatient" >
+						<html:form action="/EditPatient" onsubmit="return validationResult();">
 							<div class="form-horizontal">
 								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Name <span class="red">*</span></label>
@@ -155,35 +168,35 @@ String surgicalStatus = request.getParameter("surgicalStatus")==null?"":request.
 										<input class="form-control" type="text" name="ticketNumber" value="<%=patientDTO.getTicketNumber()==null?"":patientDTO.getTicketNumber()%>">
 									</div>
 								</div>
-								
-								<div class="form-group">
-									<label class="col-sm-4 control-label">Admitted Registration Number</label>
-									<div class="col-sm-4">
-										<input class="form-control" type="text" name="regNumber" value="<%=patientDTO.getRegNumber()==null?"":patientDTO.getRegNumber() %>">
+								<%if(patientDTO.getSurgicalStatus() != 0 || surgicalStatus.equals("1")){%>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">Admitted Registration Number <span class="red">*</span></label>
+										<div class="col-sm-4">
+											<input class="form-control" type="text" name="regNumber" value="<%=patientDTO.getRegNumber().equals("null")?"":patientDTO.getRegNumber() %>">
+										</div>
 									</div>
-								</div>
-								
-								<div class="form-group" <%if(patientDTO.getDeptId()!=3){%>style="display: none;"<%}%>>
-									<label class="col-sm-4 control-label">Ward Number</label>
-									<div class="col-sm-4">
-										<input class="form-control" type="text" name="wordNumber" value="<%=patientDTO.getWordNumber()==null?"":patientDTO.getWordNumber() %>">
+
+									<div class="form-group" <%if(patientDTO.getDeptId()!=3){%>style="display: none;"<%}%>>
+										<label class="col-sm-4 control-label">Ward Number <span class="red">*</span></label>
+										<div class="col-sm-4">
+											<input class="form-control" type="text" name="wordNumber" value="<%=patientDTO.getWordNumber().equals("null")?"":patientDTO.getWordNumber() %>">
+										</div>
 									</div>
-								</div>
-								
-								<div class="form-group" <%if(patientDTO.getDeptId()!=3){%>style="display: none;"<%}%>>
-									<label class="col-sm-4 control-label">Bed Number</label>
-									<div class="col-sm-4">
-										<input class="form-control" type="text" name="bedNumber" value="<%=patientDTO.getBedNumber()==null?"":patientDTO.getBedNumber() %>">
+
+									<div class="form-group" <%if(patientDTO.getDeptId()!=3){%>style="display: none;"<%}%>>
+										<label class="col-sm-4 control-label">Bed Number</label>
+										<div class="col-sm-4">
+											<input class="form-control" type="text" name="bedNumber" value="<%=patientDTO.getBedNumber().equals("null")?"":patientDTO.getBedNumber() %>">
+										</div>
 									</div>
-								</div>
-								
-								<div class="form-group" <%if(patientDTO.getDeptId()!=3){%>style="display: none;"<%}%>>
-									<label class="col-sm-4 control-label">Cabin Number</label>
-									<div class="col-sm-4">
-										<input class="form-control" type="text" name="cabinNumber" value="<%=patientDTO.getCabinNumber()==null?"":patientDTO.getCabinNumber() %>">
+
+									<div class="form-group" <%if(patientDTO.getDeptId()!=3){%>style="display: none;"<%}%>>
+										<label class="col-sm-4 control-label">Cabin Number</label>
+										<div class="col-sm-4">
+											<input class="form-control" type="text" name="cabinNumber" value="<%=patientDTO.getCabinNumber().equals("null")?"":patientDTO.getCabinNumber() %>">
+										</div>
 									</div>
-								</div>
-								
+								<%}%>
 								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Blood group</label>
 									<div class="col-sm-4">
@@ -194,20 +207,20 @@ String surgicalStatus = request.getParameter("surgicalStatus")==null?"":request.
 								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Telephone Number</label>
 									<div class="col-sm-4">
-										<input class="form-control" type="text" name="telephoneNum"value="<%=patientDTO.getTelephoneNum()==null?"":patientDTO.getTelephoneNum() %>" />
+										<input class="form-control" type="text" name="telephoneNum"value="<%=patientDTO.getTelephoneNum()==null?"":patientDTO.getTelephoneNum()%>" />
 									</div>
 								</div>
 								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Present Address</label>
 									<div class="col-sm-4">
-										<textarea class="form-control" rows="2" name="presentAdd" value="<%=patientDTO.getPresentAdd() %>" ></textarea>
+										<textarea class="form-control" rows="2" name="presentAdd" value="<%=patientDTO.getPresentAdd()%>"><%=patientDTO.getPresentAdd()%></textarea>
 									</div>
 								</div>
 							
 								<div class="form-group" <%if(surgicalStatus.equals("1")){%>style="display: none;"<%}%>>
 									<label class="col-sm-4 control-label">Permanent Address</label>
 									<div class="col-sm-4">
-										<textarea class="form-control" rows="2" name="permanentAdd" value="<%=patientDTO.getPermanentAdd() %>" ></textarea>
+										<textarea class="form-control" rows="2" name="permanentAdd" value="<%=patientDTO.getPermanentAdd()%>"><%=patientDTO.getPermanentAdd()%></textarea>
 									</div>
 								</div>
 								<%
@@ -217,10 +230,24 @@ String surgicalStatus = request.getParameter("surgicalStatus")==null?"":request.
 									<label class="col-sm-4 control-label">Select Bed Doctor</label>
 									<div class="col-sm-4">
 										<select name="bedDoctorID">
-											<option value="-1"><%="None"%></option>
+											<%
+												String docName = null;
+												for(int i=0;i<doctorForBedList.size();i++){%>
+													<%
+														System.out.println("*************** bed doc id = "+patientDTO.getBedDoctorID()+" *********************");
+														if(patientDTO.getBedDoctorID() == doctorForBedList.get(i).getUserID())
+															docName = doctorForBedList.get(i).getEmployeeName();
+													%>
+												<%}
+											%>
+											<option value="<%=docName==null ? -1 : patientDTO.getBedDoctorID()%>"><%=docName==null ? "none" : docName%></option>
 											<%
 											if(doctorForBedList.size()>0){
 	                                			for(int i=0;i<doctorForBedList.size();i++){%>
+													<%
+														if(patientDTO.getBedDoctorID() == doctorForBedList.get(i).getUserID())
+															continue;
+													%>
 	                                				<option value="<%=doctorForBedList.get(i).getUserID()%>"><%=doctorForBedList.get(i).getEmployeeName()%></option>
 	                                			<%}
 	                                		}%>

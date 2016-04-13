@@ -25,14 +25,21 @@ public class LoginAction extends Action{
 		LoginDTO dto = new LoginDTO();
 		dto.setuserName(form.getuserName());
 		dto.setpassWord(form.getpassWord());
+		dto.setRoleID(form.getRoleId());
 		dto=loginDAO.checkValidation(dto);
 		
 		if(dto==null){
 			target="failure";
 			p_request.getSession(true).setAttribute(SessionManager.LoginStatus, "Login Id / Password do not match");
 		}else{
-			RoleRepository.reload();
-			p_request.getSession(true).setAttribute(SessionManager.LoginStatus, dto);
+			if(dto.getRoleList().contains(";"+dto.getRoleID()+";") || dto.getRoleList().startsWith(dto.getRoleID()+";")) {
+				RoleRepository.reload();
+				p_request.getSession(true).setAttribute(SessionManager.LoginStatus, dto);
+			}else {
+				//dto = null;
+				target="failure";
+				p_request.getSession(true).setAttribute(SessionManager.LoginStatus, "You are not authorized to log in");
+			}
 		}
 		
 		return (p_mapping.findForward(target));

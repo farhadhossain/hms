@@ -97,6 +97,20 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
     <script src="../Assets/NewAssets/js/jquery.metisMenu.js"></script>
     <script src="../Assets/NewAssets/js/jquery.slimscroll.min.js"></script>
 
+	<!--AngularJs-->
+	<script type="text/javascript" src="../Assets/js/angular/angular.min.js"></script>
+
+	<script>
+		var app = angular.module('malignantApp', []);
+		app.controller('malignantCtrl', function($scope) {
+			/*$scope.tnmGenerator = function(item){
+				$scope.inspecDescripId355 = item;
+			}
+			$scope.tList = ["TX", "T0", "Tis", "T1", "T2", "T3", "T4a", "T4b"];
+			$scope.nList = ["NX", "N0", "N1", "N2", "N2a", "N2b", "N2c", "N3"];
+			$scope.mList = ["MX", "M0", "M1"];*/
+		});
+	</script>
    
 
     <!-- Custom and plugin javascript -->
@@ -163,7 +177,7 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 									
 									<!-- Tab panes -->
 							  		<html:form action="/PatientMalignantTumor">
-						        		<div class="tab-content" style="overflow: auto;">
+						        		<div class="tab-content" style="overflow: auto;" ng-app="malignantApp" ng-controller="malignantCtrl">
 								    		<div role="tabpanel" class="tab-pane active" id="history" >
 									    		<div class="panel-body">
 											    	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -249,16 +263,11 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 												<%id++; %>
 												<div role="tabpanel" class="tab-pane" id="specialNotes">
 													<%if(editAndView==true || (editAndView==false && patCurDisDTO.getSpecialNotes()!=null && patCurDisDTO.getSpecialNotes().length()>0)){%>
-													<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-toggle="collapse" data-parent="#accordion" href="<%= "#collapse"+ id%>" aria-expanded="false" aria-controls="<%= "collapse"+ id%>">
-																Special Notes
-															</a>
-														</h4>
-													</div>
 													<div class="panel-body">
 														<div class="table-responsive">
-															<textarea class="form-control" rows="2" name="specialNotes"><%=patCurDisDTO.getSpecialNotes()%></textarea>
+															<table class="table" style="font-size: 13px;">
+																<textarea class="form-control" rows="2" name="specialNotes"><%=patCurDisDTO.getSpecialNotes()%></textarea>
+															</table>
 														</div><!--/./form-group-->
 													</div>
 													<%}%>
