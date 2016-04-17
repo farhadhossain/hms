@@ -24,7 +24,7 @@
    	if((contentType.indexOf("multipart/form-data") >= 0)) {
 	    DiskFileItemFactory factory = new DiskFileItemFactory();
     	factory.setSizeThreshold(maxMemSize);
-      	//factory.setRepository(new File("/Users/macintosh/Desktop"));
+      	factory.setRepository(new File("/Users/macintosh/Documents/Farhad/apache-tomcat-8.0.20/webapps/images/"));
 	    ServletFileUpload upload = new ServletFileUpload(factory);
     	upload.setSizeMax( maxFileSize );
       	try{

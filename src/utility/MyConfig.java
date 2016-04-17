@@ -41,7 +41,7 @@ public class MyConfig{
 	public static final int userSystem=1;
 	public static final int userDoctor=2;
 	
-	public static final String filePath = "http://104.194.235.227/TestImages/";
+	public static final String filePath = "http://localhost:8080/images/";
 	
 	public static HashMap<Integer, String> refToOtherDeptDetails = new HashMap<Integer , String>() {{
 		put(0, "None");

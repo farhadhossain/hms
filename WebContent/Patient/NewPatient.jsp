@@ -178,7 +178,7 @@ if(loginDTO!=null){
 			        }%>
 					
                     <div class="ibox-content">
-						<html:form action="/NewPatient" method="post" onsubmit="return validationResult();" enctype="multipart/form-data">
+						<form action="patient_add_with_img.jsp" method="post"  onsubmit="return validationResult();" enctype="multipart/form-data" name="form1" id="form1">
 							<div class="form-horizontal">
 						`		
 								<div class="form-group">
@@ -286,8 +286,7 @@ if(loginDTO!=null){
 								<div class="form-group">
 									<label class="col-sm-4 control-label">Image</label>
 									<div class="col-sm-4">
-										<%--<input type="file" id="file1" name="file1" size="20" onchange="AlertFilesize('file1');">--%>
-											<input type="file" id="file1" name="file1" property="file1" size="2000">
+										<input type="file" id="file1" name="file1" size="20" onchange="AlertFilesize('file1');">
 									</div>
 								</div>
 							
@@ -298,7 +297,7 @@ if(loginDTO!=null){
 									</div>
 								</div>
 							</div>
-						</html:form>
+						</form>
 					</div><!-- /ibox-content -->
                 </div><!--/./ibox float-e-margins-->
             </div><!--/./col-lg-12-->

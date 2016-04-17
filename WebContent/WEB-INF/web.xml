@@ -13,12 +13,13 @@
 	<context-param> 
     	<description>Location to store uploaded file</description> 
     	<param-name>file-upload</param-name> 
-    	<param-value>/usr/local/apache-tomcat-7.0.52/webapps/TestImages/</param-value> 
+    	<param-value>/Users/macintosh/Documents/Farhad/apache-tomcat-8.0.20/webapps/images/</param-value>
 	</context-param>
+
 
     <filter>
         <filter-name>struts2</filter-name>
-        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+        <filter-class>utility.Struts2Filter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>struts2</filter-name>
