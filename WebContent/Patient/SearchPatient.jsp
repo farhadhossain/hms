@@ -5,6 +5,8 @@ if(loginDTO!=null){
 		response.sendRedirect("../");
 	}
 }
+	MyConfig.userID = loginDTO.getUserID();
+	MyConfig.roleID = loginDTO.getRoleID();
 %>
 
 <%@ page import="disease.DiseaseService" %>

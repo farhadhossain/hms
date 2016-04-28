@@ -15,10 +15,11 @@ public class LoginDTO
     }
 
     private String roleList;
-  private int roleID;
-  private int clientType;
-  public String roleName;
-public String employeeName;
+    private int roleID;
+    private int clientType;
+    public String roleName;
+    public String employeeName;
+    public String designation;
   
   public String getuserName() {
 	  return m_userName;

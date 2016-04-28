@@ -11,6 +11,7 @@ import java.util.List;
 import login.LoginDTO;
 
 import utility.DAOResult;
+import utility.MyConfig;
 
 public class ExtractionDAO {
 
@@ -394,6 +395,7 @@ public class ExtractionDAO {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		System.out.println("***************************** From save treatment plan ***********************************");
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
@@ -404,6 +406,18 @@ public class ExtractionDAO {
 			String sql="insert into tbl_extraction_patient(patient_id, extraction_id, input_value, input_value_2, input_value_3, input_value_4, payment_amount, payment_reg_no, is_instrument_provided, is_done) values("+dto.getPatientId()+", "+dto.getExtractionId()+", '"+dto.getInputValue1()+"', '"+dto.getInputValue2()+"', '"+dto.getInputValue3()+"', '"+dto.getInputValue4()+"',"+dto.getPaymentAmount()+",'"+dto.getPaymentRegNo()+"',"+dto.isInstrumentProvided()+","+dto.isDone()+")";
 			System.out.println(sql);
 			stmt.execute(sql);
+
+			//if(dto.isDone()) {
+				sql="SELECT * FROM tbl_logbook where userId="+MyConfig.userID+" and patientId="+dto.getPatientId()+" and roleId="+MyConfig.roleID;
+				System.out.println(sql);
+				rs = stmt.executeQuery(sql);
+				while (rs.next()==Boolean.FALSE) {
+					String upDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+					sql = "insert into tbl_logbook(userId, patientId, updateDate, roleId) " + "values('" + MyConfig.userID + "','" + dto.getPatientId() + "','" + upDate + "','" + MyConfig.roleID + "')";
+					System.out.println(sql);
+					stmt.execute(sql);
+				}
+			//}
 
 		}catch(Exception e){
 			daoRes.setMessage("Error: "+e.toString());

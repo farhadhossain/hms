@@ -1,8 +1,13 @@
 package utility;
 
+
 import java.util.HashMap;
 
 public class MyConfig{
+
+	//Below two variables for log book purpose
+	public static int userID = -1;
+	public static int roleID = -1;
 	
 	public static final int lengthOfPINCode=10;
 	public static final String pinPrefix="PG";
@@ -41,6 +46,8 @@ public class MyConfig{
 	public static final int userSystem=1;
 	public static final int userDoctor=2;
 	
+	/*public static final String filePath = "http://localhost:8080/images/";*/
+	/*public static final String filePath = "D:\\apache-tomcat-8.0.32\\webapps\\images\\";*/
 	public static final String filePath = "http://localhost:8080/images/";
 	
 	public static HashMap<Integer, String> refToOtherDeptDetails = new HashMap<Integer , String>() {{

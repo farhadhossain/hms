@@ -3,6 +3,7 @@
 <html ng-app="hms">
 <%@page import="patient.PatientDTO"%>
 <%@page import="patient.PatientService"%>
+<%@ page import="utility.MyConfig" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -11,8 +12,10 @@
 String accountID= request.getParameter("accountID");
 PatientService patientServ = new PatientService();
 PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
-	int userID = loginDTO.getRoleID();
-	System.out.println("*********************** userId = "+userID+"*************************");
+
+	/*MyConfig.userID = loginDTO.getUserID();
+	MyConfig.roleID = loginDTO.getRoleID();*/
+	/*System.out.println("*********************** userId = "+loginDTO.getUserID()+"*************************");*/
 %>
 <head>
 	<link rel="stylesheet" type="text/css" href="../Assets/Styles/bootstrap.css">

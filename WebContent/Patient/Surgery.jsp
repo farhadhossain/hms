@@ -14,8 +14,6 @@
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 <%
 
-
-
 	String accountID= request.getParameter("userID");
 	PatientSurgeryService patientServ = new PatientSurgeryService();
 	PatientSurgeryDTO patientSurgeryDTO=patientServ.getSurgeryByPatientID(Integer.parseInt(accountID));

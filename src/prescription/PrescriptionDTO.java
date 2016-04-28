@@ -17,6 +17,7 @@ public class PrescriptionDTO {
     private String referTo;
     private String nextVisitDate;
     private int patientID;
+    public String patientName;
     private List<PrescriptionMedicineDTO> medicines = new ArrayList<PrescriptionMedicineDTO>();
 
 

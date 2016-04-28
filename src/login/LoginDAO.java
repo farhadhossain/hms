@@ -12,7 +12,7 @@ public class LoginDAO
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			System.out.println("****************** Role id = "+dto.getRoleID()+" **********************");
 			//pstmt = conn.prepareStatement("select id, role_id, (select ROLE_NAME from system_role where ROLE_ID=tbl_user.role_id), employee_name from tbl_user where user_name=? and user_pass=?");
-			pstmt = conn.prepareStatement("select id, role_list, (select ROLE_NAME from system_role where ROLE_ID="+dto.getRoleID()+"), employee_name from tbl_user where user_name=? and user_pass=?");
+			pstmt = conn.prepareStatement("select id, role_list, (select ROLE_NAME from system_role where ROLE_ID="+dto.getRoleID()+"), employee_name, designation from tbl_user where user_name=? and user_pass=?");
 			pstmt.setString(1, dto.getuserName());
 	        pstmt.setString(2, dto.getpassWord());
 	        ResultSet rs = pstmt.executeQuery();
@@ -24,6 +24,7 @@ public class LoginDAO
 	        	dto.setClientType(-1);
 	        	dto.roleName=rs.getString(3);
 	        	dto.employeeName=rs.getString(4);
+				dto.designation=rs.getString(5);
 	        }else{
 	        	dto=null;
 	        }

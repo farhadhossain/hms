@@ -1,3 +1,4 @@
+
 <%if(loginDTO!=null){ %>
 
 <%@page import="utility.MyConfig"%><nav class="navbar-default navbar-static-side" role="navigation">
@@ -42,8 +43,15 @@
 	                        	<span class="nav-label">Patient Management </span>
 	                        </a>                
 	                    </li>
-	                <%}%>   
-                   
+	                <%}%>
+					<%if(loginDTO.getRoleID()==MyConfig.diagnosisRoomRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.minorOTOrOutdoorRole){%>
+						<li>
+							<a href='../Others/LogBook.jsp'>
+								<i class="fa fa-ambulance"></i>
+								<span class="nav-label">Log Book</span>
+							</a>
+						</li>
+					<%}%>
                     <%if(loginDTO.getClientType()==-1 && RoleRepository.isPermitted(loginDTO.getRoleID(), PermissionDTO.PatientSearch)==true){%>
                     	<%if(loginDTO.getRoleID()==MyConfig.DoctorForBed || loginDTO.getRoleID()==MyConfig.deptIndoor || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.AnesthetistRole){%>
 			                <li>
@@ -90,12 +98,12 @@
 	                        	<span class="nav-label">OT Plan</span>
 	                        </a>                
 	                    </li>--%>
-						<li>
+						<%--<li>
 							<a href='../Others/LogBook.jsp'>
 								<i class="fa fa-ambulance"></i>
 								<span class="nav-label">Log Book</span>
 							</a>
-						</li>
+						</li>--%>
 	                    
 	                    <li>
 	                        <a href='../Others/DrugList.jsp' target="_blank">

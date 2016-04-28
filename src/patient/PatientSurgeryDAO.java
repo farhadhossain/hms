@@ -1,6 +1,7 @@
 package patient;
 
 import user.UserDTO;
+import user.UserService;
 import utility.DAOResult;
 import utility.MyConfig;
 
@@ -305,6 +306,22 @@ public class PatientSurgeryDAO {
 			sql="update tbl_patient set surgical_status = 3 where id="+dto.getUserID();
 			System.out.println(sql);
 			stmt.execute(sql);
+
+			int size = dto.getAssistSurgIDList().length;
+
+			System.out.println("********************* from MakePostOperative with size = "+size+" *********************");
+			for(int i = 0; i < size; i++){
+
+				int user = dto.getAssistSurgIDList()[i];
+				int role = MyConfig.AssistantSurgeonRole;
+
+				String upDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+				sql = "insert into tbl_logbook(userId, patientId, updateDate, roleId) " + "values('" + user + "','" + dto.getUserID() + "','" + upDate + "','" + role + "')";
+				System.out.println(sql);
+				stmt.execute(sql);
+
+				//System.out.println("********************* from MakePostOperative with id = "+dto.getAssistSurgIDList()[i]+" *********************");
+			}
 
 		}catch(Exception e){
 			System.out.println(e.toString());

@@ -1,16 +1,11 @@
 package prescription;
 
-import org.apache.commons.lang.RandomStringUtils;
-import patient.PatientDTO;
+import jxl.write.DateTime;
 import utility.DAOResult;
 import utility.MyConfig;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
 
 /**
  * Created by macintosh on 11/28/15.
@@ -21,6 +16,7 @@ public class PrescriptionDAO {
 
         Connection conn=null;
         Statement stmt=null;
+        ResultSet rs = null;
 
         DAOResult daoResult = new DAOResult();
         daoResult.setValid(true);
@@ -31,8 +27,7 @@ public class PrescriptionDAO {
             conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
             stmt = conn.createStatement();
 
-            System.out.println("*********************** Id = "+dto.getId()+" *********************************");
-            System.out.println("*********************** diagnosis = "+dto.getDiagonosis()+" *********************************");
+            System.out.println("*********************** From Save Prescription with user id =  "+ MyConfig.userID+" & role id = "+ MyConfig.roleID+"*********************************");
 
             if(dto.getId()>0){
                 stmt.execute("DELETE from prescription where id = "+dto.getId());
@@ -61,6 +56,17 @@ public class PrescriptionDAO {
                 stmt.execute(sql);
             }
 
+            sql="SELECT * FROM tbl_logbook where userId="+MyConfig.userID+" and patientId="+dto.getPatientID()+" and roleId="+MyConfig.roleID;
+            System.out.println(sql);
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()==Boolean.FALSE) {
+                String upDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+                sql = "insert into tbl_logbook(userId, patientId, updateDate, roleId) " + "values('" + MyConfig.userID + "','" + dto.getPatientID() + "','" + upDate + "','" + MyConfig.roleID + "')";
+                System.out.println(sql);
+                stmt.execute(sql);
+            }
+
         }catch(Exception e){
             daoResult.setValid(false);
             e.printStackTrace();
@@ -68,6 +74,9 @@ public class PrescriptionDAO {
         }finally{
             try{stmt.close();}catch(Exception e){}
             try{conn.close();}catch(Exception e){}
+            /*try {
+                rs.close();
+            }catch(Exception e){}*/
         }
         return daoResult;
     }
@@ -117,6 +126,9 @@ public class PrescriptionDAO {
                 medicineDTO.setDuration(rs.getString("duration"));
                 dto.getMedicines().add(medicineDTO);
             }
+            rs=stmt.executeQuery("select name from tbl_patient where id="+patientId);
+            if (rs.next())
+               dto.patientName = rs.getString(1);
 
         }catch(Exception e){
             e.printStackTrace();

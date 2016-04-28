@@ -20,7 +20,7 @@ if(accountID==null){
 }else{
 	session.setAttribute("accountID", accountID);
 }
-System.out.println("accountID: "+accountID);
+
 PatientService patientServ = new PatientService();
 PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 ExtractionService extracServ = new ExtractionService();
@@ -34,6 +34,9 @@ if(loginDTO.getRoleID()==MyConfig.dutyNurseRole){
 }
 
 System.out.println("isUncheckedHide: "+isUncheckedHide);
+
+	MyConfig.userID = loginDTO.getUserID();
+	MyConfig.roleID = loginDTO.getRoleID();
 
 %>
 <head>
