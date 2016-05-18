@@ -6,6 +6,9 @@
 <%@page import="patient.PatientService"%>
 <%@page import="patient.PatientDTO"%>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="prescription.VisitDAO" %>
+<%@ page import="prescription.VisitDTO" %>
+<%@ page import="utility.StringUtil" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -21,8 +24,14 @@ if(accountID==null){
 	session.setAttribute("accountID", accountID);
 }
 
+String visitID = request.getParameter("visitID")==null?"0":request.getParameter("visitID");
+
 PatientService patientServ = new PatientService();
 PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
+int currentVisitId = new VisitDAO().getCurrentVisitId(Integer.parseInt(accountID));
+VisitDTO visitDTO = new VisitDAO().getVisitById(Integer.parseInt(visitID) == 0 ? currentVisitId : Integer.parseInt(visitID));
+StringUtil.removeNullFromObject(visitDTO);
+StringUtil.removeNullFromObject(patientDTO);
 ExtractionService extracServ = new ExtractionService();
 HashMap<Integer, String> extractionNameByID = extracServ.getExtractionListByID();
 HashMap<Integer, Integer> extractionTakaByID = extracServ.getExtractionTakaByID();
@@ -106,7 +115,6 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 			padding-right:0px;
 			padding-left:0px;
 		}
-
 	</style>
 </head>
 <body ng-app="hms">
@@ -123,9 +131,18 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 				<!-- Patient info panel -->
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">
-							Patient Details <a href="../Patient/EditPatient.jsp?accountID=<%=accountID %>" style="color: green;">[Referred To]</a>
+						<h3 class="panel-title pull-left">
+							Patient Details
 						</h3>
+						<ul role="presentation" class="dropdown pull-right" ng-show="<%=visitID.equals("0")%>">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								Previous Visits <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li ng-repeat="v in visits | limitTo:visits.length-1"><a target="_blank" href="/Patient/PatientExtraction.jsp?accountID=<%=accountID%>&visitID={{v.id}}">{{$index+1}}) on {{v.visitDate | date:'dd MMM yyyy'}}</a></li>
+							</ul>
+						</ul>
+						<div class="clearfix"></div>
 					</div>
 					<div class="panel-body_1 table-responsive ">
 						<table class="table-bordered table">
@@ -137,23 +154,25 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 								<th>Age</th>
 								<th>Sex</th>
 								<th>Registration Date</th>
+								<th>Visit Date</th>
 							</tr>
 							</thead>
 							<tbody>
 							<tr>
-								<td><%=patientDTO.getTicketNumber() %></td>
+								<td><%=visitDTO.getTicketNumber() %></td>
 								<td><%=patientDTO.getAccId() %></td>
 								<td><%=patientDTO.getName() %></td>
 								<td><%=patientDTO.getAge() %></td>
 								<td><%=patientDTO.getSex() %></td>
 								<td><%=patientDTO.getDateOfRec() %></td>
+								<td>{{currentVisit.visitDate | date:'dd MMM yyyy'}}</td>
 							</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 				<!-- Patient info panel END-->
-				<div class="row remove-margin well well-sm" ng-init="getPrescription('<%=accountID%>')" ng-show="!isDutyNurse">
+				<div class="row remove-margin well well-sm" ng-init="getVisits(<%=accountID%>);getPrescription(<%=accountID%>,<%=visitID%>);" ng-show="!isDutyNurse">
 					<div class="col-md-4" style="border-right: 1px solid gray;">
 					    <div class="row"><div class="col-sm-9"><h4><i class="fa fa-comments"></i>&nbsp;&nbsp;Chief Complaint (C/C)</h4></div></div>
 					    <div class="row" ng-repeat="cc in prescription.chiefComplain">
@@ -349,7 +368,7 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 									<div class="col-md-3">Payment Info</div>
 									<div class="col-md-3">Status</div>
 								</div>
-								<div class="row" ng-repeat="item in treatmentPlan.extraction track by item.extractionId" style="padding: 20px;">
+								<div class="row" ng-repeat="item in treatmentPlan.extraction track by item.extractionId" style="padding: 20px;" ng-show="!isDutyNurse || item.paymentRegNo!=''">
 									<div class="col-md-6" ng-if="item.paymentRegNo!=''">Deposited {{calculatePaymentAmount($index,item)}} Taka for {{item.name}}</div>
 									<div class="col-md-6" ng-if="item.paymentRegNo==''">Please deposit Taka {{calculatePaymentAmount($index,item)}} for {{item.name}}</div>
 									<div class="col-md-3" ng-show="!isDutyNurse">Reg. No <input type="text" size="10" ng-model="item.paymentRegNo"/></div>
@@ -361,7 +380,7 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 								<div>Payment registration number <input type="text" name="paymentRegNumber" value="<%=extractionDTO.getPaymentRegNumber() %>"></div>   --%>
 							</div>
 						</div>
-						<div class="row" ng-init="getTreatmentPlans()">
+						<div class="row" ng-init="getTreatmentPlans(0)" ng-show="<%=visitID.equals("0")%>">
 							<input class="btn btn-primary pull-right" type="button" value="Save" style="margin-right: 20px;margin-left: 20px;" ng-click="saveTreatmentPlan()"/>
 							<input class="btn  pull-right" type="button" value="Print" onClick="window.print()"/>
 							<input type="hidden" name="uniqIDExtraction" value="<%=extractionDTO.getUniqIDExtraction() %>">

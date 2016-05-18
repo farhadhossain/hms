@@ -5,12 +5,9 @@ import extraction.TreatmentPlanDTO;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.codehaus.jackson.map.ObjectMapper;
 import prescription.action.ActionSupport;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,7 +31,7 @@ public class TreatmentPlanAction extends ActionSupport {
     @Action(value = "/rest/treatmentPlan/all", results = {@Result(name="success",type="json")})
     public String allTreatmentPlan() {
         ExtractionDAO dao = new ExtractionDAO();
-        plans = dao.getTreatmentPlan(accountID);
+        plans = dao.getTreatmentPlan(accountID, visitID);
         return ActionSupport.SUCCESS;
     }
 
@@ -53,6 +50,12 @@ public class TreatmentPlanAction extends ActionSupport {
 
     public void setPlans(List<TreatmentPlanDTO> plans) {
         this.plans = plans;
+    }
+
+    private int visitID;
+
+    public void setVisitID(int visitID) {
+        this.visitID = visitID;
     }
 
 }

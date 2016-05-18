@@ -4,16 +4,24 @@
 <%@page import="patient.PatientService"%>
 <%@page import="patientOthers.PatientOthersDTO"%>
 <%@page import="patientOthers.PatientOthersService"%>
+<%@ page import="prescription.VisitDTO" %>
+<%@ page import="prescription.VisitDAO" %>
+<%@ page import="utility.*" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 <%
 String accountID= request.getParameter("accountID");
+String visitID = request.getParameter("visitID")==null?"0":request.getParameter("visitID");
 PatientService patientServ = new PatientService();
 boolean editAndView=false;
 
 PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
+int currentVisitId = new VisitDAO().getCurrentVisitId(Integer.parseInt(accountID));
+VisitDTO visitDTO = new VisitDAO().getVisitById(Integer.parseInt(visitID) == 0 ? currentVisitId : Integer.parseInt(visitID));
+StringUtil.removeNullFromObject(visitDTO);
+StringUtil.removeNullFromObject(patientDTO);
 
 PatientOthersService patOthersServ = new PatientOthersService();
 
@@ -27,7 +35,7 @@ HashMap<Integer, DiseaseMetaData> patFamilyRelevantDiseaseHistoryList = patOther
 HashMap<Integer, DiseaseMetaData> patHistoryOfImmunizationList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfImmunization);
 HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 %>
-<html lang="en">
+<html lang="en" ng-app="hms">
 <head><html:base/><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><%=SessionManager.title%></title>
 <!--<link rel="stylesheet" type="text/css" href="../Assets/Fonts/fontface.css" />
@@ -44,40 +52,26 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
     
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	
-	<link href="../Assets/NewAssets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <!-- Font -->
-    <link href="../Assets/NewAssets/css/font-awesome.css" type="text/css" rel="stylesheet">
-    <!-- Animation -->
-    <link href="../Assets/NewAssets/css/animate.css" type="text/css" rel="stylesheet">
-    <!-- Custom css -->
-    <link href="../Assets/NewAssets/css/style.css" type="text/css" rel="stylesheet">
-    
-    <script type="text/javascript" src="../Assets/Scripts/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="../Assets/Scripts/jquery.cookie.js"></script>
-    <script type="text/javascript" src="../Assets/Scripts/jquery-ui-1.8.16.custom.min.js"></script>
-    <script type="text/javascript" src="../Assets/Scripts/sidebar-menu.js"></script>
-    <script type="text/javascript" src="../Assets/Scripts/bootstrap.js"></script>
-    <script type="text/javascript" src="../Assets/Scripts/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="../Assets/Scripts/bootstrap-timepicker.min.js"></script>
-    <script type="text/javascript" src="../Assets/Scripts/jquery.numeric.js"></script>
-    <script type="text/javascript" src="../Assets/Scripts/picnet.table.filter.min.js"></script>
-    <script type="text/javascript" src="../Assets/Scripts/highcharts.js"></script>
-    <script type="text/javascript" src="../Assets/Scripts/mir-billing-script.js"></script>
-    
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../Assets/NewAssets/js/bootstrap.min.js"></script>
-    <script src="../Assets/NewAssets/js/jquery.metisMenu.js"></script>
-    <script src="../Assets/NewAssets/js/jquery.slimscroll.min.js"></script>
 
-   
+	<link rel="stylesheet" type="text/css" href="../Assets/Styles/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../Assets/NewAssets/css/datepicker.css">
+	<link rel="stylesheet" type="text/css" href="../Assets/NewAssets/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="../Assets/Styles/toastr.min.css">
+	<link href="../Assets/NewAssets/css/style.css" type="text/css" rel="stylesheet">
 
-    <!-- Custom and plugin javascript -->
-    <script src="../Assets/NewAssets/js/custom.js"></script>
-    <script src="../Assets/NewAssets/js/pace.min.js"></script>
     
+   <script type="text/javascript" src="../Assets/js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="../Assets/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../Assets/js/toastr.min.js"></script>
+ 	<script type="text/javascript" src="../Assets/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="../Assets/js/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../Assets/js/angular/ui-bootstrap-0.13.1.min.js"></script>
+	<script type="text/javascript" src="../Assets/js/angular/ui-bootstrap-tpls-0.13.1.min.js"></script>
+	<script type="text/javascript" src="../Assets/js/angular/module.js"></script>
+	<script type="text/javascript" src="../Assets/js/angular/controllers/viewFindingsController.js"></script>
+	<script>
+
+	</script>
 </head>
 
 
@@ -91,7 +85,7 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
                
              	<div style="clear:both"></div>
    				 <div class="ibox float-e-margins">
-                    <div class="ibox-title">
+                    <div class="ibox-title" ng-controller = "ViewFindingsController" ng-init="getVisits(<%=accountID%>);">
                     
                     	<div class="row">
                     		<div class="col-sm-6" style="font-family: ubuntu mono;">
@@ -99,7 +93,16 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
                        		</div>
                        		<div class="col-sm-6" style="text-align: right;">
                        			<input type="button" class="btn btn-primary" style="padding: 2px 12px;" value="Print" onClick="window.print()">
+								<ul role="presentation" class="dropdown pull-right" ng-show="<%=visitID.equals("0")%>">
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+										Previous Visits <span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<li ng-repeat="v in visits | limitTo:visits.length-1" ><a target="_blank" href="/Report/PatientInfoAll.jsp?accountID=<%=accountID%>&visitID={{v.id}}">{{$index+1}}) on {{v.visitDate | date:'dd MMM yyyy'}}</a></li>
+									</ul>
+								</ul>
                        		</div>
+
                         </div>
                     </div><!--/./ibox-title-->
                     
@@ -135,20 +138,20 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 										</div>
 										<div class="col-sm-2">
 											<label>Ticket No:</label>
-											<label><%=patientDTO.getTicketNumber() %></label>
+											<label><%=visitDTO.getTicketNumber() %></label>
 										</div>
 										
 										<div class="col-sm-2">
 										  	<label for="p1">Ward No:  </label>
-										  	<label style=""><%=patientDTO.getWordNumber()==null?"":patientDTO.getWordNumber() %></label>
+										  	<label style=""><%=visitDTO.getWordNumber()==null?"":visitDTO.getWordNumber() %></label>
 										</div>
 										<div class="col-sm-2">
 											<label>Bed No:</label>
-											<label><%= patientDTO.getBedNumber() %></label>
+											<label><%= visitDTO.getBedNumber() %></label>
 										</div>
 										<div class="col-sm-2">
 											<label>Cabin No: </label>
-											<label><%=patientDTO.getCabinNumber() %></label>
+											<label><%=visitDTO.getCabinNumber() %></label>
 										</div>
 										<div class="col-sm-2">
 											<label>Blood Group: </label>
@@ -171,11 +174,11 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 										<div class="row">
 											<div classs="col-sm-12">
 												<label style="font-size: 16px;">&nbsp;Admitted in:</label>
-												<label style="font-size: 16px; color: red;"><%=statusList.get(patientDTO.getDeptId()) %></label>
+												<label style="font-size: 16px; color: red;"><%=statusList.get(visitDTO.getCurrentStatus()) %></label>
 											</div>
 											<table class="col-sm-12" style="color: #0A141F;">
 												<%if(patientDTO.getDeptId()==3){%>
-				                        			<%Iterator<Integer> it = patientDTO.diseaseTypeHash.iterator();
+				                        			<%Iterator<Integer> it = visitDTO.diseaseTypeHash.iterator();
 				                                  	while(it.hasNext()) {
 				                                  		int key=it.next();%>
 				                    					<tr>

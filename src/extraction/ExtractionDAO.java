@@ -1,5 +1,9 @@
 package extraction;
 
+import login.LoginDTO;
+import utility.DAOResult;
+import utility.MyConfig;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -7,11 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-
-import login.LoginDTO;
-
-import utility.DAOResult;
-import utility.MyConfig;
 
 public class ExtractionDAO {
 
@@ -242,6 +241,60 @@ public class ExtractionDAO {
 		return dto;
 	}
 
+	public ExtractionDTO getExtractionDTOByPatientID(int patientID) {
+		ExtractionDTO dto = new ExtractionDTO();
+		Connection conn = null;
+		Statement stmt = null;
+
+		try{
+			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
+			stmt = conn.createStatement();
+
+			String sql="SELECT * FROM tbl_extraction_patient where patient_id="+patientID+" and is_done=1";
+			System.out.println(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()){
+				if(rs.getInt("extraction_id")==1){
+					dto.setExtractionId1_1(rs.getString("input_value")); dto.setExtractionId1_2(rs.getString("input_value_2"));
+					dto.setExtractionId1_3(rs.getString("input_value_3")); dto.setExtractionId1_4(rs.getString("input_value_4"));
+				}else if(rs.getInt("extraction_id")==2){
+					dto.setExtractionId2_1(rs.getString("input_value")); dto.setExtractionId2_2(rs.getString("input_value_2"));
+					dto.setExtractionId2_3(rs.getString("input_value_3")); dto.setExtractionId2_4(rs.getString("input_value_4"));
+				}else if(rs.getInt("extraction_id")==3){
+					dto.setExtractionId3_1(rs.getString("input_value")); dto.setExtractionId3_2(rs.getString("input_value_2"));
+					dto.setExtractionId3_3(rs.getString("input_value_3")); dto.setExtractionId3_4(rs.getString("input_value_4"));
+				}else if(rs.getInt("extraction_id")==5){
+					dto.setExtractionId5("Excision of epulis");
+				}else if(rs.getInt("extraction_id")==6){
+					dto.setExtractionId6("Frenectomy");
+				}else if(rs.getInt("extraction_id")==7){
+					dto.setExtractionId7("Incision oferupting teeth");
+				}else if(rs.getInt("extraction_id")==8){
+					dto.setExtractionId8("Gingivactomy");
+				}else if(rs.getInt("extraction_id")==9){
+					dto.setExtractionId9("Management of small cyst /enucleation");
+				}else if(rs.getInt("extraction_id")==10){
+					dto.setExtractionId10("Apisectomy per teeth");
+				}else if(rs.getInt("extraction_id")==11){
+					dto.setExtractionId11("Drainage of abscess");
+				}else if(rs.getInt("extraction_id")==12){
+					dto.setExtractionId12("Splinting of teeth/ one jaw");
+				}else if(rs.getInt("extraction_id")==13){
+					dto.setExtractionId13("IMF by Arch bar wiring for simple jaw fracture");
+				}else if(rs.getInt("extraction_id")==14){
+					dto.setExtractionId14("Incisional biopsy");
+				}
+			}
+		}catch (Exception e){
+			System.out.println(e.toString());
+		}finally {
+			try{stmt.close();}catch(Exception e){}
+			try{conn.close();}catch(Exception e){}
+		}
+
+		return dto;
+	}
+
 	public ArrayList<ExtractionDTO> getPatientExtractionDTOList(String startDate, String endDate) {
 		Connection conn = null;
 		Statement stmt = null; 
@@ -403,7 +456,7 @@ public class ExtractionDAO {
 				stmt.execute("delete from tbl_extraction_patient where id="+dto.getId());
 			}
 
-			String sql="insert into tbl_extraction_patient(patient_id, extraction_id, input_value, input_value_2, input_value_3, input_value_4, payment_amount, payment_reg_no, is_instrument_provided, is_done) values("+dto.getPatientId()+", "+dto.getExtractionId()+", '"+dto.getInputValue1()+"', '"+dto.getInputValue2()+"', '"+dto.getInputValue3()+"', '"+dto.getInputValue4()+"',"+dto.getPaymentAmount()+",'"+dto.getPaymentRegNo()+"',"+dto.isInstrumentProvided()+","+dto.isDone()+")";
+			String sql="insert into tbl_extraction_patient(patient_id, extraction_id, input_value, input_value_2, input_value_3, input_value_4, payment_amount, payment_reg_no, is_instrument_provided, is_done, visit_id) values("+dto.getPatientId()+", "+dto.getExtractionId()+", '"+dto.getInputValue1()+"', '"+dto.getInputValue2()+"', '"+dto.getInputValue3()+"', '"+dto.getInputValue4()+"',"+dto.getPaymentAmount()+",'"+dto.getPaymentRegNo()+"',"+dto.isInstrumentProvided()+","+dto.isDone() +",(select max(id) from visit where patient_id="+dto.getPatientId()+"))";
 			System.out.println(sql);
 			stmt.execute(sql);
 
@@ -428,15 +481,15 @@ public class ExtractionDAO {
 		return daoRes;
 	}
 
-	public List<TreatmentPlanDTO> getTreatmentPlan(int patientId) {
+	public List<TreatmentPlanDTO> getTreatmentPlan(int patientId, int visitId) {
 		List<TreatmentPlanDTO> dtos = new ArrayList<TreatmentPlanDTO>();
 		Connection conn = null;
 		Statement stmt = null;
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
-
-			String sql="SELECT * FROM tbl_extraction_patient where patient_id="+patientId;
+			String visit = visitId==0?"(select max(id) from visit where patient_id="+patientId+")":visitId+"";
+			String sql="SELECT * FROM tbl_extraction_patient where patient_id="+patientId+" and visit_id="+visit;
 			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 

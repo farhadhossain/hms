@@ -43,8 +43,6 @@ DiseaseService disServ = new DiseaseService();
 DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(Integer.parseInt(userID), Integer.parseInt(diseaseID)); 
 ArrayList<FollowUpDTO> followUpList=disServ.getFollowUpReport(Integer.parseInt(userID), Integer.parseInt(diseaseID));
 
-HashMap<Integer, DiseaseMetaData> disHisto0ryList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
-HashMap<Integer, String> disHistoryParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseHistory);
 
 HashMap<Integer, DiseaseMetaData> disInspectionList = disServ.getDiseaseDetailsByDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
 HashMap<Integer, String> disInspecParentByChild = disServ.getParentByChildWithDisIDAndDisType(Integer.parseInt(diseaseID), MyConfig.diseaseInspection);
@@ -182,20 +180,20 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 									    		<div class="panel-body">
 											    	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 												    	<%
-														for(int key: disSpecialCaseList.keySet()){ 
+														for(int key: disSpecialCaseList.keySet()){
 										                    	HashMap<Integer, DiseaseMetaData> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(Integer.parseInt(diseaseID), key);
 										                    	HashMap<Integer, String> disSpecialCaseListDetailsParentByChild = disServ.getParentByChildWithSpCaseDetailsByDisIDAndCaseDetailsID(Integer.parseInt(diseaseID), key);
 										                    	boolean isAnyAvailable=disServ.getIsThisSpecialIdsChildAssigned(Integer.parseInt(userID), Integer.parseInt(diseaseID), key);%>
-										                    	
+
 																	<%@ include file="../includeDiseaseParts/includeSpecialCaseIdOnly.jsp"%>
-																
+
 														<%}%>
 													</div>
 										    	</div>
 									    	</div>
 										    <%id++;%>
-										    
-										    <div role="tabpanel" class="tab-pane" id="clinicalExamination" style="">
+
+										     <div role="tabpanel" class="tab-pane" id="clinicalExamination" style="">
 										    	<div class="panel-body">
 													<%if(editAndView==true || (editAndView==false && patCurDisDTO.patInspId.isEmpty()==false)){%>
 													<div class="table-responsive">
@@ -204,9 +202,10 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 														</table>
 													</div>
 													<%}%>
-										    	</div><!--/./form-group--> 
-								    		 </div>
-											
+										    	</div><!--/./form-group-->
+											 </div>
+											<%id++;%>
+
 						    	   			 <div role="tabpanel" class="tab-pane" id="specificInvestigation">
 									    	 	<div class="panel-body">
 											 		<table class="table" style="font-size: 13px;">
@@ -218,10 +217,10 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 														%>
 														<%=MyUtility.generateHTML(disSpecialCaseListDetails, disSpecialCaseListDetailsParentByChild, "specialCaseId", patCurDisDTO.patSpCaseId, patCurDisDTO, editAndView)%>
 													</table>
-										    	</div><!--/./form-group--> 
+										    	</div><!--/./form-group-->
 				    	 					 </div>
-										     <%id++; %> 
-										    
+										     <%id++; %>
+
 										     <div role="tabpanel" class="tab-pane" id="diagnosis">
 							    		 		<%if(editAndView==true || (editAndView==false && patCurDisDTO.patDiagonosisId.isEmpty()==false)){%>
 											    	<div class="panel-body">
@@ -229,12 +228,12 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 															<table class="table" style="font-size: 13px;">
 																<%=MyUtility.generateHTML(disDiagonosisList, disDiagonosisParentByChild, "diagnosisId", patCurDisDTO.patDiagonosisId, patCurDisDTO, editAndView)%>
 															 </table>
-														 </div><!--/./form-group--> 
+														 </div><!--/./form-group-->
 													 </div>
 												 <%}%>
 									    	</div>
-									    	<%id++; %> 
-									    	
+									    	<%id++; %>
+
 									    	<div role="tabpanel" class="tab-pane" id="treatmentPlan">
 										    	<%if(editAndView==true || (editAndView==false && patCurDisDTO.patTrtmntId.isEmpty()==false)){%>
 											    	<div class="panel-body">
@@ -242,7 +241,7 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 															<table class="table" style="font-size: 13px;">
 																	<%=MyUtility.generateHTML(disTreatmentPlanList, disTreatmentPlanParentByChild, "treatmentId", patCurDisDTO.patTrtmntId, patCurDisDTO, editAndView)%>
 															 </table>
-														 </div><!--/./form-group--> 
+														 </div><!--/./form-group-->
 													 </div>
 												 <%}%>
 									    	</div>
@@ -255,7 +254,7 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 															<table class="table" style="font-size: 13px;">
 																<%=MyUtility.generateHTML(disOtherList, disOtherParentByChild, "othersId", patCurDisDTO.patOthersId, patCurDisDTO, editAndView)%>
 															</table>
-														 </div><!--/./form-group--> 
+														 </div>
 													 </div>
 												 <%}%>
 										 		</div>
@@ -268,7 +267,7 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 															<table class="table" style="font-size: 13px;">
 																<textarea class="form-control" rows="2" name="specialNotes"><%=patCurDisDTO.getSpecialNotes()%></textarea>
 															</table>
-														</div><!--/./form-group-->
+														</div>
 													</div>
 													<%}%>
 												</div>
@@ -276,7 +275,7 @@ String actionNameFollowUp="/NewFindingsMalignantTumorPatient";
 												<input type="submit" value="Submit" class="btn btn-primary" <%if(editAndView==false){%>style="display: none;"<%}%>>
 												<input type="hidden" name="userId" id="userId" value="<%=userID%>">
 											    <input type="hidden" name="diseaseId" id="diseaseId" value="<%=diseaseID%>">
-										    	
+
 									    	
 									  		</div>
 							  			</html:form>

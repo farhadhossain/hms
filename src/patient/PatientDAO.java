@@ -1,5 +1,12 @@
 package patient;
 
+import common.BaseDAO;
+import login.LoginDTO;
+import org.apache.commons.lang.RandomStringUtils;
+import prescription.VisitDAO;
+import utility.DAOResult;
+import utility.MyConfig;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -7,14 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import login.LoginDTO;
 
-import org.apache.commons.lang.RandomStringUtils;
-import utility.DAOResult;
-import utility.MyConfig;
-
-
-public class PatientDAO
+public class PatientDAO  extends BaseDAO
 {
 	public DAOResult addNewPatient(PatientDTO dto, int userID) {
 		
@@ -53,19 +54,17 @@ public class PatientDAO
 			sql="insert into tbl_patient(pin, current_status, name, age, sex, tel_num, present_add, permanent_add, ticket_number, reg_number, word_number, bed_number, cabin_number, blood_group, added_by, image_name, other_dept_ref_id) " +
 					"values('"+pin+"', "+dto.getDeptId()+", '"+dto.getName()+"', "+dto.getAge()+", '"+dto.getSex()+"', '"+dto.getTelephoneNum()+"', '"+dto.getPresentAdd()+"', '"+dto.getPermanentAdd()+"', '"+dto.getTicketNumber()+"', '"+dto.getRegNumber()+"', '"+dto.getWordNumber()+"', '"+dto.getBedNumber()+"', '"+dto.getCabinNumber()+"', '"+dto.getBloodGroup()+"', "+userID+", '"+dto.imageName+"', "+dto.getOtherDeptRefId()+")";
 			System.out.println(sql);
-			stmt.execute(sql);
+
+			int generatedId = executeInsert(conn, sql);
 			
-			rs = stmt.executeQuery("SELECT * FROM tbl_patient where pin='"+pin+"'");
-			if(rs.next()) {
-				dto.setAccId(rs.getInt("id"));
-			}
-			rs.close();
-			
-			
+			dto.setAccId(generatedId);
+			daoResult.setObjectId(generatedId);
+
 			sql="insert into tbl_patient_log(patient_id, work) values("+dto.getAccId()+", 'Admitted Today')";
 			System.out.println(sql);
 			stmt.execute(sql);
-			
+
+
 			/*for(int i=0; i<dto.getDiseaseType().length; i++){
 				sql="insert into tbl_patient_disease(patient_id, disease_id) values("+dto.getAccId()+", "+dto.getDiseaseType()[i]+")";
 				System.out.println(sql);
@@ -264,7 +263,9 @@ public class PatientDAO
 			sql="update tbl_patient set ticket_number='"+dto.getTicketNumber()+"', reg_number='"+dto.getRegNumber()+"', word_number='"+dto.getWordNumber()+"', bed_number='"+dto.getBedNumber()+"', cabin_number='"+dto.getCabinNumber()+"', blood_group='"+dto.getBloodGroup()+"', current_status="+dto.getDeptId()+", name='"+dto.getName()+"', age="+dto.getAge()+", sex='"+dto.getSex()+"', tel_num='"+dto.getTelephoneNum()+"', present_add='"+dto.getPresentAdd()+"', permanent_add='"+dto.getPermanentAdd()+"', other_dept_ref_id="+dto.getOtherDeptRefId()+", bed_doctor_id="+dto.getBedDoctorID()+" where id="+dto.getAccId();
 			System.out.println(sql);
 			stmt.executeUpdate(sql);
-			
+			String visitSql="update visit set ticket_number='"+dto.getTicketNumber()+"', word_number='"+dto.getWordNumber()+"', bed_number='"+dto.getBedNumber()+"', cabin_number='"+dto.getCabinNumber()+"', current_status="+dto.getDeptId()+", other_dept_ref_id="+dto.getOtherDeptRefId()+", bed_doctor_id="+dto.getBedDoctorID()+" where patient_id="+dto.getAccId() + " ORDER BY id DESC LIMIT 1";
+			stmt.execute(visitSql);
+
 			sql="insert into tbl_patient_log(patient_id, work) values("+dto.getAccId()+", 'Update Today')";
 			System.out.println(sql);
 			stmt.execute(sql);
@@ -273,11 +274,13 @@ public class PatientDAO
 				sql="update tbl_patient set surgical_status = "+dto.getSurgicalStatus()+" where id="+dto.getAccId();
 				System.out.println(sql);
 				stmt.execute(sql);
+				stmt.execute("update visit set surgical_status = "+dto.getSurgicalStatus()+" where patient_id="+dto.getAccId()+ " ORDER BY id DESC LIMIT 1");
 			}
 			if(dto.getSurgicalStatus()==1){
 				sql="update tbl_patient set date_of_adm = now() where id="+dto.getAccId();
 				System.out.println(sql);
 				stmt.execute(sql);
+				stmt.execute("update visit set date_of_adm = now() where patient_id="+dto.getAccId()+ " ORDER BY id DESC LIMIT 1");
 			}
 			/*ResultSet rs = null;
 			for(int i=0; i<dto.getDiseaseType().length; i++){
@@ -311,7 +314,7 @@ public class PatientDAO
 		
 		Connection conn=null;
 		Statement stmt=null;
-		
+		int currentVisitId =  new VisitDAO().getCurrentVisitId(patientID);
 		String message="Operation Successfull";
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
@@ -320,6 +323,7 @@ public class PatientDAO
 			String sql="update tbl_patient set is_discharged=1, date_of_disch=NOW() where id="+patientID;
 			System.out.println(sql);
 			stmt.executeUpdate(sql);
+			stmt.executeUpdate("update visit set is_discharged=1, date_of_disch=NOW() where id="+currentVisitId);
 						
 			sql="insert into tbl_patient_log(patient_id, work) values("+patientID+", 'Discharged Today')";
 			System.out.println(sql);
@@ -341,6 +345,7 @@ public class PatientDAO
 		DAOResult daoResult = new DAOResult();
 		daoResult.setValid(true);
 		daoResult.setMessage("Updated Successfully");
+		int currentVisitId =  new VisitDAO().getCurrentVisitId(dto.getAccId());
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
@@ -349,7 +354,7 @@ public class PatientDAO
 			
 			ResultSet rs = null;
 			for(int i=0; i<dto.getDiseaseType().length; i++){
-				sql="select * from tbl_patient_disease where patient_id="+dto.getAccId()+" and disease_id="+dto.getDiseaseType()[i];
+				sql="select * from tbl_patient_disease where patient_id="+dto.getAccId()+" and disease_id="+dto.getDiseaseType()[i] +" and visit_id="+currentVisitId;
 				boolean isNew=true;
 				rs = stmt.executeQuery(sql);
 				if(rs.next()){
@@ -357,7 +362,7 @@ public class PatientDAO
 				}
 				rs.close();
 				if(isNew){
-					sql="insert into tbl_patient_disease(patient_id, disease_id) values("+dto.getAccId()+", "+dto.getDiseaseType()[i]+")";
+					sql="insert into tbl_patient_disease(patient_id, visit_id, disease_id) values("+dto.getAccId()+", "+currentVisitId+", "+dto.getDiseaseType()[i]+")";
 					System.out.println(sql);
 					stmt.execute(sql);
 				}

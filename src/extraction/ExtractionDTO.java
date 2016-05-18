@@ -31,7 +31,18 @@ public class ExtractionDTO {
 	private String extractionId4_4;
 	private int totalTk;
 	private String paymentRegNumber;
-	
+	private String extractionId4;
+	private String extractionId5;
+	private String extractionId6;
+	private String extractionId7;
+	private String extractionId8;
+	private String extractionId9;
+	private String extractionId10;
+	private String extractionId11;
+	private String extractionId12;
+	private String extractionId13;
+	private String extractionId14;
+
 	public HashSet<Integer> patCurExtractionList;
 	
 	public ExtractionDTO(){
@@ -57,6 +68,18 @@ public class ExtractionDTO {
 		extractionId4_4="";
 		totalTk=0;
 		paymentRegNumber="";
+
+		extractionId4 = "";
+		extractionId5 = "";
+		extractionId6 = "";
+		extractionId7 = "";
+		extractionId8 = "";
+		extractionId9 = "";
+		extractionId10 = "";
+		extractionId11 = "";
+		extractionId12 = "";
+		extractionId13 = "";
+		extractionId14 = "";
 	}
 
 	public int getUserId() {
@@ -227,6 +250,92 @@ public class ExtractionDTO {
 	public int getUniqIDExtraction() {
 		return uniqIDExtraction;
 	}
-	
 
+	public String getExtractionId5() {
+		return extractionId5;
+	}
+
+	public void setExtractionId5(String extractionId5) {
+		this.extractionId5 = extractionId5;
+	}
+
+	public String getExtractionId4() {
+		return extractionId4;
+	}
+
+	public void setExtractionId4(String extractionId4) {
+		this.extractionId4 = extractionId4;
+	}
+
+	public String getExtractionId6() {
+		return extractionId6;
+	}
+
+	public void setExtractionId6(String extractionId6) {
+		this.extractionId6 = extractionId6;
+	}
+
+	public String getExtractionId7() {
+		return extractionId7;
+	}
+
+	public void setExtractionId7(String extractionId7) {
+		this.extractionId7 = extractionId7;
+	}
+
+	public String getExtractionId8() {
+		return extractionId8;
+	}
+
+	public void setExtractionId8(String extractionId8) {
+		this.extractionId8 = extractionId8;
+	}
+
+	public String getExtractionId9() {
+		return extractionId9;
+	}
+
+	public void setExtractionId9(String extractionId9) {
+		this.extractionId9 = extractionId9;
+	}
+
+	public String getExtractionId10() {
+		return extractionId10;
+	}
+
+	public void setExtractionId10(String extractionId10) {
+		this.extractionId10 = extractionId10;
+	}
+
+	public String getExtractionId11() {
+		return extractionId11;
+	}
+
+	public void setExtractionId11(String extractionId11) {
+		this.extractionId11 = extractionId11;
+	}
+
+	public String getExtractionId12() {
+		return extractionId12;
+	}
+
+	public void setExtractionId12(String extractionId12) {
+		this.extractionId12 = extractionId12;
+	}
+
+	public String getExtractionId13() {
+		return extractionId13;
+	}
+
+	public void setExtractionId13(String extractionId13) {
+		this.extractionId13 = extractionId13;
+	}
+
+	public String getExtractionId14() {
+		return extractionId14;
+	}
+
+	public void setExtractionId14(String extractionId14) {
+		this.extractionId14 = extractionId14;
+	}
 }

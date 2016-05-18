@@ -1,11 +1,10 @@
 package dashboard;
 
+import utility.MyConfig;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-
-import utility.MyConfig;
 
 public class DashBoardDAO {
 	public DashBoardDTO getSystemInfo(){
@@ -24,7 +23,7 @@ public class DashBoardDAO {
 	        }
 	        rs.close();
 	        
-	        sql="select count(*) from tbl_patient where DATE(date_of_rec)=DATE(NOW())";
+	        sql="select count(DISTINCT p.id) from tbl_patient p join visit v on p.id=v.patient_id where DATE(v.date_of_rec)=DATE(NOW())";
 			System.out.println(sql);
 	        rs=stmt.executeQuery(sql);
 	        if(rs.next()){

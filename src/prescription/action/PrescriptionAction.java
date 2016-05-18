@@ -19,7 +19,7 @@ public class PrescriptionAction extends ActionSupport{
     @Action(value = "/rest/prescription/get", results = {@Result(name="success",type="json") })
     public String findPrescriptionById() {
         PrescriptionDAO dao = new PrescriptionDAO();
-        prescription = dao.getPrescriptionByPatientId(accountID);
+        prescription = dao.getPrescriptionByPatientId(accountID, visitID);
         return ActionSupport.SUCCESS;
     }
 
@@ -48,5 +48,11 @@ public class PrescriptionAction extends ActionSupport{
 
     public void setAccountID(int accountID) {
         this.accountID = accountID;
+    }
+
+    private int visitID;
+
+    public void setVisitID(int visitID) {
+        this.visitID = visitID;
     }
 }

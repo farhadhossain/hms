@@ -76,7 +76,7 @@ int size=dtoList.size();
 %>
 
 
-<html >
+<html ng-app="hms">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><html:base/>
 <title><%=SessionManager.title%></title>
 
@@ -102,6 +102,11 @@ int size=dtoList.size();
     <script type="text/javascript" src="../Assets/Scripts/picnet.table.filter.min.js"></script>
     <script type="text/javascript" src="../Assets/Scripts/highcharts.js"></script>
     <script src="../Assets/Date/js/datepicker.js"></script>
+	<script type="text/javascript" src="../Assets/js/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../Assets/js/angular/ui-bootstrap-0.13.1.min.js"></script>
+	<script type="text/javascript" src="../Assets/js/angular/ui-bootstrap-tpls-0.13.1.min.js"></script>
+	<script type="text/javascript" src="../Assets/js/angular/module.js"></script>
+	<script type="text/javascript" src="../Assets/js/angular/controllers/searchPatientController.js"></script>
     
     <script type="text/javascript">
     $(function(){
@@ -136,7 +141,7 @@ int size=dtoList.size();
 </head>
 
 <body>
-	<div id="wrapper">
+	<div id="wrapper" ng-controller = "SearchPatientController">
     
         <%@ include file="../includes/leftNav.jsp"%><!--sidebar-->
 	
@@ -240,10 +245,8 @@ int size=dtoList.size();
 					                    	<%}else{%>
 					                    		<th>Added By</th>
 					                    	<%}%>
-					                    	
-					                    	<%if(loginDTO.getRoleID()!=MyConfig.frontDeskRole){%>
-					                    		<th>Action</th>
-					                    	<%}%>
+
+											<th>Action</th>
 					                    	
 					                    </tr>
 					                </thead>
@@ -310,7 +313,7 @@ int size=dtoList.size();
 														<%}%>
 
 														<%if(dto.getDeptId()==MyConfig.deptOutdoorOrMinorOT){%>
-															<a href="../Patient/PatientExtraction.jsp?accountID=<%=dto.getAccId()%>">Treatment Plan</a><br>
+															<a target="_blank"  href="../Patient/PatientExtraction.jsp?accountID=<%=dto.getAccId()%>">Treatment Plan</a><br>
 														<%}else if(dto.getDeptId()==MyConfig.deptIndoor && dto.getSurgicalStatus() != 0){%>
 															<a href="../Department/IndoorDiseaseUpdateOrView.jsp?accountID=<%=dto.getAccId()%>&generalOnly=true">General Diseases</a><br>
 															<a href="../Department/IndoorDiseaseUpdateOrView.jsp?accountID=<%=dto.getAccId()%>">Specific Diseases</a><br>
@@ -326,9 +329,9 @@ int size=dtoList.size();
 														<%if(loginDTO.getRoleID()==MyConfig.DoctorForBed || loginDTO.getRoleID()==MyConfig.deptIndoor || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.AnesthetistRole){%>
 															<a target="_blank" href="../Report/PatientInfoAll.jsp?accountID=<%=dto.getAccId()%>">View Findings</a><br>
 														<%}%>
-
+														<%if(loginDTO.getRoleID()!=MyConfig.dutyNurseRole){%>
 														<a target="_blank" href="../Patient/Prescription.jsp?accountID=<%=dto.getAccId()%>">Prescription</a><br>
-
+														<%}%>
 														<a href="../Patient/EditPatient.jsp?accountID=<%=dto.getAccId()%>">Referred To</a><br>
 
 														<%if(loginDTO.getRoleID()==MyConfig.DoctorForBed || loginDTO.getRoleID()==MyConfig.deptIndoor || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.AnesthetistRole){%>
@@ -343,7 +346,11 @@ int size=dtoList.size();
 															<%}%>
 									                    <%}%>
 						                        	</td>
-						                        <%}%>
+						                        <%}else{%>
+													<td>
+														<a ng-click ="open(<%=dto.getAccId()%>)">New Visit</a>
+													</td>
+												<%}%>
 					                    	</tr>
 					                    <%}%>  
 					                </tbody>
@@ -358,6 +365,22 @@ int size=dtoList.size();
        <%@ include file="../includes/newFooter.jsp"%><!-- footer -->
 
     </div><!--/./gray-bg-->
+
+	<script type="text/ng-template" id="myModalContent.html">
+		<div class="modal-header">
+			<h3 class="modal-title">New Visit</h3>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+				<label>Ticket Number</label>
+				<input type="text" ng-model="item.ticketNumber" class="form-control">
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" type="button" ng-click="ok()"><i class="fa fa-spinner fa-spin" ng-show="busy"></i>OK</button>
+			<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+		</div>
+	</script>
 </div><!--/#/wrapper-->
 
 

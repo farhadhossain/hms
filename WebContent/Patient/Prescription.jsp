@@ -4,15 +4,23 @@
 <%@page import="patient.PatientDTO"%>
 <%@page import="patient.PatientService"%>
 <%@ page import="utility.MyConfig" %>
+<%@ page import="prescription.VisitDTO" %>
+<%@ page import="prescription.VisitDAO" %>
+<%@ page import="utility.StringUtil" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 <%
 String accountID= request.getParameter("accountID");
+String visitID = request.getParameter("visitID")==null?"0":request.getParameter("visitID");
 PatientService patientServ = new PatientService();
 PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 
+int currentVisitId = new VisitDAO().getCurrentVisitId(Integer.parseInt(accountID));
+VisitDTO visitDTO = new VisitDAO().getVisitById(Integer.parseInt(visitID) == 0 ? currentVisitId : Integer.parseInt(visitID));
+StringUtil.removeNullFromObject(visitDTO);
+StringUtil.removeNullFromObject(patientDTO);
 	/*MyConfig.userID = loginDTO.getUserID();
 	MyConfig.roleID = loginDTO.getRoleID();*/
 	/*System.out.println("*********************** userId = "+loginDTO.getUserID()+"*************************");*/
@@ -93,7 +101,7 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 
 	</style>
 </head>
-<body ng-controller = "PrescriptionController" ng-init="getPrescription('<%=accountID%>')">
+<body ng-controller = "PrescriptionController" ng-init="getVisits(<%=accountID%>);getPrescription(<%=accountID%>,<%=visitID%>);">
 <div class="container" style="padding-top: 40px;width:1300px">
   <div class="row">
   <div class="container-fluid">
@@ -110,9 +118,18 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
     <!-- Patient info panel -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">
-				Patient Details <a href="../Patient/EditPatient.jsp?accountID=<%=accountID %>" style="color: green;">[Referred To]</a>
+			<h3 class="panel-title pull-left">
+				Patient Details
 		    </h3>
+			<ul role="presentation" class="dropdown pull-right" ng-show="<%=visitID.equals("0")%>">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+					Previous Visits <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li ng-repeat="v in visits  | limitTo:visits.length-1 "><a target="_blank" href="/Patient/Prescription.jsp?accountID=<%=accountID%>&visitID={{v.id}}">{{$index+1}}) on {{v.visitDate | date:'dd MMM yyyy'}}</a></li>
+				</ul>
+			</ul>
+			<div class="clearfix"></div>
         </div>
 	   <div class="panel-body_1 table-responsive ">
 		 <table class="table-bordered table">
@@ -124,16 +141,18 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 				 <th>Age</th>
 				 <th>Sex</th>
 				 <th>Registration Date</th>
+			     <th>Visit Date</th>
 			  </tr>
 			</thead>
 		   <tbody>
 			  <tr>
-			  	 <td><%=patientDTO.getTicketNumber() %></td>
-				 <td><%=patientDTO.getAccId() %></td>
+			  	 <td><%=visitDTO.getTicketNumber() %></td>
+				  <td><%=patientDTO.getAccId() %></td>
 				 <td><%=patientDTO.getName() %></td>
 				 <td><%=patientDTO.getAge() %></td>
 				 <td><%=patientDTO.getSex() %></td>
 				  <td><%= patientDTO.getDateOfRec() %></td>
+				  <td>{{currentVisit.visitDate | date:'dd MMM yyyy'}}</td>
 			  </tr>
 		   </tbody>
 		</table>
@@ -1165,8 +1184,8 @@ PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 
 							}
 						</script>
-						<input type="button" class="btn btn-primary" onClick="loadPrintPage()" value="Print">
-						<input type="button" class="btn btn-primary" ng-click="savePrescription()" value="Save">
+						<input type="button" class="btn btn-primary" onClick="loadPrintPage()" value="Print" ng-show="<%=visitID.equals("0")%>">
+						<input type="button" class="btn btn-primary" ng-click="savePrescription()" value="Save" ng-show="<%=visitID.equals("0")%>">
 					</form>
 				</div>
 			</div>

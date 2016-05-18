@@ -35,7 +35,7 @@ public class GetPatientDiseaseInfoDAO {
 		return dtoList;
 	}
 	
-	public DiseaseDTO getDiseaseInfo(int userID, int diseaseID) {
+	public DiseaseDTO getDiseaseInfo(int userID, int visitId, int diseaseID) {
 		DiseaseDTO disDTO= new DiseaseDTO();
 		Connection conn = null;
 		Statement stmt = null; 
@@ -56,7 +56,7 @@ public class GetPatientDiseaseInfoDAO {
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("select * from tbl_patient_disease_history where patient_id="+userID+" and history_id in (select id from tbl_disease_history where dis_id="+diseaseID+")");
+			ResultSet rs = stmt.executeQuery("select * from tbl_patient_disease_history where patient_id="+userID+" and visit_id="+visitId+" and history_id in (select id from tbl_disease_history where dis_id="+diseaseID+")");
 			while(rs.next()){
 				int historyId=rs.getInt("history_id");
 				
@@ -190,7 +190,7 @@ public class GetPatientDiseaseInfoDAO {
 			rs.close();
 			
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_symptom where patient_id="+userID+" and symptom_id in (select id from tbl_disease_symptom where dis_id="+diseaseID+")");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_symptom where patient_id="+userID+" and visit_id="+visitId+" and symptom_id in (select id from tbl_disease_symptom where dis_id="+diseaseID+")");
 			while(rs.next()){
 				disDTO.patSympId.add(rs.getInt("symptom_id"));
 				DiseaseMetaValues metaValues = new DiseaseMetaValues();
@@ -202,7 +202,7 @@ public class GetPatientDiseaseInfoDAO {
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_auscultation where patient_id="+userID+" and auscultation_id in (select id from tbl_disease_auscultation where dis_id="+diseaseID+")");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_auscultation where patient_id="+userID+" and visit_id="+visitId+" and auscultation_id in (select id from tbl_disease_auscultation where dis_id="+diseaseID+")");
 			while(rs.next()){
 				disDTO.patAuscId.add(rs.getInt("auscultation_id"));
 				DiseaseMetaValues metaValues = new DiseaseMetaValues();
@@ -214,7 +214,7 @@ public class GetPatientDiseaseInfoDAO {
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_perticipating_factor where patient_id="+userID+" and p_factor_id in (select id from tbl_disease_perticipating_factor where dis_id="+diseaseID+")");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_perticipating_factor where patient_id="+userID+" and visit_id="+visitId+" and p_factor_id in (select id from tbl_disease_perticipating_factor where dis_id="+diseaseID+")");
 			while(rs.next()){
 				if(rs.getInt("p_factor_id")==9){
 					disDTO.setOtherPertFact(rs.getString("input_value"));
@@ -223,7 +223,7 @@ public class GetPatientDiseaseInfoDAO {
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_special_case_details where patient_id="+userID+" and sp_case_id in (select id from tbl_disease_special_case_details where dis_id="+diseaseID+")");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_special_case_details where patient_id="+userID+" and visit_id="+visitId+userID+" and sp_case_id in (select id from tbl_disease_special_case_details where dis_id="+diseaseID+")");
 			while(rs.next()){
 				int specialCaseId=rs.getInt("sp_case_id");
 				if(specialCaseId==1){
@@ -694,7 +694,7 @@ public class GetPatientDiseaseInfoDAO {
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_others where patient_id="+userID+" and others_id in (select id from tbl_disease_others where dis_id="+diseaseID+")");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_others where patient_id="+userID+" and visit_id="+visitId+" and others_id in (select id from tbl_disease_others where dis_id="+diseaseID+")");
 			while(rs.next()){
 				int othersId=rs.getInt("others_id");
 				if(othersId==1){
@@ -739,7 +739,7 @@ public class GetPatientDiseaseInfoDAO {
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_palpation where patient_id="+userID+" and palpation_id in (select id from tbl_disease_palpation where dis_id="+diseaseID+")");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_palpation where patient_id="+userID+" and visit_id="+visitId+" and palpation_id in (select id from tbl_disease_palpation where dis_id="+diseaseID+")");
 			while(rs.next()){
 				int palpationId=rs.getInt("palpation_id");
 				if(palpationId==1){
@@ -810,7 +810,7 @@ public class GetPatientDiseaseInfoDAO {
 			rs.close();
 			
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_inspection where patient_id="+userID+" and inspection_id in (select id from tbl_disease_inspection where dis_id="+diseaseID+")");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_inspection where patient_id="+userID+" and visit_id="+visitId+" and inspection_id in (select id from tbl_disease_inspection where dis_id="+diseaseID+")");
 			while(rs.next()){
 				int inspectionId=rs.getInt("inspection_id");
 				if(inspectionId==4){
@@ -979,7 +979,7 @@ public class GetPatientDiseaseInfoDAO {
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_treatment where patient_id="+userID+" and treatment_id in (select id from tbl_disease_treatment where dis_id="+diseaseID+")");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_treatment where patient_id="+userID+" and visit_id="+visitId+" and treatment_id in (select id from tbl_disease_treatment where dis_id="+diseaseID+")");
 			while(rs.next()){
 				int treatmentId=rs.getInt("treatment_id");
 				if(treatmentId==5){
@@ -1044,7 +1044,7 @@ public class GetPatientDiseaseInfoDAO {
 			rs.close();
 			
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_diagnosis where patient_id="+userID+" and diagnosis_id in (select id from tbl_disease_diagnosis where dis_id="+diseaseID+")");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_diagnosis where patient_id="+userID+" and visit_id="+visitId+" and diagnosis_id in (select id from tbl_disease_diagnosis where dis_id="+diseaseID+")");
 			while(rs.next()){
 				int diagnosisId=rs.getInt("diagnosis_id");
 				if(diagnosisId==18){
@@ -1110,14 +1110,14 @@ public class GetPatientDiseaseInfoDAO {
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease where patient_id="+userID+" and disease_id="+diseaseID);
+			rs = stmt.executeQuery("select * from tbl_patient_disease where patient_id="+userID+" and visit_id="+visitId+" and disease_id="+diseaseID);
 			if(rs.next()){
 				disDTO.setNad(rs.getInt("nad"));
 			}
 			rs.close();
 			
 			
-			rs = stmt.executeQuery("select * from tbl_oral_and_maxillofacial_trauma where patient_id="+userID);
+			rs = stmt.executeQuery("select * from tbl_oral_and_maxillofacial_trauma where patient_id="+userID+" and visit_id="+visitId);
 			if(rs.next()){
 				disDTO.setOmLocation(rs.getString("omLocation"));
 				disDTO.setOmDuration(rs.getString("omDuration"));    
@@ -1139,7 +1139,7 @@ public class GetPatientDiseaseInfoDAO {
 			rs.close();
 			
 			
-			rs = stmt.executeQuery("select * from tbl_patient_special_notes where patient_id="+userID+" and disease_id="+diseaseID);
+			rs = stmt.executeQuery("select * from tbl_patient_special_notes where patient_id="+userID+" and visit_id="+visitId+" and disease_id="+diseaseID);
 			if(rs.next()){
 				disDTO.setSpecialNotes(rs.getString("special_notes"));
 				disDTO.setComplications(rs.getString("complications"));    

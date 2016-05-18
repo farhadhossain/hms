@@ -1,8 +1,10 @@
 package disease;
 
+import prescription.VisitDAO;
+import utility.DAOResult;
+
 import java.sql.Connection;
 import java.sql.Statement;
-import utility.DAOResult;
 
 public class UpdatePatientDiseaseInfoDAO {
 	
@@ -11,26 +13,27 @@ public class UpdatePatientDiseaseInfoDAO {
 		daoRes.setMessage("Added Successfully");
 		int sizeOfArray=0;
 		Connection conn = null;
-		Statement stmt = null; 
+		Statement stmt = null;
+		int currentVisitId = new VisitDAO().getCurrentVisitId(dto.getUserId());
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
 
-			stmt.executeUpdate("delete from tbl_patient_disease_history where patient_id="+dto.getUserId()+" and history_id in (select id from tbl_disease_history where dis_id="+dto.getDiseaseId()+")");
-			stmt.executeUpdate("delete from tbl_patient_disease_symptom where patient_id="+dto.getUserId()+" and symptom_id in (select id from tbl_disease_symptom where dis_id="+dto.getDiseaseId()+")");
-			stmt.executeUpdate("delete from tbl_patient_disease_inspection where patient_id="+dto.getUserId()+" and inspection_id in (select id from tbl_disease_inspection where dis_id="+dto.getDiseaseId()+")");
-			stmt.executeUpdate("delete from tbl_patient_disease_palpation where patient_id="+dto.getUserId()+" and palpation_id in (select id from tbl_disease_palpation where dis_id="+dto.getDiseaseId()+")");
-			stmt.executeUpdate("delete from tbl_patient_disease_auscultation where patient_id="+dto.getUserId()+" and auscultation_id in (select id from tbl_disease_auscultation where dis_id="+dto.getDiseaseId()+")");
-			stmt.executeUpdate("delete from tbl_patient_disease_others where patient_id="+dto.getUserId()+" and others_id in (select id from tbl_disease_others where dis_id="+dto.getDiseaseId()+")");
-			stmt.executeUpdate("delete from tbl_patient_disease_special_case_details where patient_id="+dto.getUserId()+" and sp_case_id in (select id from tbl_disease_special_case_details where dis_id="+dto.getDiseaseId()+")");
-			stmt.executeUpdate("delete from tbl_patient_disease_treatment where patient_id="+dto.getUserId()+" and treatment_id in (select id from tbl_disease_treatment where dis_id="+dto.getDiseaseId()+")");
-			stmt.executeUpdate("delete from tbl_patient_disease_diagnosis where patient_id="+dto.getUserId()+" and diagnosis_id in (select id from tbl_disease_diagnosis where dis_id="+dto.getDiseaseId()+")");
+			stmt.executeUpdate("delete from tbl_patient_disease_history where patient_id="+dto.getUserId()+ " and visit_id="+currentVisitId+" and history_id in (select id from tbl_disease_history where dis_id="+dto.getDiseaseId()+")");
+			stmt.executeUpdate("delete from tbl_patient_disease_symptom where patient_id="+dto.getUserId()+ " and visit_id="+currentVisitId+" and symptom_id in (select id from tbl_disease_symptom where dis_id="+dto.getDiseaseId()+")");
+			stmt.executeUpdate("delete from tbl_patient_disease_inspection where patient_id="+dto.getUserId()+ " and visit_id="+currentVisitId+" and inspection_id in (select id from tbl_disease_inspection where dis_id="+dto.getDiseaseId()+")");
+			stmt.executeUpdate("delete from tbl_patient_disease_palpation where patient_id="+dto.getUserId()+ " and visit_id="+currentVisitId+" and palpation_id in (select id from tbl_disease_palpation where dis_id="+dto.getDiseaseId()+")");
+			stmt.executeUpdate("delete from tbl_patient_disease_auscultation where patient_id="+dto.getUserId()+ " and visit_id="+currentVisitId+" and auscultation_id in (select id from tbl_disease_auscultation where dis_id="+dto.getDiseaseId()+")");
+			stmt.executeUpdate("delete from tbl_patient_disease_others where patient_id="+dto.getUserId()+ " and visit_id="+currentVisitId+" and others_id in (select id from tbl_disease_others where dis_id="+dto.getDiseaseId()+")");
+			stmt.executeUpdate("delete from tbl_patient_disease_special_case_details where patient_id="+dto.getUserId()+ " and visit_id="+currentVisitId+" and sp_case_id in (select id from tbl_disease_special_case_details where dis_id="+dto.getDiseaseId()+")");
+			stmt.executeUpdate("delete from tbl_patient_disease_treatment where patient_id="+dto.getUserId()+ " and visit_id="+currentVisitId+" and treatment_id in (select id from tbl_disease_treatment where dis_id="+dto.getDiseaseId()+")");
+			stmt.executeUpdate("delete from tbl_patient_disease_diagnosis where patient_id="+dto.getUserId()+ " and visit_id="+currentVisitId+" and diagnosis_id in (select id from tbl_disease_diagnosis where dis_id="+dto.getDiseaseId()+")");
 			
 			if(dto.getOralAndMaxillofacTrauma()>0){
-				stmt.executeUpdate("delete from tbl_oral_and_maxillofacial_trauma where patient_id="+dto.getUserId());
-				stmt.execute("insert into tbl_oral_and_maxillofacial_trauma(patient_id, omLocation, omDuration, omTimeframe, omIntensity, omMechanism, eyeOpening, verbalResponse, motorResponse, totalScore, comments, mechanismOfInjury, reflex, motorFunction, mentalStatus, rectalTone, omSpninalCordOther) " +
-						"values("+dto.getUserId()+",'"+dto.getOmLocation()+"','"+dto.getOmDuration()+"','"+dto.getOmTimeframe()+"','"+dto.getOmIntensity()+"','"+dto.getOmMechanism()+"','"+dto.getEyeOpening()+"','"+dto.getVerbalResponse()+"','"+dto.getMotorResponse()+"','"+dto.getTotalScore()+"','"+dto.getComments()+"','"+dto.getMechanismOfInjury()+"','"+dto.getReflex()+"','"+dto.getMotorFunction()+"','"+dto.getMentalStatus()+"','"+dto.getRectalTone()+"', '"+dto.getOmSpninalCordOther()+"')");
+				stmt.executeUpdate("delete from tbl_oral_and_maxillofacial_trauma where patient_id="+dto.getUserId()+ " and visit_id="+currentVisitId);
+				stmt.execute("insert into tbl_oral_and_maxillofacial_trauma(patient_id,visit_id, omLocation, omDuration, omTimeframe, omIntensity, omMechanism, eyeOpening, verbalResponse, motorResponse, totalScore, comments, mechanismOfInjury, reflex, motorFunction, mentalStatus, rectalTone, omSpninalCordOther) " +
+						"values("+dto.getUserId()+","+currentVisitId+",'"+dto.getOmLocation()+"','"+dto.getOmDuration()+"','"+dto.getOmTimeframe()+"','"+dto.getOmIntensity()+"','"+dto.getOmMechanism()+"','"+dto.getEyeOpening()+"','"+dto.getVerbalResponse()+"','"+dto.getMotorResponse()+"','"+dto.getTotalScore()+"','"+dto.getComments()+"','"+dto.getMechanismOfInjury()+"','"+dto.getReflex()+"','"+dto.getMotorFunction()+"','"+dto.getMentalStatus()+"','"+dto.getRectalTone()+"', '"+dto.getOmSpninalCordOther()+"')");
 			}
 			
 			{
@@ -443,7 +446,7 @@ public class UpdatePatientDiseaseInfoDAO {
 						tail_1=", input_value, input_value_2, input_value_3, input_value_4";
 						tail_2=", '"+dto.getSpecialCaseId454_1()+"', '"+dto.getSpecialCaseId454_2()+"', '"+dto.getSpecialCaseId454_3()+"', '"+dto.getSpecialCaseId454_4()+"'";
 					}
-					stmt.execute("insert into tbl_patient_disease_special_case_details(patient_id, sp_case_id"+tail_1+") values("+dto.getUserId()+", "+dto.getSpecialCaseId()[i]+tail_2+")");
+					stmt.execute("insert into tbl_patient_disease_special_case_details(patient_id, visit_id, sp_case_id"+tail_1+") values("+dto.getUserId()+","+currentVisitId+", "+dto.getSpecialCaseId()[i]+tail_2+")");
 					tail_1="";
 					tail_2="";
 				}
@@ -569,7 +572,7 @@ public class UpdatePatientDiseaseInfoDAO {
 						tail_1=", input_value"; tail_2=", "+dto.getHisDescripId230();
 					}
 
-					stmt.execute("insert into tbl_patient_disease_history(patient_id, history_id"+tail_1+") values("+dto.getUserId()+", "+dto.getHistoryId()[i]+tail_2+")");
+					stmt.execute("insert into tbl_patient_disease_history(patient_id, visit_id, history_id"+tail_1+") values("+dto.getUserId()+","+currentVisitId+", "+dto.getHistoryId()[i]+tail_2+")");
 
 					tail_1="";
 					tail_2="";
@@ -583,7 +586,7 @@ public class UpdatePatientDiseaseInfoDAO {
 				}catch(Exception e){sizeOfArray=0;};
 				
 				for(int i=0;i<sizeOfArray;i++){
-					stmt.execute("insert into tbl_patient_disease_symptom(patient_id, symptom_id) values("+dto.getUserId()+", "+dto.getSymptomId()[i]+")");
+					stmt.execute("insert into tbl_patient_disease_symptom(patient_id,visit_id, symptom_id) values("+dto.getUserId()+","+currentVisitId+", "+dto.getSymptomId()[i]+")");
 				}
 			}
 			
@@ -594,37 +597,37 @@ public class UpdatePatientDiseaseInfoDAO {
 				
 				for(int i=0;i<sizeOfArray;i++){
 					if(dto.getOthersId()[i]==1){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", "+dto.getOthsDescripId1()+")");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", "+dto.getOthsDescripId1()+")");
 					}else if(dto.getOthersId()[i]==2){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", "+dto.getOthsDescripId2()+")");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id,visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", "+dto.getOthsDescripId2()+")");
 					}else if(dto.getOthersId()[i]==3){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", "+dto.getOthsDescripId3()+")");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id,visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", "+dto.getOthsDescripId3()+")");
 					}else if(dto.getOthersId()[i]==4){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", "+dto.getOthsDescripId4()+")");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id,visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", "+dto.getOthsDescripId4()+")");
 					}else if(dto.getOthersId()[i]==8){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId8()+"')");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId8()+"')");
 					}else if(dto.getOthersId()[i]==12){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId12()+"')");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId12()+"')");
 					}else if(dto.getOthersId()[i]==13){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId13()+"')");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId13()+"')");
 					}else if(dto.getOthersId()[i]==14){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId14()+"')");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId14()+"')");
 					}else if(dto.getOthersId()[i]==15){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId15()+"')");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId15()+"')");
 					}else if(dto.getOthersId()[i]==16){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId16()+"')");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId16()+"')");
 					}else if(dto.getOthersId()[i]==17){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId17()+"')");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId17()+"')");
 					}else if(dto.getOthersId()[i]==20){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId20()+"')");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId20()+"')");
 					}else if(dto.getOthersId()[i]==21){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId21()+"')");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId21()+"')");
 					}else if(dto.getOthersId()[i]==22){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId22()+"')");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", '"+dto.getOthsDescripId22()+"')");
 					}else if(dto.getOthersId()[i]==25){
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id, input_value) values("+dto.getUserId()+", "+dto.getOthersId()[i]+", "+dto.getOthsDescripId25()+")");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+", "+dto.getOthsDescripId25()+")");
 					}else{
-						stmt.execute("insert into tbl_patient_disease_others(patient_id, others_id) values("+dto.getUserId()+", "+dto.getOthersId()[i]+")");
+						stmt.execute("insert into tbl_patient_disease_others(patient_id, visit_id, others_id) values("+dto.getUserId()+","+currentVisitId+", "+dto.getOthersId()[i]+")");
 					}
 				}
 			}			
@@ -772,7 +775,7 @@ public class UpdatePatientDiseaseInfoDAO {
 					}else if(dto.getInspectionId()[i]==537){
 						tail_1=", input_value, input_value_2";tail_2=", '"+dto.getInspecDescripId537_1()+"', '"+dto.getInspecDescripId537_2()+"'";
 					}
-					stmt.execute("insert into tbl_patient_disease_inspection(patient_id, inspection_id"+tail_1+") values("+dto.getUserId()+", "+dto.getInspectionId()[i]+tail_2+")");
+					stmt.execute("insert into tbl_patient_disease_inspection(patient_id, visit_id, inspection_id"+tail_1+") values("+dto.getUserId()+","+currentVisitId+", "+dto.getInspectionId()[i]+tail_2+")");
 					tail_1="";
 					tail_2="";
 				}
@@ -842,7 +845,7 @@ public class UpdatePatientDiseaseInfoDAO {
 						}else if(dto.getPalpationId()[i]==115){
 							tail_1=", input_value"; tail_2=", '"+dto.getPalpaDescripId115()+"'";
 						}
-						stmt.execute("insert into tbl_patient_disease_palpation(patient_id, palpation_id"+tail_1+") values("+dto.getUserId()+", "+dto.getPalpationId()[i]+tail_2+")");
+						stmt.execute("insert into tbl_patient_disease_palpation(patient_id, visit_id, palpation_id"+tail_1+") values("+dto.getUserId()+","+currentVisitId+", "+dto.getPalpationId()[i]+tail_2+")");
 						tail_1="";
 						tail_2="";
 					}
@@ -858,9 +861,9 @@ public class UpdatePatientDiseaseInfoDAO {
 				try{
 					for(int i=0;i<sizeOfArray;i++){
 						if(dto.getAuscultationId()[i]==7){
-							stmt.execute("insert into tbl_patient_disease_auscultation(patient_id, auscultation_id, input_value) values("+dto.getUserId()+", "+dto.getAuscultationId()[i]+", '"+dto.getAuscuDescripId7()+"')");
+							stmt.execute("insert into tbl_patient_disease_auscultation(patient_id, visit_id, auscultation_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getAuscultationId()[i]+", '"+dto.getAuscuDescripId7()+"')");
 						}else{
-							stmt.execute("insert into tbl_patient_disease_auscultation(patient_id, auscultation_id) values("+dto.getUserId()+", "+dto.getAuscultationId()[i]+")");
+							stmt.execute("insert into tbl_patient_disease_auscultation(patient_id, visit_id, auscultation_id) values("+dto.getUserId()+","+currentVisitId+", "+dto.getAuscultationId()[i]+")");
 						}
 					}
 				}catch(Exception e){}
@@ -926,7 +929,7 @@ public class UpdatePatientDiseaseInfoDAO {
 							tail_1=", input_value"; tail_2=", '"+dto.getTreatmentId167()+"'";
 						}
 						
-						stmt.execute("insert into tbl_patient_disease_treatment(patient_id, treatment_id"+tail_1+") values("+dto.getUserId()+", "+dto.getTreatmentId()[i]+tail_2+")");
+						stmt.execute("insert into tbl_patient_disease_treatment(patient_id, visit_id, treatment_id"+tail_1+") values("+dto.getUserId()+","+currentVisitId+", "+dto.getTreatmentId()[i]+tail_2+")");
 						tail_1="";
 						tail_2="";
 					}
@@ -994,7 +997,7 @@ public class UpdatePatientDiseaseInfoDAO {
 						}else if(dto.getDiagnosisId()[i]==129){
 							tail_1=", input_value"; tail_2=", '"+dto.getDiagnosisId129()+"'";
 						}
-						stmt.execute("insert into tbl_patient_disease_diagnosis(patient_id, diagnosis_id"+tail_1+") values("+dto.getUserId()+", "+dto.getDiagnosisId()[i]+tail_2+")");
+						stmt.execute("insert into tbl_patient_disease_diagnosis(patient_id, visit_id, diagnosis_id"+tail_1+") values("+dto.getUserId()+","+currentVisitId+", "+dto.getDiagnosisId()[i]+tail_2+")");
 						tail_1="";
 						tail_2="";
 					}
@@ -1012,7 +1015,7 @@ public class UpdatePatientDiseaseInfoDAO {
 						if(dto.getPrticpFactId()[i]==9){
 							tail_1=", input_value"; tail_2=", "+dto.getOtherPertFact();
 						}
-						stmt.execute("insert into tbl_patient_disease_perticipating_factor(patient_id, p_factor_id"+tail_1+") values("+dto.getUserId()+", "+dto.getPrticpFactId()[i]+tail_2+")");
+						stmt.execute("insert into tbl_patient_disease_perticipating_factor(patient_id, visit_id, p_factor_id"+tail_1+") values("+dto.getUserId()+","+currentVisitId+", "+dto.getPrticpFactId()[i]+tail_2+")");
 						tail_1="";
 						tail_2="";
 					}
@@ -1020,13 +1023,13 @@ public class UpdatePatientDiseaseInfoDAO {
 			}
 						
 			{
-				stmt.executeUpdate("delete from tbl_patient_special_notes where patient_id="+dto.getUserId()+" and disease_id="+dto.getDiseaseId());
+				stmt.executeUpdate("delete from tbl_patient_special_notes where patient_id="+dto.getUserId()+" and disease_id="+dto.getDiseaseId() +" and visit_id="+ currentVisitId);
 				if( (dto.getSpecialNotes()!=null && dto.getSpecialNotes().length()>0) || (dto.getComplications()!=null && dto.getComplications().length()>0)){
-					stmt.execute("insert into tbl_patient_special_notes(patient_id, disease_id, special_notes, complications) values("+dto.getUserId()+","+dto.getDiseaseId()+",'"+dto.getSpecialNotes()+"','"+dto.getComplications()+"')");
+					stmt.execute("insert into tbl_patient_special_notes(patient_id, visit_id, disease_id, special_notes, complications) values("+dto.getUserId()+","+currentVisitId+","+dto.getDiseaseId()+",'"+dto.getSpecialNotes()+"','"+dto.getComplications()+"')");
 				}
 			}
 			
-			stmt.executeUpdate("update tbl_patient_disease set nad="+dto.getNad()+" where patient_id="+dto.getUserId()+" and disease_id="+dto.getDiseaseId());
+			stmt.executeUpdate("update tbl_patient_disease set nad="+dto.getNad()+" where patient_id="+dto.getUserId()+" and disease_id="+dto.getDiseaseId() +" and visit_id="+currentVisitId);
 
             for(Object key: dto.getRequestParameters().keySet()){
                 if(key.toString().split("-").length>1 && key.toString().split("-").length<4 && key.toString().endsWith("input_value")){
@@ -1069,7 +1072,7 @@ public class UpdatePatientDiseaseInfoDAO {
 						firstField = "auscultation_id";
 					}
 
-                    String query = "insert into "+ table+"(patient_id, "+firstField+", "+columns+") values("+dto.getUserId()+", "+id+", "+ values+")";
+                    String query = "insert into "+ table+"(patient_id, visit_id, "+firstField+", "+columns+") values("+dto.getUserId()+","+currentVisitId+", "+id+", "+ values+")";
                     System.out.println(query);
                     stmt.execute(query);
                 }
@@ -1088,10 +1091,11 @@ public class UpdatePatientDiseaseInfoDAO {
 		Connection conn = null;
 		Statement stmt = null; 
 		String message="Added Successfully";
+        int currentVisitId = new VisitDAO().getCurrentVisitId(userID);
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
-			stmt.executeUpdate("insert into tbl_patient_disease_follow_up(patient_id, disease_id, findings) values("+userID+","+diseaseID+",'"+newFindings+"')");
+			stmt.executeUpdate("insert into tbl_patient_disease_follow_up(patient_id, visit_id, disease_id, findings) values("+userID+","+currentVisitId+","+diseaseID+",'"+newFindings+"')");
 			
 		}catch(Exception e){
 			message="Error: "+e.toString();

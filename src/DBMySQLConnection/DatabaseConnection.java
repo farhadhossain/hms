@@ -1,11 +1,6 @@
 package DBMySQLConnection;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class DatabaseConnection {
 	public String DatabaseURL;
@@ -18,7 +13,7 @@ public class DatabaseConnection {
 	public static Connection ConnectionManager(){
 		try{
 			Class.forName("com.mysql.jdbc.Driver"); 
-			return DriverManager.getConnection("jdbc:mysql:///hms", "root", "1234");
+			return DriverManager.getConnection("jdbc:mysql:///hms", "root", "");
 			//return DriverManager.getConnection("jdbc:mysql://104.194.248.186/SoftSwitch", "root", "a!2345");
 		}catch(Exception e){
 			System.out.println(e.toString());

@@ -1,10 +1,14 @@
 package prescription;
 
-import jxl.write.DateTime;
+
 import utility.DAOResult;
 import utility.MyConfig;
+import utility.StringUtil;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
 /**
@@ -22,7 +26,6 @@ public class PrescriptionDAO {
         daoResult.setValid(true);
         //daoResult.setMessage("New Patient '"+dto.getName()+"' added Successfully");
 
-
         try{
             conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
             stmt = conn.createStatement();
@@ -36,8 +39,8 @@ public class PrescriptionDAO {
             try {
                 nextVisitDate = "'"+new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(dto.getNextVisitDate()))+"'";
             }catch(Exception t){}
-            String sql="insert into prescription(nextVisitDate,referTo,ho, chiefComplain, onObservation, investigation, diagonosis,advice, patientId) " +
-                    "values("+nextVisitDate+",'"+dto.getReferTo()+"','"+dto.getHo()+"','"+dto.getChiefComplain()+"', '"+dto.getOnObservation()+"', '"+dto.getInvestigation()+"','"+dto.getDiagonosis()+"', '"+dto.getAdvice()+"' , "+dto.getPatientID()+")";
+            String sql="insert into prescription(nextVisitDate,referTo,ho, chiefComplain, onObservation, investigation, diagonosis,advice, patientId, visitId) " +
+                    "values("+nextVisitDate+",'"+dto.getReferTo()+"','"+dto.getHo()+"','"+dto.getChiefComplain()+"', '"+dto.getOnObservation()+"', '"+dto.getInvestigation()+"','"+dto.getDiagonosis()+"', '"+dto.getAdvice()+"' , "+dto.getPatientID()+",(select max(id) from visit where patient_id="+dto.getPatientID()+"))";
             System.out.println(sql);
             PreparedStatement statement = conn.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
@@ -56,11 +59,11 @@ public class PrescriptionDAO {
                 stmt.execute(sql);
             }
 
-            sql="SELECT * FROM tbl_logbook where userId="+MyConfig.userID+" and patientId="+dto.getPatientID()+" and roleId="+MyConfig.roleID;
-            System.out.println(sql);
-            rs = stmt.executeQuery(sql);
+            if(MyConfig.roleID != MyConfig.SurgeonRole && MyConfig.roleID != MyConfig.dutyNurseRole) {
+                sql = "delete FROM tbl_logbook where userId=" + MyConfig.userID + " and patientId=" + dto.getPatientID() + " and roleId=" + MyConfig.roleID;
+                System.out.println(sql);
+                stmt.executeUpdate(sql);
 
-            while (rs.next()==Boolean.FALSE) {
                 String upDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
                 sql = "insert into tbl_logbook(userId, patientId, updateDate, roleId) " + "values('" + MyConfig.userID + "','" + dto.getPatientID() + "','" + upDate + "','" + MyConfig.roleID + "')";
                 System.out.println(sql);
@@ -74,18 +77,19 @@ public class PrescriptionDAO {
         }finally{
             try{stmt.close();}catch(Exception e){}
             try{conn.close();}catch(Exception e){}
-            /*try {
+            try {
                 rs.close();
-            }catch(Exception e){}*/
+            }catch(Exception e){}
         }
         return daoResult;
     }
 
-    public PrescriptionDTO getPrescriptionByPatientId(int patientId) {
+    public PrescriptionDTO getPrescriptionByPatientId(int patientId, int visitId) {
         Connection conn=null;
         Statement stmt=null;
         PrescriptionDTO dto = new PrescriptionDTO();
-        String sql="SELECT * FROM prescription where patientId="+patientId;
+        String visit = visitId==0?"(select max(id) from visit where patient_id="+patientId+")":visitId+"";
+        String sql="SELECT * FROM prescription where patientId="+patientId +" and visitId="+visit;
         try{
             conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
             stmt = conn.createStatement();
@@ -124,12 +128,13 @@ public class PrescriptionDAO {
                 medicineDTO.setPrescriptionId(rs.getInt("prescriptionId"));
                 medicineDTO.setTotalNumber(rs.getString("totalNumber"));
                 medicineDTO.setDuration(rs.getString("duration"));
+                StringUtil.removeNullFromObject(medicineDTO);
                 dto.getMedicines().add(medicineDTO);
             }
             rs=stmt.executeQuery("select name from tbl_patient where id="+patientId);
             if (rs.next())
                dto.patientName = rs.getString(1);
-
+            StringUtil.removeNullFromObject(dto);
         }catch(Exception e){
             e.printStackTrace();
         }finally{

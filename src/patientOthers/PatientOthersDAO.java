@@ -1,15 +1,16 @@
 package patientOthers;
 
+import disease.form.DiseaseMetaData;
+import prescription.VisitDAO;
+import utility.DAOResult;
+import utility.MyConfig;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-
-import disease.form.DiseaseMetaData;
-import utility.DAOResult;
-import utility.MyConfig;
 
 public class PatientOthersDAO
 {
@@ -124,7 +125,9 @@ public class PatientOthersDAO
 	}
 	
 	public PatientOthersDTO getPatientOthersDTOByID(int accId) {
-		
+
+		int currentVisitId = new VisitDAO().getCurrentVisitId(accId);
+
 		Connection conn=null;
 		Statement stmt=null;
 		
@@ -142,13 +145,13 @@ public class PatientOthersDAO
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoExposureTo+")");
+			ResultSet rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoExposureTo+")");
 			while(rs.next()){
 				patOthDTO.patExposureToId.add(rs.getInt("info_id"));
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHabits+")");
+			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHabits+")");
 			while(rs.next()){
 				patOthDTO.patHabitsId.add(rs.getInt("info_id"));
 				if(rs.getInt("info_id")==4){
@@ -167,26 +170,26 @@ public class PatientOthersDAO
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoMenstrualHistory+")");
+			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoMenstrualHistory+")");
 			while(rs.next()){
 				patOthDTO.patMenstrualHistoryId.add(rs.getInt("info_id"));
 			}
 			rs.close();
 			
 			
-			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoObstetricalHistory+")");
+			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoObstetricalHistory+")");
 			while(rs.next()){
 				patOthDTO.patObstetricalHistoryId.add(rs.getInt("info_id"));
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoFamilyRelevantDiseaseHistory+")");
+			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoFamilyRelevantDiseaseHistory+")");
 			while(rs.next()){
 				patOthDTO.patRelevantDiseaseHistoryId.add(rs.getInt("info_id"));
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and info_id in (select id from tbl_personal_info_history where info_id in ("+MyConfig.infoHistoryOfBlood+","+MyConfig.infoHistoryOfOthers+","+MyConfig.infoHistoryOfPreAnestheticEvaluation+","+MyConfig.infoHistoryOfPreAnEvIntraOralExamination+","+MyConfig.infoHistoryOfPreAnEvExtraOralExamination+","+MyConfig.infoMentalStateAndIntelligence+","+MyConfig.infoMentalState+","+MyConfig.infoFacies+","+MyConfig.infoGeneralAssessmentOfIllness+"))");
+			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id in ("+MyConfig.infoHistoryOfBlood+","+MyConfig.infoHistoryOfOthers+","+MyConfig.infoHistoryOfPreAnestheticEvaluation+","+MyConfig.infoHistoryOfPreAnEvIntraOralExamination+","+MyConfig.infoHistoryOfPreAnEvExtraOralExamination+","+MyConfig.infoMentalStateAndIntelligence+","+MyConfig.infoMentalState+","+MyConfig.infoFacies+","+MyConfig.infoGeneralAssessmentOfIllness+"))");
 			while(rs.next()){
 				patOthDTO.patInfoId.add(rs.getInt("info_id"));
 				if(rs.getInt("info_id")==4){
@@ -258,7 +261,7 @@ public class PatientOthersDAO
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfImmunization+")");
+			rs = stmt.executeQuery("select * from tbl_patient_personal_info_history where patient_id="+accId+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfImmunization+")");
 			while(rs.next()){
 				patOthDTO.patImmunizationHistoryId.add(rs.getInt("info_id"));
 				if(rs.getInt("info_id")==41){
@@ -267,7 +270,7 @@ public class PatientOthersDAO
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_details where patient_id="+accId);
+			rs = stmt.executeQuery("select * from tbl_patient_details where patient_id="+accId +" and visit_id="+currentVisitId );
 			if(rs.next()){
 				patOthDTO.setFather(rs.getString("father"));
 				patOthDTO.setMother(rs.getString("mother"));
@@ -283,7 +286,7 @@ public class PatientOthersDAO
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_pre_anesthetic_evaluation where patient_id="+accId);
+			rs = stmt.executeQuery("select * from tbl_pre_anesthetic_evaluation where patient_id="+accId+" and visit_id="+currentVisitId);
 			if(rs.next()){
 				patOthDTO.setCurProb(rs.getString("cur_prob"));
 				patOthDTO.setOtherKnownProb(rs.getString("other_known_prob"));
@@ -310,7 +313,9 @@ public class PatientOthersDAO
 	}
 	
 	public PatientOthersDTO getPatientPhyExmInfoDTOByID(int accId) {
-		
+
+		int currentVisitId = new VisitDAO().getCurrentVisitId(accId);
+
 		Connection conn=null;
 		Statement stmt=null;
 		
@@ -324,7 +329,7 @@ public class PatientOthersDAO
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("select * from tbl_patient_disease_inspection where patient_id="+accId+" and inspection_id in (select id from tbl_disease_inspection where dis_id=14)");
+			ResultSet rs = stmt.executeQuery("select * from tbl_patient_disease_inspection where patient_id="+accId+" and visit_id="+currentVisitId+" and inspection_id in (select id from tbl_disease_inspection where dis_id=14)");
 			while(rs.next()){
 				patOthDTO.patInspectionId.add(rs.getInt("inspection_id"));
 				if(rs.getInt("inspection_id")==15){
@@ -333,7 +338,7 @@ public class PatientOthersDAO
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_palpation where patient_id="+accId+" and palpation_id in (select id from tbl_disease_palpation where dis_id=14)");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_palpation where patient_id="+accId+" and visit_id="+currentVisitId+" and palpation_id in (select id from tbl_disease_palpation where dis_id=14)");
 			while(rs.next()){
 				patOthDTO.patPalpationId.add(rs.getInt("palpation_id"));
 				if(rs.getInt("palpation_id")==15){
@@ -342,7 +347,7 @@ public class PatientOthersDAO
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_phy_exm where patient_id="+accId);
+			rs = stmt.executeQuery("select * from tbl_patient_phy_exm where patient_id="+accId+" and visit_id="+currentVisitId);
 			if(rs.next()){
 				patOthDTO.setVsTemp(rs.getString("vsTemp"));
 				patOthDTO.setVsPulse(rs.getString("vsPulse"));
@@ -394,7 +399,9 @@ public class PatientOthersDAO
 	}
 	
 	public DAOResult updatePatientPhyExmInfoDTO(PatientOthersDTO dto) {
-		
+
+		int currentVisitId = new VisitDAO().getCurrentVisitId(dto.getUserId());
+
 		Connection conn=null;
 		Statement stmt=null;
 		String sql=null;
@@ -407,12 +414,12 @@ public class PatientOthersDAO
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
-			stmt.executeUpdate("delete from tbl_patient_phy_exm where patient_id="+dto.getUserId());
-			stmt.executeUpdate("delete from tbl_patient_disease_palpation where patient_id="+dto.getUserId()+" and palpation_id in (select id from tbl_disease_palpation where dis_id=14)");
-			stmt.executeUpdate("delete from tbl_patient_disease_inspection where patient_id="+dto.getUserId()+" and inspection_id in (select id from tbl_disease_inspection where dis_id=14)");
+			stmt.executeUpdate("delete from tbl_patient_phy_exm where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId);
+			stmt.executeUpdate("delete from tbl_patient_disease_palpation where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and palpation_id in (select id from tbl_disease_palpation where dis_id=14)");
+			stmt.executeUpdate("delete from tbl_patient_disease_inspection where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and inspection_id in (select id from tbl_disease_inspection where dis_id=14)");
 			
-			sql="insert into tbl_patient_phy_exm(patient_id, vsTemp, vsPulse, vsRate, vsBloodPre, bsHeight, bsWeight, bsBMI, bsWC, clInspec, clPalpi,clPrec,clAusc,jvp,carotidPulsCar,apexImp,parastImp,palpaHs,thrill,hs,ec,os,murmur,peripheralPul,inspecOthers,palpaOthers,precusNote,auscultion,carotidPulse,genIntFunc,motorFunc,sensory,carnialNerve,otherDescip,neckVein,movOfNeck,thyroidGland) " +
-					"values("+dto.getUserId()+", '"+dto.getVsTemp()+"', '"+dto.getVsPulse()+"', '"+dto.getVsRate()+"', '"+dto.getVsBloodPre()+"', '"+dto.getBsHeight()+"', '"+dto.getBsWeight()+"', '"+dto.getBsBMI()+"', '"+dto.getBsWC()+"', '"+dto.getClInspec()+"', '"+dto.getClPalpi()+"', '"+dto.getClPrec()+"', '"+dto.getClAusc()+"', '"+dto.getJvp()+"', '"+dto.getCarotidPulsCar()+"', '"+dto.getApexImp()+"', '"+dto.getParastImp()+"', '"+dto.getPalpaHs()+"', '"+dto.getThrill()+"', '"+dto.getHs()+"', '"+dto.getEc()+"', '"+dto.getOs()+"', '"+dto.getMurmur()+"', '"+dto.getPeripheralPul()+"', '"+dto.getInspecOthers()+"', '"+dto.getPalpaOthers()+"', '"+dto.getPrecusNote()+"', '"+dto.getAuscultion()+"', '"+dto.getCarotidPulse()+"', '"+dto.getGenIntFunc()+"', '"+dto.getMotorFunc()+"', '"+dto.getSensory()+"', '"+dto.getCarnialNerve()+"', '"+dto.getOtherDescip()+"',"+dto.getNeckVein()+", "+dto.getMovOfNeck()+", "+dto.getThyroidGland()+")";
+			sql="insert into tbl_patient_phy_exm(patient_id, visit_id, vsTemp, vsPulse, vsRate, vsBloodPre, bsHeight, bsWeight, bsBMI, bsWC, clInspec, clPalpi,clPrec,clAusc,jvp,carotidPulsCar,apexImp,parastImp,palpaHs,thrill,hs,ec,os,murmur,peripheralPul,inspecOthers,palpaOthers,precusNote,auscultion,carotidPulse,genIntFunc,motorFunc,sensory,carnialNerve,otherDescip,neckVein,movOfNeck,thyroidGland) " +
+					"values("+dto.getUserId()+", "+currentVisitId+", '"+dto.getVsTemp()+"', '"+dto.getVsPulse()+"', '"+dto.getVsRate()+"', '"+dto.getVsBloodPre()+"', '"+dto.getBsHeight()+"', '"+dto.getBsWeight()+"', '"+dto.getBsBMI()+"', '"+dto.getBsWC()+"', '"+dto.getClInspec()+"', '"+dto.getClPalpi()+"', '"+dto.getClPrec()+"', '"+dto.getClAusc()+"', '"+dto.getJvp()+"', '"+dto.getCarotidPulsCar()+"', '"+dto.getApexImp()+"', '"+dto.getParastImp()+"', '"+dto.getPalpaHs()+"', '"+dto.getThrill()+"', '"+dto.getHs()+"', '"+dto.getEc()+"', '"+dto.getOs()+"', '"+dto.getMurmur()+"', '"+dto.getPeripheralPul()+"', '"+dto.getInspecOthers()+"', '"+dto.getPalpaOthers()+"', '"+dto.getPrecusNote()+"', '"+dto.getAuscultion()+"', '"+dto.getCarotidPulse()+"', '"+dto.getGenIntFunc()+"', '"+dto.getMotorFunc()+"', '"+dto.getSensory()+"', '"+dto.getCarnialNerve()+"', '"+dto.getOtherDescip()+"',"+dto.getNeckVein()+", "+dto.getMovOfNeck()+", "+dto.getThyroidGland()+")";
 			System.out.println(sql);
 			stmt.executeUpdate(sql);
 			
@@ -422,11 +429,11 @@ public class PatientOthersDAO
 				}catch(Exception e){sizeOfArray=0;};
 				
 				for(int i=0;i<sizeOfArray;i++){
-					stmt.execute("insert into tbl_patient_disease_palpation(patient_id, palpation_id) values("+dto.getUserId()+", "+dto.getPalpationId()[i]+")");
+					stmt.execute("insert into tbl_patient_disease_palpation(patient_id, visit_id, palpation_id) values("+dto.getUserId()+", "+currentVisitId+", "+dto.getPalpationId()[i]+")");
 					if(dto.getPalpationId()[i]==15){
 						String tmp=dto.getPalpaOthers();
 						if(tmp!=null && tmp.length()>0){
-							stmt.executeUpdate("update tbl_patient_disease_palpation set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and palpation_id="+dto.getPalpationId()[i]);
+							stmt.executeUpdate("update tbl_patient_disease_palpation set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and palpation_id="+dto.getPalpationId()[i]);
 						}
 					}
 				}
@@ -438,11 +445,11 @@ public class PatientOthersDAO
 				}catch(Exception e){sizeOfArray=0;};
 				
 				for(int i=0;i<sizeOfArray;i++){
-					stmt.execute("insert into tbl_patient_disease_inspection(patient_id, inspection_id) values("+dto.getUserId()+", "+dto.getInspectionId()[i]+")");
+					stmt.execute("insert into tbl_patient_disease_inspection(patient_id, visit_id, inspection_id) values("+dto.getUserId()+", "+currentVisitId+", "+dto.getInspectionId()[i]+")");
 					if(dto.getInspectionId()[i]==15){
 						String tmp=dto.getInspecOthers();
 						if(tmp!=null && tmp.length()>0){
-							stmt.executeUpdate("update tbl_patient_disease_inspection set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and inspection_id="+dto.getInspectionId()[i]);
+							stmt.executeUpdate("update tbl_patient_disease_inspection set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId +" and inspection_id="+dto.getInspectionId()[i]);
 						}
 					}
 				}
@@ -459,7 +466,9 @@ public class PatientOthersDAO
 	}
 	
 	public DAOResult updatePatientGeneralSurveyDTO(PatientOthersDTO dto) {
-		
+
+		int currentVisitId = new VisitDAO().getCurrentVisitId(dto.getUserId());
+
 		Connection conn=null;
 		Statement stmt=null;		
 		DAOResult daoResult = new DAOResult();
@@ -470,10 +479,10 @@ public class PatientOthersDAO
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoGeneralAssessmentOfIllness+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoMentalStateAndIntelligence+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoMentalState+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoFacies+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoGeneralAssessmentOfIllness+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoMentalStateAndIntelligence+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoMentalState+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoFacies+")");
 			
 			
 			{
@@ -485,7 +494,7 @@ public class PatientOthersDAO
 					if(dto.getInfoId()[i]==154){
 						tail_1=", input_value"; tail_2=", '"+dto.getInfoId154()+"'";
 					}
-					stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id"+tail_1+") values("+dto.getUserId()+", "+dto.getInfoId()[i]+tail_2+")");
+					stmt.execute("insert into tbl_patient_personal_info_history(patient_id, visit_id, info_id"+tail_1+") values("+dto.getUserId()+", "+currentVisitId+", "+dto.getInfoId()[i]+tail_2+")");
 					tail_1="";
 					tail_2="";
 				}
@@ -503,7 +512,9 @@ public class PatientOthersDAO
 	}
 	
 	public DAOResult updatePatientPreAnestheticEvaluationDTO(PatientOthersDTO dto) {
-		
+
+		int currentVisitId = new VisitDAO().getCurrentVisitId(dto.getUserId());
+
 		Connection conn=null;
 		Statement stmt=null;		
 		DAOResult daoResult = new DAOResult();
@@ -514,19 +525,20 @@ public class PatientOthersDAO
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfPreAnestheticEvaluation+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfPreAnEvIntraOralExamination+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfPreAnEvExtraOralExamination+")");
-			stmt.executeUpdate("delete from tbl_pre_anesthetic_evaluation where patient_id="+dto.getUserId());
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+ " and visit_id="+ currentVisitId +" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfPreAnestheticEvaluation+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+ " and visit_id="+ currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfPreAnEvIntraOralExamination+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+ " and visit_id="+ currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfPreAnEvExtraOralExamination+")");
+			stmt.executeUpdate("delete from tbl_pre_anesthetic_evaluation where patient_id=" + dto.getUserId() + " and visit_id=" + currentVisitId);
 			
-			stmt.execute("insert into tbl_pre_anesthetic_evaluation(patient_id, cur_prob, other_known_prob, cur_prob_treatment_or_medicines, cur_dose, cur_dose_duration, cur_dose_effectiveness, cur_drugs_use, cur_drugs_reason, cur_drugs_dose, cur_drugs_dur, cur_drugs_effectiveness, cur_drugs_side_effect) " +
-					"values("+dto.getUserId()+",'"+dto.getCurProb()+"','"+dto.getOtherKnownProb()+"','"+dto.getCurProbTreatment()+"','"+dto.getCurDose()+"','"+dto.getCurDoseDuration()+"','"+dto.getCurDoseEffectiveness()+"','"+dto.getCurDrugsUse()+"','"+dto.getCurDrugsReason()+"','"+dto.getCurDrugsDose()+"','"+dto.getCurDrugsDur()+"','"+dto.getCurDrugsEffectiveness()+"','"+dto.getCurDrugsSideEffect()+"')");
+			stmt.execute("insert into tbl_pre_anesthetic_evaluation(patient_id, visit_id, cur_prob, other_known_prob, cur_prob_treatment_or_medicines, cur_dose, cur_dose_duration, cur_dose_effectiveness, cur_drugs_use, cur_drugs_reason, cur_drugs_dose, cur_drugs_dur, cur_drugs_effectiveness, cur_drugs_side_effect) " +
+					"values("+dto.getUserId()+", "+currentVisitId+",'"+dto.getCurProb()+"','"+dto.getOtherKnownProb()+"','"+dto.getCurProbTreatment()+"','"+dto.getCurDose()+"','"+dto.getCurDoseDuration()+"','"+dto.getCurDoseEffectiveness()+"','"+dto.getCurDrugsUse()+"','"+dto.getCurDrugsReason()+"','"+dto.getCurDrugsDose()+"','"+dto.getCurDrugsDur()+"','"+dto.getCurDrugsEffectiveness()+"','"+dto.getCurDrugsSideEffect()+"')");
 			
 			{
 				try{
 					sizeOfArray=dto.getInfoId().length;
 				}catch(Exception e){sizeOfArray=0;};
 				String tail_1="", tail_2="";
+				String visit = "(select max(id) from visit where patient_id="+dto.getUserId()+")";
 				for(int i=0;i<sizeOfArray;i++){
 					if(dto.getInfoId()[i]==99){
 						tail_1=", input_value"; tail_2=", '"+dto.getInfoId99()+"'";
@@ -555,7 +567,7 @@ public class PatientOthersDAO
 					}else if(dto.getInfoId()[i]==151){
 						tail_1=", input_value"; tail_2=", "+dto.getInfoId151();
 					}
-					stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id"+tail_1+") values("+dto.getUserId()+", "+dto.getInfoId()[i]+tail_2+")");
+					stmt.execute("insert into tbl_patient_personal_info_history(patient_id, visit_id, info_id"+tail_1+") values("+dto.getUserId()+", "+currentVisitId+", "+dto.getInfoId()[i]+tail_2+")");
 					tail_1="";
 					tail_2="";
 				}
@@ -573,7 +585,9 @@ public class PatientOthersDAO
 	}
 	
 	public DAOResult updatePatientInvestigationDTO(PatientOthersDTO dto) {
-		
+
+		int currentVisitId = new VisitDAO().getCurrentVisitId(dto.getUserId());
+
 		Connection conn=null;
 		Statement stmt=null;		
 		DAOResult daoResult = new DAOResult();
@@ -584,14 +598,15 @@ public class PatientOthersDAO
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfBlood+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfOthers+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+ " and visit_id="+ currentVisitId +" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfBlood+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+ " and visit_id="+ currentVisitId +" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfOthers+")");
 						
 			{
 				try{
 					sizeOfArray=dto.getInfoId().length;
 				}catch(Exception e){sizeOfArray=0;};
 				String tail_1="", tail_2="";
+
 				for(int i=0;i<sizeOfArray;i++){
 					
 					if(dto.getInfoId()[i]==75){
@@ -617,7 +632,7 @@ public class PatientOthersDAO
 					}else if(dto.getInfoId()[i]==98){
 						tail_1=", input_value, input_value_2"; tail_2=", '"+dto.getInfoId98_1()+"', '"+dto.getInfoId98_2()+"'";
 					}
-					stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id"+tail_1+") values("+dto.getUserId()+", "+dto.getInfoId()[i]+tail_2+")");
+					stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id, visit_id "+tail_1+") values("+dto.getUserId()+", "+dto.getInfoId()[i] +","+ currentVisitId + tail_2+")");
 					tail_1="";
 					tail_2="";
 				}
@@ -645,20 +660,21 @@ public class PatientOthersDAO
 		daoResult.setValid(true);
 		daoResult.setMessage("Updated Successfully");
 		int sizeOfArray=0;
+		int currentVisitId = new VisitDAO().getCurrentVisitId(dto.getUserId());
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
-			stmt.executeUpdate("delete from tbl_patient_details where patient_id="+dto.getUserId());
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHabits+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoExposureTo+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoMenstrualHistory+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoObstetricalHistory+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoFamilyRelevantDiseaseHistory+")");
-			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfImmunization+")");
+			stmt.executeUpdate("delete from tbl_patient_details where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId );
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHabits+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoExposureTo+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoMenstrualHistory+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoObstetricalHistory+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoFamilyRelevantDiseaseHistory+")");
+			stmt.executeUpdate("delete from tbl_patient_personal_info_history where patient_id="+dto.getUserId()+" and visit_id="+currentVisitId+" and info_id in (select id from tbl_personal_info_history where info_id="+MyConfig.infoHistoryOfImmunization+")");
 			
-			sql="insert into tbl_patient_details(patient_id, marital_status, hobbies, father, mother, sister, brother, wife_or_husband, consanguinity_of_marriage, relision_id, social_status_id, occupation) " +
-					"values("+dto.getUserId()+", "+dto.getMaritalStatus()+", '"+dto.getHobbies()+"', '"+dto.getFather()+"', '"+dto.getMother()+"', '"+dto.getSister()+"', '"+dto.getBrother()+"', '"+dto.getWifeOrHusband()+"', '"+dto.getConsanguiOfMarri()+"', "+dto.getReligionId()+", "+dto.getSocialStatusId()+", '"+dto.getOccupation()+"')";
+			sql="insert into tbl_patient_details(patient_id, visit_id, marital_status, hobbies, father, mother, sister, brother, wife_or_husband, consanguinity_of_marriage, relision_id, social_status_id, occupation) " +
+					"values("+dto.getUserId()+","+currentVisitId+", "+dto.getMaritalStatus()+", '"+dto.getHobbies()+"', '"+dto.getFather()+"', '"+dto.getMother()+"', '"+dto.getSister()+"', '"+dto.getBrother()+"', '"+dto.getWifeOrHusband()+"', '"+dto.getConsanguiOfMarri()+"', "+dto.getReligionId()+", "+dto.getSocialStatusId()+", '"+dto.getOccupation()+"')";
 			System.out.println(sql);
 			stmt.executeUpdate(sql);
 			
@@ -668,7 +684,7 @@ public class PatientOthersDAO
 				}catch(Exception e){sizeOfArray=0;};
 				
 				for(int i=0;i<sizeOfArray;i++){
-					stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id) values("+dto.getUserId()+", "+dto.getExposureTo()[i]+")");
+					stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id, visit_id) values("+dto.getUserId()+","+dto.getExposureTo()[i]+","+currentVisitId+")");
 				}
 			}
 			
@@ -678,43 +694,44 @@ public class PatientOthersDAO
 				}catch(Exception e){sizeOfArray=0;};
 				
 				for(int i=0;i<sizeOfArray;i++){
-					stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id) values("+dto.getUserId()+", "+dto.getHabitsId()[i]+")");
+					stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id, visit_id) values("+dto.getUserId()+", "+dto.getHabitsId()[i]+","+currentVisitId+")");
 					
 					if(dto.getHabitsId()[i]==4){
 						String tmp=dto.getCigarettesStick();
 						if(tmp!=null && tmp.length()>0){
-							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]);
+							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]+" and visit_id="+currentVisitId);
 						}
 						tmp=dto.getCigarettesYear();
 						if(tmp!=null && tmp.length()>0){
-							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value_2='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]);
+							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value_2='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]+" and visit_id="+currentVisitId);
 						}
 					}else if(dto.getHabitsId()[i]==5){
 						String tmp=dto.getSmokelessTobaccoTime();
 						if(tmp!=null && tmp.length()>0){
-							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]);
+							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]+" and visit_id="+currentVisitId);
+
 						}
 						tmp=dto.getSmokelessTobaccoYear();
 						if(tmp!=null && tmp.length()>0){
-							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value_2='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]);
+							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value_2='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]+" and visit_id="+currentVisitId);
 						}
 					}else if(dto.getHabitsId()[i]==6){
 						String tmp=dto.getAlcoholPack();
 						if(tmp!=null && tmp.length()>0){
-							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]);
+							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]+" and visit_id="+currentVisitId);
 						}
 						tmp=dto.getAlcoholYear();
 						if(tmp!=null && tmp.length()>0){
-							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value_2='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]);
+							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value_2='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]+" and visit_id="+currentVisitId);
 						}
 					}else if(dto.getHabitsId()[i]==7){
 						String tmp=dto.getOtherSubsAbuse();
 						if(tmp!=null && tmp.length()>0){
-							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]);
+							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]+" and visit_id="+currentVisitId);
 						}
 						tmp=dto.getOtherSubsAbuseYear();
 						if(tmp!=null && tmp.length()>0){
-							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value_2='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]);
+							stmt.executeUpdate("update tbl_patient_personal_info_history set input_value_2='"+tmp+"' where patient_id="+dto.getUserId()+" and info_id="+dto.getHabitsId()[i]+" and visit_id="+currentVisitId);
 						}
 					}
 				}
@@ -728,7 +745,7 @@ public class PatientOthersDAO
 					}catch(Exception e){sizeOfArray=0;};
 					
 					for(int i=0;i<sizeOfArray;i++){
-						stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id) values("+dto.getUserId()+", "+dto.getMenstrualHistoryId()[i]+")");
+						stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id, visit_id) values("+dto.getUserId()+", "+dto.getMenstrualHistoryId()[i]+","+currentVisitId+")");
 					}
 				}
 			}
@@ -741,7 +758,7 @@ public class PatientOthersDAO
 					}catch(Exception e){sizeOfArray=0;};
 					
 					for(int i=0;i<sizeOfArray;i++){
-						stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id) values("+dto.getUserId()+", "+dto.getObstetricalHistoryId()[i]+")");
+						stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id, visit_id) values("+dto.getUserId()+", "+dto.getObstetricalHistoryId()[i]+","+currentVisitId+")");
 					}
 				}
 			}
@@ -754,7 +771,7 @@ public class PatientOthersDAO
 					}catch(Exception e){sizeOfArray=0;};
 					
 					for(int i=0;i<sizeOfArray;i++){
-						stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id) values("+dto.getUserId()+", "+dto.getRelevantDiseaseHistoryId()[i]+")");
+						stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id, visit_id) values("+dto.getUserId()+", "+dto.getRelevantDiseaseHistoryId()[i]+","+currentVisitId+")");
 					}
 				}
 			}
@@ -766,7 +783,7 @@ public class PatientOthersDAO
 					}catch(Exception e){sizeOfArray=0;};
 					
 					for(int i=0;i<sizeOfArray;i++){
-						stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id) values("+dto.getUserId()+", "+dto.getImmunizationHistoryId()[i]+")");
+						stmt.execute("insert into tbl_patient_personal_info_history(patient_id, info_id, visit_id) values("+dto.getUserId()+", "+dto.getImmunizationHistoryId()[i]+","+currentVisitId+")");
 					}
 				}
 			}

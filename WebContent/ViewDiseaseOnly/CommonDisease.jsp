@@ -9,9 +9,10 @@
 <%@ page import="utility.MyUtility" %>
 <%@ page language="Java" %>
 <%
+
 DiseaseService disServ = new DiseaseService();
 
-DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(patientDTO.getAccId(), key); 
+DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(patientDTO.getAccId(), Integer.parseInt(visitID), key);
 ArrayList<FollowUpDTO> followUpList=disServ.getFollowUpReport(patientDTO.getAccId(), key);
 
 HashMap<Integer, DiseaseMetaData> disHistoryList = disServ.getDiseaseDetailsByDisIDAndDisType(key, MyConfig.diseaseHistory);

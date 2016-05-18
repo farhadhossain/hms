@@ -1,15 +1,30 @@
 hms.controller('TreatmentPlanController', function ($scope, $http, $window, $location) {
 
+    $scope.visitChanged = function (visitId) {
+        $scope.getPrescription($scope.accountId, visitId);
+        $scope.getTreatmentPlans(visitId);
+    };
+
+    $scope.getVisits = function (accountID) {
+        $http({
+            method: "get",
+            url: '/rest/visit/all?accountID=' + accountID
+        }).success(function (result) {
+            $scope.visits = result.visits;
+            $scope.accountId = accountID;
+        });
+    }
+
     $scope.isDutyNurse=$window.isDutyNurse;
 
     var patientID =  $location.search().accountID;
     $scope.prescription = {ho:[],chiefComplain:[],onObservation:[],investigation:[], patientID:patientID};
 
 
-    $scope.getPrescription = function (accountID) {
+    $scope.getPrescription = function (accountID, visitID) {
         $http({
             method: "get",
-            url: '/rest/prescription/get?accountID=' + accountID
+            url: '/rest/prescription/get?accountID=' + accountID + '&visitID='+visitID
         }).success(function (result) {
             if(result.prescription && result.prescription.id) {
                 $scope.prescription = result.prescription;
@@ -22,16 +37,18 @@ hms.controller('TreatmentPlanController', function ($scope, $http, $window, $loc
             }
             if($location.search().printNow){
                 setTimeout(function(){window.print();},1000);
-
             }
+            var index = $scope.visits.map(function(x) {return x.id; }).indexOf(visitID);
+            $scope.currentVisit = $scope.visits[index==-1?$scope.visits.length-1:index];
         });
     };
 
-    $scope.getTreatmentPlans = function (accountID) {
+    $scope.getTreatmentPlans = function (visitID) {
         $http({
             method: "get",
-            url: '/rest/treatmentPlan/all?accountID=' + patientID
+            url: '/rest/treatmentPlan/all?accountID=' + patientID + '&visitID='+visitID
         }).success(function (result) {
+            $scope.treatmentPlan = {extraction:[]};
             if(result.plans) {
                  for(var i in result.plans){
                      var plan = result.plans[i];

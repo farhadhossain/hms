@@ -1,5 +1,10 @@
 hms.controller('PrescriptionController', function ($scope, $http, $location) {
 
+    $scope.visitChanged = function (visitId) {
+        location.href='/Patient/Prescription.jsp?accountID='+$scope.accountId+'&visitID='+visitId
+        //$scope.getPrescription($scope.accountId, visitId);
+    };
+
     $scope.prescription = {ho:[],chiefComplain:[],onObservation:[],investigation:[],diagonosis:[{disease:''}],medicines:[],advice:[],patientID: $location.search().accountID};
 
     $scope.searchMedicine = function(val, index){
@@ -36,10 +41,20 @@ hms.controller('PrescriptionController', function ($scope, $http, $location) {
     };
 
 
-    $scope.getPrescription = function (accountID) {
+    $scope.getVisits = function (accountID) {
         $http({
             method: "get",
-            url: '/rest/prescription/get?accountID=' + accountID
+            url: '/rest/visit/all?accountID=' + accountID
+        }).success(function (result) {
+            $scope.visits = result.visits;
+            $scope.accountId = accountID;
+        });
+    }
+
+    $scope.getPrescription = function (accountID, visitID) {
+        $http({
+            method: "get",
+            url: '/rest/prescription/get?accountID=' + accountID + '&visitID='+visitID
         }).success(function (result) {
             if(result.prescription && result.prescription.id) {
                 $scope.prescription = result.prescription;
@@ -52,7 +67,15 @@ hms.controller('PrescriptionController', function ($scope, $http, $location) {
                 if($scope.prescription.medicines.length>0) {
                     $scope.medicines = $scope.prescription.medicines;
                 }
+            }else{
+                $scope.medicines = [];
+                $scope.medicines.push({});
+                $scope.prescription = {ho:[],chiefComplain:[],onObservation:[],investigation:[],diagonosis:[{disease:''}],medicines:[],advice:[],patientID: $location.search().accountID};
+
             }
+
+            var index = $scope.visits.map(function(x) {return x.id; }).indexOf(visitID);
+            $scope.currentVisit = $scope.visits[index==-1?$scope.visits.length-1:index];
         });
     }
 

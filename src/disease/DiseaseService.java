@@ -1,10 +1,11 @@
 package disease;
 
+import disease.form.DiseaseMetaData;
+import prescription.VisitDAO;
+import utility.DAOResult;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import disease.form.DiseaseMetaData;
-import utility.DAOResult;
 
 public class DiseaseService {
 	
@@ -42,8 +43,10 @@ public class DiseaseService {
 	}
 	
 	public DiseaseDTO getDiseaseInfo(int userID, int diseaseID) {
-		return new GetPatientDiseaseInfoDAO().getDiseaseInfo(userID, diseaseID);
+		int currentVisitId = new VisitDAO().getCurrentVisitId(userID);
+		return new GetPatientDiseaseInfoDAO().getDiseaseInfo(userID, currentVisitId, diseaseID);
 	}
+
 	public ArrayList<FollowUpDTO> getFollowUpReport(int userID, int diseaseID) {
 		return new GetPatientDiseaseInfoDAO().getFollowUpReport(userID, diseaseID);
 	}
@@ -54,5 +57,12 @@ public class DiseaseService {
 	public String addNewFollowUp(int userID, int diseaseID, String newFindings) {
 		return new UpdatePatientDiseaseInfoDAO().addNewFollowUp(userID, diseaseID, newFindings);
 	}
-	
+
+
+	public DiseaseDTO getDiseaseInfo(int userID, int visitId, int diseaseID) {
+		if (visitId==0){
+			visitId = new VisitDAO().getCurrentVisitId(userID);
+		}
+		return new GetPatientDiseaseInfoDAO().getDiseaseInfo(userID, visitId, diseaseID);
+	}
 }

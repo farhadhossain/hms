@@ -1,14 +1,13 @@
 package utility;
 
-import java.util.HashMap;
-import java.util.HashSet;
-
+import department.DepartmentDiseaseDTO;
+import disease.DiseaseDTO;
 import disease.form.DiseaseMetaData;
 import disease.form.DiseaseMetaValues;
 import patientOthers.PatientOthersDTO;
 
-import department.DepartmentDiseaseDTO;
-import disease.DiseaseDTO;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class MyUtility {
 	static int[] getSortedKeyList(HashMap<Integer, DiseaseMetaData> mapInfo){
@@ -683,7 +682,7 @@ public class MyUtility {
 				String tClass [] = new String[]{"","TX", "T0", "Tis", "T1", "T2", "T3", "T4a", "T4b"};
 				String nClass [] = new String[]{"","NX", "N0", "N1", "N2", "N2a", "N2b", "N2c", "N3"};
 				String mClass [] = new String[]{"","MX", "M0", "M1"};
-				if(patCurDisDTO.getInspecDescripId290() != 1 && patCurDisDTO.getInspecDescripId332() != 1 && patCurDisDTO.getInspecDescripId351() != 1)
+				if(patCurDisDTO.getInspecDescripId290() != 0 && patCurDisDTO.getInspecDescripId332() != 0 && patCurDisDTO.getInspecDescripId351() != 0)
 					val355 = tClass[patCurDisDTO.getInspecDescripId290()-1]+""+nClass[patCurDisDTO.getInspecDescripId332()-1]+""+mClass[patCurDisDTO.getInspecDescripId351() - 1];
 					patCurDisDTO.setInspecDescripId355(val355);
 				tail="<input type=\"text\" name=\""+name+"\" value=\""+val355+"\" ng-readonly=\"true\">";

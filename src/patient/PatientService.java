@@ -1,17 +1,23 @@
 package patient;
 
+import login.LoginDTO;
+import prescription.VisitDAO;
+import prescription.VisitDTO;
+import utility.DAOResult;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import login.LoginDTO;
-
-import utility.DAOResult;
 
 public class PatientService {
 	
 	public DAOResult addNewPatient(PatientDTO dto, int userID){
 		PatientDAO dao = new PatientDAO();
-		return dao.addNewPatient(dto, userID);
+		DAOResult result =  dao.addNewPatient(dto, userID);
+		VisitDTO visitDTO = new VisitDTO();
+		visitDTO.setPatientId(result.getObjectId());
+		visitDTO.setTicketNumber(dto.getTicketNumber());
+		new VisitDAO().create(visitDTO);
+		return result;
 	}
 	
 	public ArrayList<PatientDTO> getPatientDTOs(String startDate, String endDate, String searchBy, String nameTicketPhone, int roleID){
