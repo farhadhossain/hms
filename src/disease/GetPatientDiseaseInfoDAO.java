@@ -223,7 +223,7 @@ public class GetPatientDiseaseInfoDAO {
 			}
 			rs.close();
 			
-			rs = stmt.executeQuery("select * from tbl_patient_disease_special_case_details where patient_id="+userID+" and visit_id="+visitId+userID+" and sp_case_id in (select id from tbl_disease_special_case_details where dis_id="+diseaseID+")");
+			rs = stmt.executeQuery("select * from tbl_patient_disease_special_case_details where patient_id="+userID+" and visit_id="+visitId+" and sp_case_id in (select id from tbl_disease_special_case_details where dis_id="+diseaseID+")");
 			while(rs.next()){
 				int specialCaseId=rs.getInt("sp_case_id");
 				if(specialCaseId==1){

@@ -89,7 +89,7 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 		document.getElementById('totalTk').value=parseInt(previousSum)+(parseInt(lengthDiff)*parseInt(amount));
 		document.getElementById(previousStore).value=textbox;
 	}
-	
+
     </script>
 	<style>
 		.borders span{
@@ -243,7 +243,7 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 						<html:form action="/NewExtraction">
 						<div class="row">
 							<div class="col-md-4 col-sm-6 col-xs-12">
-								<table>
+								<table id="extraction_panel">
 									<tr><td>Extraction<br><br></td></tr>
 
 									<%--<%for(int key : extractionNameByID.keySet()){
@@ -295,14 +295,14 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 										</tr>
 									<%}%>--%>
 
-									<tr ng-repeat = "e in extractionItems track by e.extractionId" ng-if="e.id < 4">
+									<tr  ng-repeat = "e in extractionItems track by e.extractionId" ng-if="e.id < 4">
 										<td>
-											<input type="checkbox" ng-disabled="{{isDutyNurse}}" checklist-model="treatmentPlan.extraction" checklist-value="e"  checklist-change="imChanged()">&emsp;{{e.name}}
+											<input type="checkbox" checklist-model="treatmentPlan.extraction" checklist-value="e"  checklist-change="imChanged()">&emsp;{{e.name}}
 											<div class="row" style="margin-left: 15px;">
 												<div class="borders" style="text-align: right;">
 													<span ng-repeat="tooth in [8,7,6,5,4,3,2,1]" ng-show="checklistShow(e.name)" >
-														<span ng-click="toggleCheckBox($event)" ng-show = "getChecklistModel(e.name).num1.indexOf(tooth)==-1" ><a ng-href='#here'>{{tooth}}</a></span>
-														<span ng-click="toggleCheckBox($event)" ng-show = "getChecklistModel(e.name).num1.indexOf(tooth)!=-1" ><input type="checkbox"  checklist-model="getChecklistModel(e.name).num1" checklist-value="tooth" checklist-change="imChanged()"/></span>
+														<span ng-click="toggleCheckBox($event)" ng-show = "getChecklistModel(e.name).num1.indexOf(tooth)==-1" ><a ng-href='#here' >{{tooth}}</a></span>
+														<span ng-click="toggleCheckBox($event)" ng-show = "getChecklistModel(e.name).num1.indexOf(tooth)!=-1" ><input type="checkbox" checklist-model="getChecklistModel(e.name).num1" checklist-value="tooth" checklist-change="imChanged()"/></span>
 													</span>
 												</div>
 												<div class="borders">
@@ -356,7 +356,7 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 --%>
 									<tr ng-repeat = "e in extractionItems track by e.extractionId" ng-if="e.id > 4">
 										<td>
-											<input type="checkbox" ng-disabled="{{isDutyNurse}}"  style="margin-left: 40px;" checklist-value="e" checklist-model="treatmentPlan.extraction">&emsp;{{e.name}}
+											<input type="checkbox"   style="margin-left: 40px;" checklist-value="e" checklist-model="treatmentPlan.extraction">&emsp;{{e.name}}
 										</td>
 									</tr>
 
@@ -393,6 +393,11 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
      		</div>
    		</div>
   	</div>
+	<% if(isUncheckedHide){%>
+	<script>
+		document.getElementById('extraction_panel').style.pointerEvents = 'none';
+	</script>
+	<%}%>
 </div>
 </body>
 </html>

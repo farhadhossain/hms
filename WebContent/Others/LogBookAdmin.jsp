@@ -1,4 +1,7 @@
 <%@ page import="java.util.Calendar" %>
+<%@ page import="user.UserService" %>
+<%@ page import="user.UserDTO" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ include file="../includes/checkLogin.jsp"%>
 
 <%
@@ -30,6 +33,9 @@
     }else{
         session.setAttribute("endDate", endDate);
     }
+
+    UserService service = new UserService();
+    ArrayList<UserDTO> dtoList= service.getAllUsers("", -1);
 %>
 
 <html>
@@ -113,16 +119,15 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" name="endDate" id="endDate" value="<%=endDate %>" style="width: 150px;">
                             </div>
-                            <%--<label>Search By</label>
+                            <label>Employee</label>
                             <div class="input-group">
-                                <select class="form-control" name="searchBy">
-                                    <option value="0">None</option>
-                                    <option value="1">Patient Name</option>
-                                    <option value="2">Ticket Number</option>
-                                    <option value="3">Phone Number</option>
-                                    <option value="4">Registration Number</option>
+                                <select class="form-control" name="userId">
+                                    <%for(UserDTO userDTO: dtoList){%>
+                                         <option value="<%=userDTO.getUserID()%>"><%=userDTO.getEmployeeName()%></option>
+                                    <%}%>
+
                                 </select>
-                            </div>--%>
+                            </div>
                             <div class="input-group">
                                 <%--<input type="text" placeholder="Name, PIN, Phone..." class="form-control" name="nameTicketPhone" id="top-search">--%>
                                 <span class="input-group-btn">

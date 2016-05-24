@@ -786,7 +786,7 @@ public class UpdatePatientDiseaseInfoDAO {
 					sizeOfArray=dto.getPalpationId().length;
 				}catch(Exception e){sizeOfArray=0;};
 				String tail_1="", tail_2="";
-				try{	
+
 					for(int i=0;i<sizeOfArray;i++){
 						if(dto.getPalpationId()[i]==1){
 							tail_1=", input_value"; tail_2=", '"+dto.getHeartRatePerMin()+"'";
@@ -849,7 +849,7 @@ public class UpdatePatientDiseaseInfoDAO {
 						tail_1="";
 						tail_2="";
 					}
-				}catch(Exception e){}
+
 			}
 			
 			
@@ -858,7 +858,7 @@ public class UpdatePatientDiseaseInfoDAO {
 					sizeOfArray=dto.getAuscultationId().length;
 				}catch(Exception e){sizeOfArray=0;};
 				
-				try{
+
 					for(int i=0;i<sizeOfArray;i++){
 						if(dto.getAuscultationId()[i]==7){
 							stmt.execute("insert into tbl_patient_disease_auscultation(patient_id, visit_id, auscultation_id, input_value) values("+dto.getUserId()+","+currentVisitId+", "+dto.getAuscultationId()[i]+", '"+dto.getAuscuDescripId7()+"')");
@@ -866,7 +866,7 @@ public class UpdatePatientDiseaseInfoDAO {
 							stmt.execute("insert into tbl_patient_disease_auscultation(patient_id, visit_id, auscultation_id) values("+dto.getUserId()+","+currentVisitId+", "+dto.getAuscultationId()[i]+")");
 						}
 					}
-				}catch(Exception e){}
+
 			}
 			
 			{
@@ -874,7 +874,7 @@ public class UpdatePatientDiseaseInfoDAO {
 					sizeOfArray=dto.getTreatmentId().length;
 				}catch(Exception e){sizeOfArray=0;};
 				
-				try{
+
 					String tail_1="", tail_2="";
 					for(int i=0;i<sizeOfArray;i++){
 						if(dto.getTreatmentId()[i]==5){
@@ -933,7 +933,7 @@ public class UpdatePatientDiseaseInfoDAO {
 						tail_1="";
 						tail_2="";
 					}
-				}catch(Exception e){}
+
 			}
 			
 			{
@@ -941,7 +941,7 @@ public class UpdatePatientDiseaseInfoDAO {
 					sizeOfArray=dto.getDiagnosisId().length;
 				}catch(Exception e){sizeOfArray=0;};
 				
-				try{
+
 					String tail_1="", tail_2="";
 					for(int i=0;i<sizeOfArray;i++){
 						if(dto.getDiagnosisId()[i]==18){
@@ -1001,7 +1001,7 @@ public class UpdatePatientDiseaseInfoDAO {
 						tail_1="";
 						tail_2="";
 					}
-				}catch(Exception e){}
+
 			}
 			
 			{
@@ -1009,7 +1009,7 @@ public class UpdatePatientDiseaseInfoDAO {
 					sizeOfArray=dto.getPrticpFactId().length;
 				}catch(Exception e){sizeOfArray=0;};
 				
-				try{
+
 					String tail_1="", tail_2="";
 					for(int i=0;i<sizeOfArray;i++){
 						if(dto.getPrticpFactId()[i]==9){
@@ -1019,7 +1019,7 @@ public class UpdatePatientDiseaseInfoDAO {
 						tail_1="";
 						tail_2="";
 					}
-				}catch(Exception e){}
+
 			}
 						
 			{

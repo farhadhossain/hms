@@ -7,17 +7,21 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="extraction.ExtractionDTO" %>
 <%@ page import="extraction.ExtractionDAO" %>
+<%@ page import="user.UserDTO" %>
+<%@ page import="user.UserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../includes/checkLogin.jsp"%>
 
 <%
     String startDate = request.getParameter("startDate");
     String endDate = request.getParameter("endDate");
+    int userId = request.getParameter("userId")==null ? loginDTO.getUserID() : Integer.parseInt(request.getParameter("userId"));
     System.out.println("-------- startdate = "+startDate+" & endDate = "+endDate+"------------");
+    UserDTO userDTO = new UserDAO().getUserDTO(userId);
     LogBookDAO logBook = new LogBookDAO();
-    Map<Integer, String> diagnosisPatLists = logBook.getPatientListsByRoleId(loginDTO.getUserID(), startDate, endDate, MyConfig.diagnosisRoomRole);
-    Map<Integer, String> minorOtPatLists = logBook.getPatientListsByRoleId(loginDTO.getUserID(), startDate, endDate, MyConfig.minorOTOrOutdoorRole);
-    Map<Integer, String> majorOtPatLists = logBook.getPatientListsByRoleId(loginDTO.getUserID(), startDate, endDate, MyConfig.AssistantSurgeonRole);
+    Map<Integer, String> diagnosisPatLists = logBook.getPatientListsByRoleId(userId, startDate, endDate, MyConfig.diagnosisRoomRole);
+    Map<Integer, String> minorOtPatLists = logBook.getPatientListsByRoleId(userId, startDate, endDate, MyConfig.minorOTOrOutdoorRole);
+    Map<Integer, String> majorOtPatLists = logBook.getPatientListsByRoleId(userId, startDate, endDate, MyConfig.AssistantSurgeonRole);
     prescription.PrescriptionDAO presDAO = new PrescriptionDAO();
     prescription.PrescriptionDTO presDTO = new PrescriptionDTO();
     ExtractionDAO extractionDAO = new ExtractionDAO();
@@ -55,7 +59,7 @@
     </section>
     <section style="padding:50px;">
         <div style="clear:both">&nbsp;</div>
-        <h4><strong>Name of <%=loginDTO.designation.equals("null")?"[Student's designation not mentioned]":loginDTO.designation%> Student:</strong> <%=loginDTO.employeeName%></h4>
+        <h4><strong>Name of <%=userDTO.getDesignation().equals("null")?"[Student's designation not mentioned]":userDTO.getDesignation()%> Student:</strong> <%=userDTO.getEmployeeName()%></h4>
         <table>
             <tbody>
             <tr>
@@ -92,7 +96,7 @@
                     <%while (itr.hasNext()){%>
                    <%
                        int key = itr.next().getKey();
-                       presDTO = presDAO.getPrescriptionByPatientId(key);
+                       presDTO = presDAO.getPrescriptionByPatientId(key, 0);
                        i++;
                        String oe = presDTO.getOnObservation();
                        System.out.println("*************** O/E = "+oe+" ************************");
@@ -265,7 +269,7 @@
                     <%
                         int key = itr.next().getKey();
                         String caries = "", looseTeeth = "", bdr = "", impacted = "";
-                        presDTO = presDAO.getPrescriptionByPatientId(key);
+                        presDTO = presDAO.getPrescriptionByPatientId(key, 0);
                         i++;
                         String oe = presDTO.getOnObservation();
                         System.out.println("*************** O/E = "+oe+" ************************");
@@ -395,7 +399,7 @@
 
                                 <tr>
                                     <td>Disease: <i class="fa fa-angle-right">&nbsp;</i></td>
-                                    <td colspan="2"><%=presDTO.getDiagonosis().substring(presDTO.getDiagonosis().indexOf(":")+2, presDTO.getDiagonosis().indexOf("}")-1)%></td>
+                                    <td colspan="2"></td>
                                 </tr>
 
                                 <tr>

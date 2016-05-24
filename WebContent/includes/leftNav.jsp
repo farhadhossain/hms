@@ -44,7 +44,7 @@
 	                        </a>                
 	                    </li>
 	                <%}%>
-					<%if(loginDTO.getRoleID()==MyConfig.diagnosisRoomRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.minorOTOrOutdoorRole){%>
+					<%if(loginDTO.getRoleID()==MyConfig.diagnosisRoomRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.minorOTOrOutdoorRole){%>
 						<li>
 							<a href='../Others/LogBook.jsp'>
 								<i class="fa fa-ambulance"></i>
@@ -122,6 +122,12 @@
 							<a href='../Report/AllDeptCompareReport.jsp'>
 								<i class="fa fa-bar-chart"></i>
 								<span class="nav-label">Department Comparison Report</span>
+							</a>
+						</li>
+					    <li>
+							<a href='../Others/LogBookAdmin.jsp'>
+								<i class="fa fa-ambulance"></i>
+								<span class="nav-label">Log Book</span>
 							</a>
 						</li>
                     <%}%>
