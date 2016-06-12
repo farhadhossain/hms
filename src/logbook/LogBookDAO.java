@@ -60,8 +60,6 @@ public class LogBookDAO {
             dto.setOperationName(surgeryDTO.getNameOfOp());
             dto.setOperationDate(surgeryDTO.getDateOfOp());
 
-            String sql = "select name from tbl_patient where id="+patientId;
-            System.out.println(sql);
             for(int i = 0; i < surgeryDTO.getSurgeonList().size(); i++){
                 UserDTO userDTO = surgeryDTO.getSurgeonList().get(i);
                 surgeons += userDTO.getEmployeeName()+", ";
@@ -84,13 +82,17 @@ public class LogBookDAO {
             dto.setAssSurgeons(assSurgeons);
             dto.setAnesthetist(annesthesists);
 
-            System.out.println("-------------- Surgeons: "+surgeons+" ----------------------");
+            System.out.println("-------------- Surgeons: " + surgeons + " ----------------------");
             System.out.println("-------------- AssSurgeons: "+assSurgeons+" ----------------------");
             System.out.println("-------------- Annesthesists: "+annesthesists+" ----------------------");
 
+            String sql = "select id,name from tbl_patient where id="+patientId;
+            System.out.println(sql);
             ResultSet rs = stmt.executeQuery(sql);
-            if(rs.next())
-                dto.setPatientName(rs.getString(1));
+            if(rs.next()) {
+                dto.setPatientId(rs.getInt("id"));
+                dto.setPatientName(rs.getString("name"));
+            }
             rs.close();
         }catch (Exception e){
             System.out.println("Problems----"+e.toString());

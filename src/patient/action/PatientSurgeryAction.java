@@ -29,6 +29,7 @@ public class PatientSurgeryAction extends Action{
 		PatientSurgeryDTO dto = new PatientSurgeryDTO();
 		
 		dto.setUserID(form.getUserID());
+		dto.setSurgicalID(form.getSurgicalID());
 		dto.setOperationalNotes(form.getOperationalNotes());
 		dto.setCompliOfAnesthesia(form.getCompliOfAnesthesia());
 		dto.setDateOfOp(form.getDateOfOp());

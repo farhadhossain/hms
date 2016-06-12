@@ -12,6 +12,10 @@ public class UserDTO
 	private int employeeType;
 	private String designation;
 	private String roleList;
+	private String studentId;
+	private String program;
+	private String phase;
+	private String block;
 
 	public String getRoleList() {
 		return roleList;
@@ -70,5 +74,37 @@ public class UserDTO
 
 	public void setDesignation(String designation) {
 		this.designation = designation;
+	}
+
+	public String getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
+	}
+
+	public String getProgram() {
+		return program;
+	}
+
+	public void setProgram(String program) {
+		this.program = program;
+	}
+
+	public String getPhase() {
+		return phase;
+	}
+
+	public void setPhase(String phase) {
+		this.phase = phase;
+	}
+
+	public String getBlock() {
+		return block;
+	}
+
+	public void setBlock(String block) {
+		this.block = block;
 	}
 }

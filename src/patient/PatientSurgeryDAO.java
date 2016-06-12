@@ -1,7 +1,7 @@
 package patient;
 
+import prescription.VisitDAO;
 import user.UserDTO;
-import user.UserService;
 import utility.DAOResult;
 import utility.MyConfig;
 
@@ -99,13 +99,14 @@ public class PatientSurgeryDAO {
 		DAOResult daoResult = new DAOResult();
 		daoResult.setValid(true);
 		daoResult.setMessage("Added Successfully");
+		int currentVisit = new VisitDAO().getCurrentVisitId(dto.getUserID());
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
 			String[] id={"id"};
-			String sql="INSERT INTO tbl_patient_surgery(patient_id, name_of_op, date_of_op) " +
-					"VALUES ("+dto.getUserID()+",'"+dto.getNameOfOp()+"','"+dto.getDateOfOp()+"')";
+			String sql="INSERT INTO tbl_patient_surgery(patient_id, name_of_op, date_of_op, visit_id) " +
+					"VALUES ("+dto.getUserID()+",'"+dto.getNameOfOp()+"','"+dto.getDateOfOp()+"',"+currentVisit+")";
 			System.out.println(sql);
 			stmt.executeUpdate(sql, id);
 			
@@ -299,9 +300,29 @@ public class PatientSurgeryDAO {
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 
-			String sql="update tbl_patient_surgery set compli_of_anesthesia='"+dto.getCompliOfAnesthesia()+"', post_operative_comp='"+dto.getPostOperativeCompli()+"', others='"+dto.getOthers()+"', operational_notes='"+dto.getOperationalNotes()+"' where patient_id="+dto.getUserID();
+
+			String sql="update tbl_patient_surgery set compli_of_anesthesia='"+dto.getCompliOfAnesthesia()+"', post_operative_comp='"+dto.getPostOperativeCompli()+"', others='"+dto.getOthers()+"', operational_notes='"+dto.getOperationalNotes()+"' where id="+dto.getSurgicalID();
 			System.out.println(sql);
 			stmt.executeUpdate(sql);
+
+			stmt.executeUpdate("delete from tbl_patient_surgery_doctor where surgical_history_id="+dto.getSurgicalID());
+
+
+        	for(int i=0;i<dto.getSurgeonIDList().length;i++){
+        		sql="insert into tbl_patient_surgery_doctor(surgical_history_id, doctor_id, role_id) values("+dto.getSurgicalID()+", "+dto.getSurgeonIDList()[i]+", "+MyConfig.SurgeonRole+")";
+        		stmt.executeUpdate(sql);
+			}
+
+        	for(int i=0;i<dto.getAssistSurgIDList().length;i++){
+        		sql="insert into tbl_patient_surgery_doctor(surgical_history_id, doctor_id, role_id) values("+dto.getSurgicalID()+", "+dto.getAssistSurgIDList()[i]+", "+MyConfig.AssistantSurgeonRole+")";
+        		stmt.executeUpdate(sql);
+			}
+
+        	for(int i=0;i<dto.getAnesthetistIDList().length;i++){
+        		sql="insert into tbl_patient_surgery_doctor(surgical_history_id, doctor_id, role_id) values("+dto.getSurgicalID()+", "+dto.getAnesthetistIDList()[i]+", "+MyConfig.AnesthetistRole+")";
+        		stmt.executeUpdate(sql);
+			}
+
 
 			sql="update tbl_patient set surgical_status = 3 where id="+dto.getUserID();
 			System.out.println(sql);

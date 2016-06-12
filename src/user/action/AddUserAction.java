@@ -40,6 +40,11 @@ public class AddUserAction extends Action{
 			dto.setEmployeePhone(form.getEmployeePhone());
 			dto.setDesignation(form.getDesignation());
 			dto.setEmployeeType(form.getEmployeeType());
+			dto.setStudentId(form.getStudentId() == null ? "" : form.getStudentId());
+			dto.setProgram(form.getProgram()==null?"":form.getProgram());
+			dto.setPhase(form.getPhase()==null?"":form.getPhase());
+			dto.setBlock(form.getBlock()==null?"":form.getBlock());
+			;
 			UserService service = new UserService();
 			DAOResult daoResult=service.addUser(dto);
 			if(daoResult.isValid()==false){

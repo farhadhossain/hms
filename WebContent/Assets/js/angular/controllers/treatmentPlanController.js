@@ -61,8 +61,10 @@ hms.controller('TreatmentPlanController', function ($scope, $http, $window, $loc
                               ei.num3 = plan.inputValue3!='null'?JSON.parse(plan.inputValue3):[];
                               ei.num4 = plan.inputValue4!='null'?JSON.parse(plan.inputValue4):[];
                               ei.paymentRegNo=plan.paymentRegNo=='null'?"":plan.paymentRegNo;
+                              ei.tempPaymentRegNo = ei.paymentRegNo;
                               ei.done= plan.done;
                               ei.instrumentProvided= plan.instrumentProvided;
+                              ei.tempInstrumentProvided= plan.instrumentProvided;
                               var temp = ei;
                               temp.planId = plan.id;
                               $scope.treatmentPlan.extraction.push(temp);
@@ -125,9 +127,10 @@ hms.controller('TreatmentPlanController', function ($scope, $http, $window, $loc
                      inputValue3: JSON.stringify(e.num3),
                      inputValue4: JSON.stringify(e.num4),
                      paymentAmount : e.paymentAmount,
-                     paymentRegNo : e.paymentRegNo,
+                     paymentRegNo : e.tempPaymentRegNo,
                      done : e.done,
-                     instrumentProvided : e.instrumentProvided
+                     instrumentProvided : e.instrumentProvided,
+                     instrumentProvided : e.tempInstrumentProvided
                     };
             if(e.planId){ex.id= e.planId}
            console.log(JSON.stringify(ex));

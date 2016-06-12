@@ -144,11 +144,56 @@ UserDTO dto=service.getUserDTO(Integer.parseInt(userID));
 				                    	</select>
 									</div>
 								</div>
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Student ID#</label>
+									<div class="col-sm-4">
+										<input name="studentId" type="text" class="input-small  input-right" value="<%=dto.getStudentId()%>"/>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Program</label>
+									<div class="col-sm-4">
+										<select name="program">
+											<option value="">None</option>
+				                    		<option <%if(dto.getProgram().equals("Residency")){%>selected="selected"<%}%> value="Residency">Residency</option>
+					                    	<option <%if(dto.getProgram().equals("Medical Officer")){%>selected="selected"<%}%> value="Medical Officer">Medical Officer</option>
+											<option <%if(dto.getProgram().equals("PGT")){%>selected="selected"<%}%> value="PGT">PGT</option>
+											<option <%if(dto.getProgram().equals("DDS")){%>selected="selected"<%}%> value="DDS">DDS</option>
+											<option <%if(dto.getProgram().equals("FCPS")){%>selected="selected"<%}%> value="FCPS">FCPS</option>
+				                    	</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Phase</label>
+									<div class="col-sm-4">
+										<select name="phase">
+											<option value="">None</option>
+				                    		<option <%if(dto.getPhase().equals("A")){%>selected="selected"<%}%> value="A">A</option>
+					                    	<option <%if(dto.getPhase().equals("B")){%>selected="selected"<%}%> value="B">B</option>
+				                    	</select>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Block</label>
+									<div class="col-sm-4">
+										<select name="block">
+											<option value="">None</option>
+				                    		<option <%if(dto.getBlock().equals("Medicine")){%>selected="selected"<%}%> value="Medicine">Medicine</option>
+					                    	<option <%if(dto.getBlock().equals("Surgery")){%>selected="selected"<%}%> value="Surgery">Surgery</option>
+				                    	</select>
+									</div>
+								</div>
+
 								
 								<div class="form-group">
 									<label class="col-sm-4 control-label">Primary Role:</label>
 									<div class="col-sm-4">
-										<select name="roleId" style="margin-left: 26px;">
+										<select name="roleId">
 				                    		<option value="-1">None</option>
 					                    	<%
 					                    	RoleService roleService = new RoleService();

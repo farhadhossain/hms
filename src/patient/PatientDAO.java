@@ -114,7 +114,7 @@ public class PatientDAO  extends BaseDAO
 			if(roleID==MyConfig.diagnosisRoomRole){
 				sql+=" and (current_status="+MyConfig.deptDiagnosisRoom;
 				sql+=" or current_status="+MyConfig.deptEmergency +")";
-			}else if(roleID==MyConfig.minorOTOrOutdoorRole){
+			}else if(roleID==MyConfig.minorOTOrOutdoorRole || roleID==MyConfig.dutyNurseRole){
 				sql+=" and (current_status="+MyConfig.deptOutdoorOrMinorOT;
 				sql+=" or current_status="+MyConfig.deptEmergency +")";
 			}else if(roleID==MyConfig.SurgeonRole || roleID==MyConfig.AssistantSurgeonRole || roleID==MyConfig.AnesthetistRole || roleID==MyConfig.DoctorForBed){

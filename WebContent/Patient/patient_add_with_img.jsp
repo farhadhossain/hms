@@ -20,11 +20,11 @@
    	ServletContext context = session.getServletContext();
    	String filePath = context.getInitParameter("file-upload");
     String contentType = request.getContentType();
-    
+
    	if((contentType.indexOf("multipart/form-data") >= 0)) {
 	    DiskFileItemFactory factory = new DiskFileItemFactory();
     	factory.setSizeThreshold(maxMemSize);
-      	factory.setRepository(new File("/Users/macintosh/Documents/Farhad/apache-tomcat-8.0.20/webapps/images/"));
+      	factory.setRepository(new File(application.getRealPath("\\Assets\\Images")));
 	    ServletFileUpload upload = new ServletFileUpload(factory);
     	upload.setSizeMax( maxFileSize );
       	try{

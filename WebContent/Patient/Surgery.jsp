@@ -8,6 +8,7 @@
 <%@ page import="patient.PatientSurgeryDTO" %>
 <%@ page import="java.util.*" %>
 <%@ page import="org.apache.commons.lang.ArrayUtils" %>
+<%@ page import="utility.StringUtil" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -17,7 +18,7 @@
 	String accountID= request.getParameter("userID");
 	PatientSurgeryService patientServ = new PatientSurgeryService();
 	PatientSurgeryDTO patientSurgeryDTO=patientServ.getSurgeryByPatientID(Integer.parseInt(accountID));
-
+	StringUtil.removeNullFromObject(patientSurgeryDTO);
 
 	ArrayList<UserDTO> surgeonList = new UserService().getAllUsers("", MyConfig.SurgeonRole);
 	ArrayList<UserDTO> assistSurgeonList = new UserService().getAllUsers("", MyConfig.AssistantSurgeonRole);
@@ -271,6 +272,7 @@
                             		<label class="col-sm-4 control-label"></label>
                             		<div class="col-sm-6">
 	                            		<input type="submit" value="Submit" class="btn btn-primary">
+										<input type="hidden" name="surgicalID" id="surgicalID" value="<%=patientSurgeryDTO.getSurgicalID()%>">
 										<input type="hidden" name="userID" id="userID" value="<%=userID%>">
 										<input type="hidden" name="surgicalStatus" id="surgicalStatus" value="<%=surgicalStatus%>">
                             		</div>

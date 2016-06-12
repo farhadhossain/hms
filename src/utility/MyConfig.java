@@ -48,7 +48,7 @@ public class MyConfig{
 	
 	/*public static final String filePath = "http://localhost:8080/images/";*/
 	/*public static final String filePath = "D:\\apache-tomcat-8.0.32\\webapps\\images\\";*/
-	public static final String filePath = "http://localhost:8080/images/";
+	public static final String filePath = "\\Assets\\Images\\";
 	
 	public static HashMap<Integer, String> refToOtherDeptDetails = new HashMap<Integer , String>() {{
 		put(0, "None");

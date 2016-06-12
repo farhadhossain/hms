@@ -142,11 +142,57 @@ if(loginDTO!=null){
 				                    	</select>
 									</div>
 								</div>
+
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Student ID#</label>
+									<div class="col-sm-4">
+										<input name="studentId" type="text" class="input-small  input-right" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Program</label>
+									<div class="col-sm-4">
+										<select name="program">
+											<option value="">None</option>
+				                    		<option value="Residency">Residency</option>
+					                    	<option value="Medical Officer">Medical Officer</option>
+											<option value="PGT">PGT</option>
+											<option value="DDS">DDS</option>
+											<option value="FCPS">FCPS</option>
+				                    	</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Phase</label>
+									<div class="col-sm-4">
+										<select name="phase">
+											<option value="">None</option>
+				                    		<option value="A">A</option>
+					                    	<option value="B">B</option>
+				                    	</select>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label">Block</label>
+									<div class="col-sm-4">
+										<select name="block">
+											<option value="">None</option>
+				                    		<option value="Medicine">Medicine</option>
+					                    	<option value="Surgery">Surgery</option>
+				                    	</select>
+									</div>
+								</div>
+
 								
 								<div class="form-group">
 									<label class="col-sm-4 control-label">Primary Role</label>
 									<div class="col-sm-4">
-										<select name="roleId" style="margin-left: 26px;">
+										<select name="roleId">
 				                    		<option value="-1">None</option>
 					                    	<%
 					                    	RoleService service = new RoleService();

@@ -371,10 +371,10 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 								<div class="row" ng-repeat="item in treatmentPlan.extraction track by item.extractionId" style="padding: 20px;" ng-show="!isDutyNurse || item.paymentRegNo!=''">
 									<div class="col-md-6" ng-if="item.paymentRegNo!=''">Deposited {{calculatePaymentAmount($index,item)}} Taka for {{item.name}}</div>
 									<div class="col-md-6" ng-if="item.paymentRegNo==''">Please deposit Taka {{calculatePaymentAmount($index,item)}} for {{item.name}}</div>
-									<div class="col-md-3" ng-show="!isDutyNurse">Reg. No <input type="text" size="10" ng-model="item.paymentRegNo"/></div>
-									<div class="col-md-3" ng-show="isDutyNurse">Reg. No : {{item.paymentRegNo}}</div>
+									<div class="col-md-3" ng-show="!isDutyNurse && !item.paymentRegNo">Reg. No {{item.paymentRegNo}}<input type="text" size="10" ng-model="item.tempPaymentRegNo"/></div>
+									<div class="col-md-3" ng-show="isDutyNurse || item.paymentRegNo">Reg. No : {{item.paymentRegNo}}</div>
 									<div class="col-md-3" ng-show="!isDutyNurse"><input ng-model="item.done" type="checkbox">&nbsp;&nbsp;Done</div>
-									<div class="col-md-3" ng-show="isDutyNurse"><input ng-model="item.instrumentProvided" type="checkbox">&nbsp;&nbsp;Instrument Provided</div>
+									<div class="col-md-3" ng-show="isDutyNurse"><input ng-model="item.tempInstrumentProvided" ng-hide="item.instrumentProvided"  type="checkbox">&nbsp;&nbsp;Instrument Provided</div>
 								</div>
 <%--								<div>Please deposit <input type="text" readonly="readonly" value="<%=extractionDTO.getTotalTk() %>" name="totalTk" id="totalTk">Taka<br></div>
 								<div>Payment registration number <input type="text" name="paymentRegNumber" value="<%=extractionDTO.getPaymentRegNumber() %>"></div>   --%>

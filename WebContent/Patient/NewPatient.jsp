@@ -170,7 +170,7 @@ if(loginDTO!=null){
             	<div class="col-lg-12">
                  <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Add New Patient</h5>
+                        <h5>Add New Patient<%=application.getRealPath("/Assets/Images")%></h5>
                     </div><!--/./ibox-title-->
 					<%if(session.getAttribute(SessionManager.PatientAdd)!=null){%>
 			        	<div class="alert alert-success" id="AlertSuccess" ><%=session.getAttribute(SessionManager.PatientAdd)%></div>

@@ -252,7 +252,8 @@ int size=dtoList.size();
 					                </thead>
 					                <tbody>
 										<%for(int i=0;i<size;i++){
-					                        PatientDTO dto = dtoList.get(i);%> 	 	
+					                        PatientDTO dto = dtoList.get(i);
+										%>
 					                    	<tr>
 					                    		<td><%=(i+1) %></td>
 					                    		<td>

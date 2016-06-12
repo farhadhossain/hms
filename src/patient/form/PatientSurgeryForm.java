@@ -3,7 +3,8 @@ package patient.form;
 import org.apache.struts.action.ActionForm;
 
 public class PatientSurgeryForm extends ActionForm{
-	
+
+	private int surgicalID;
 	private int userID;
 	private String operationalNotes;
 	private String nameOfOp;
@@ -16,7 +17,16 @@ public class PatientSurgeryForm extends ActionForm{
 	private int[] assistSurgIDList;
 	private int[] anesthetistIDList;
 	private int surgicalStatus;
-	
+
+
+	public int getSurgicalID() {
+		return surgicalID;
+	}
+
+	public void setSurgicalID(int surgicalID) {
+		this.surgicalID = surgicalID;
+	}
+
 	public int[] getSurgeonIDList() {
 		return surgeonIDList;
 	}

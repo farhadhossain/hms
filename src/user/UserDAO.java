@@ -1,14 +1,13 @@
 package user;
 
+import login.LoginDTO;
+import utility.DAOResult;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import login.LoginDTO;
-import utility.DAOResult;
-import utility.LogGeneration;
-import utility.SessionManager;
 
 
 public class UserDAO
@@ -31,7 +30,7 @@ public class UserDAO
 		    
 		    
 		    
-	        pstmt = conn.prepareStatement("INSERT INTO tbl_user(user_name, user_pass, role_id, employee_name, phone_number, user_type, designation, role_list) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+	        pstmt = conn.prepareStatement("INSERT INTO tbl_user(user_name, user_pass, role_id, employee_name, phone_number, user_type, designation, role_list, student_id, program, phase,block) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	        pstmt.setString(1, dto.getUserName());
 	        pstmt.setString(2, dto.getPassword());
 	        pstmt.setInt(3, dto.getRoleID());
@@ -40,6 +39,10 @@ public class UserDAO
 	        pstmt.setInt(6, dto.getEmployeeType());
 			pstmt.setString(7, dto.getDesignation());
 			pstmt.setString(8, dto.getRoleList());
+			pstmt.setString(9, dto.getStudentId());
+			pstmt.setString(10, dto.getProgram());
+			pstmt.setString(11, dto.getPhase());
+			pstmt.setString(12, dto.getBlock());
 	        pstmt.execute();
 	        
 	        pstmt.close();
@@ -75,6 +78,10 @@ public class UserDAO
 	        	dto.setEmployeePhone(rs.getString("phone_number"));
 	        	dto.setEmployeeType(rs.getInt("user_type"));
 				dto.setDesignation(rs.getString("designation"));
+				dto.setStudentId(rs.getString("student_id"));
+				dto.setProgram(rs.getString("program"));
+				dto.setPhase(rs.getString("phase"));
+				dto.setBlock(rs.getString("block"));
 	        	destDTOs.add(dto);
 	        }
 	        rs.close();
@@ -122,6 +129,10 @@ public class UserDAO
 				dto.setDesignation(rs.getString("designation"));
 	        	dto.setEmployeeType(rs.getInt("user_type"));
 				dto.setRoleList(rs.getString("role_list"));
+				dto.setStudentId(rs.getString("student_id"));
+				dto.setProgram(rs.getString("program"));
+				dto.setPhase(rs.getString("phase"));
+				dto.setBlock(rs.getString("block"));
 	        }
 	        rs.close();
 		}catch(Exception e){
@@ -151,7 +162,7 @@ public class UserDAO
 				return daoResult;
 		    }
 		    
-	        pstmt = conn.prepareStatement("UPDATE tbl_user SET user_pass=?, role_id=?, employee_name=?, phone_number=?, user_type=?, designation=?, role_list=? WHERE id=?");
+	        pstmt = conn.prepareStatement("UPDATE tbl_user SET user_pass=?, role_id=?, employee_name=?, phone_number=?, user_type=?, designation=?, role_list=? ,student_id=?, program=?, phase=?,block=? WHERE id=?");
 	        pstmt.setString(1, dto.getPassword());
 	        pstmt.setInt(2, dto.getRoleID());
 	        pstmt.setString(3, dto.getEmployeeName());
@@ -159,7 +170,11 @@ public class UserDAO
 	        pstmt.setInt(5, dto.getEmployeeType());
 			pstmt.setString(6, dto.getDesignation());
 	        pstmt.setString(7, dto.getRoleList());
-			pstmt.setInt(8, dto.getUserID());
+			pstmt.setString(8, dto.getStudentId());
+			pstmt.setString(9, dto.getProgram());
+			pstmt.setString(10, dto.getPhase());
+			pstmt.setString(11, dto.getBlock());
+			pstmt.setInt(12, dto.getUserID());
 	        pstmt.executeUpdate();
 	        
 		}catch(Exception e){

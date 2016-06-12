@@ -4,6 +4,7 @@ package logbook;
  * Created by User on 4/29/2016.
  */
 public class MajorOtDTO {
+    int patientId;
     String patientName;
     String diagnosis;
     String operationName;
@@ -11,6 +12,14 @@ public class MajorOtDTO {
     String assSurgeons;
     String anesthetist;
     String operationDate;
+
+    public int getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
+    }
 
     public String getPatientName() {
         return patientName;
@@ -67,4 +76,5 @@ public class MajorOtDTO {
     public void setOperationDate(String operationDate) {
         this.operationDate = operationDate;
     }
+
 }

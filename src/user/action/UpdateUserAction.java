@@ -1,21 +1,18 @@
 package user.action;
 
-import org.apache.struts.action.Action;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import login.LoginDTO;
-
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionForward;
-
+import org.apache.struts.action.ActionMapping;
 import user.UserDTO;
 import user.UserService;
 import user.form.UserForm;
 import utility.DAOResult;
-import utility.LogGeneration;
 import utility.SessionManager;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 public class UpdateUserAction extends Action{
@@ -38,8 +35,12 @@ public class UpdateUserAction extends Action{
 				System.out.println("******************** Updating Role List = " + form.getRoleList()[i] + " *******************");
 			}
 			dto.setRoleList(role_list);
-			dto.setEmployeePhone(form.getEmployeePhone()==null?"":form.getEmployeePhone());
-			dto.setDesignation(form.getDesignation()==null?"":form.getDesignation());
+			dto.setEmployeePhone(form.getEmployeePhone() == null ? "" : form.getEmployeePhone());
+			dto.setDesignation(form.getDesignation() == null ? "" : form.getDesignation());
+			dto.setStudentId(form.getStudentId() == null ? "" : form.getStudentId());
+			dto.setProgram(form.getProgram()==null?"":form.getProgram());
+			dto.setPhase(form.getPhase()==null?"":form.getPhase());
+			dto.setBlock(form.getBlock()==null?"":form.getBlock());
 			UserService service = new UserService();
 			DAOResult daoResult=service.updateUserDTO(dto);
 			if(daoResult.isValid()==false){
