@@ -42,6 +42,9 @@ public class PatientSurgeryAction extends Action{
 		dto.setSurgeonIDList(form.getSurgeonIDList());
 		dto.setSurgicalStatus(form.getSurgicalStatus());
 
+		dto.setFollowupAdvice(form.getFollowupAdvice());
+		dto.setNextVisitDate(form.getNextVisitDate());
+
 		DAOResult daoResult=null;
 		PatientSurgeryService service = new PatientSurgeryService();
 		if(dto.getSurgicalStatus()==2) {

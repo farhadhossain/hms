@@ -32,12 +32,14 @@
     LogBookDAO logBook = new LogBookDAO();
     Map<Integer, String> diagnosisPatLists = logBook.getPatientListsByRoleId(userId, startDate, endDate, MyConfig.diagnosisRoomRole);
     Map<Integer, String> minorOtPatLists = logBook.getPatientListsByRoleId(userId, startDate, endDate, MyConfig.minorOTOrOutdoorRole);
-    Map<Integer, String> majorOtPatLists = logBook.getPatientListsByRoleId(userId, startDate, endDate, MyConfig.AssistantSurgeonRole);
+    Map<Integer, String> majorOtPatLists = logBook.getPatientListsByRoleId(userId, startDate, endDate, MyConfig.SurgeonRole);
+    majorOtPatLists.putAll(logBook.getPatientListsByRoleId(userId, startDate, endDate, MyConfig.AssistantSurgeonRole));
+    majorOtPatLists.putAll(logBook.getPatientListsByRoleId(userId, startDate, endDate, MyConfig.AnesthetistRole));
     prescription.PrescriptionDAO presDAO = new PrescriptionDAO();
     //prescription.PrescriptionDTO presDTO = new PrescriptionDTO();
     ExtractionDAO extractionDAO = new ExtractionDAO();
     DiseaseService disServ = new DiseaseService();
-    HashMap<Integer, String> diseaseList = new DiseaseService().getSysDiseaseInfo(-1);
+    HashMap<Integer, String> diseaseList = disServ.getSysDiseaseInfo(-1);
 
 %>
 
@@ -51,6 +53,31 @@
             .diagnosis, .surgery{width:100%;}
             .diagnosis tbody>tr>td{padding:2px;}
             .surgery tbody>tr>td{padding:2px;}
+            *{
+			font-family: Verdana;
+			font-size: 12px;
+		}
+
+
+		input[type=checkbox]{
+			visibility:hidden;
+			font-size: 12px;
+		}
+
+		input[type=text]{
+			border:none;
+			font-size: 12px;
+		}
+
+		select{
+			border:none;
+			width : 300px !important;
+			background: transparent;
+			-webkit-appearance: none;
+    		-moz-appearance: none;
+    		appearance: none;
+		}
+
         </style>
     </head>
     <body>

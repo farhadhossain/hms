@@ -56,7 +56,7 @@ public class LogBookDAO {
             conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
             stmt = conn.createStatement();
 
-            surgeryDTO = surgeryDAO.getSurgeryByPatientID(patientId);
+            surgeryDTO = surgeryDAO.getSurgeryByPatientID(patientId, 0);
             dto.setOperationName(surgeryDTO.getNameOfOp());
             dto.setOperationDate(surgeryDTO.getDateOfOp());
 

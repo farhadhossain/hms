@@ -16,8 +16,9 @@
 <%
 
 	String accountID= request.getParameter("userID");
+	String visitID = request.getParameter("visitID")==null?"0":request.getParameter("visitID");
 	PatientSurgeryService patientServ = new PatientSurgeryService();
-	PatientSurgeryDTO patientSurgeryDTO=patientServ.getSurgeryByPatientID(Integer.parseInt(accountID));
+	PatientSurgeryDTO patientSurgeryDTO=patientServ.getSurgeryByPatientID(Integer.parseInt(accountID), Integer.parseInt(visitID));
 	StringUtil.removeNullFromObject(patientSurgeryDTO);
 
 	ArrayList<UserDTO> surgeonList = new UserService().getAllUsers("", MyConfig.SurgeonRole);

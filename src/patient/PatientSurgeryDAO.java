@@ -150,15 +150,18 @@ public class PatientSurgeryDAO {
 		return daoResult;
 	}
 	
-	public PatientSurgeryDTO getSurgeryByPatientID(int patientId) {
+	public PatientSurgeryDTO getSurgeryByPatientID(int patientId, int visitId) {
 		PatientSurgeryDTO dto = new PatientSurgeryDTO();
 		String sql=null;
 		Connection conn =null;
 		Statement stmt =null;
+		if (visitId==0){
+			visitId = new VisitDAO().getCurrentVisitId(patientId);
+		}
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
-			sql="SELECT * from tbl_patient_surgery where patient_id="+patientId;
+			sql="SELECT * from tbl_patient_surgery where patient_id="+patientId +" and visit_id="+visitId;
 			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 	        if(rs.next()){
@@ -174,7 +177,9 @@ public class PatientSurgeryDAO {
 	        	dto.setNameOfOp(rs.getString("name_of_op"));
 	        	dto.setOthers(rs.getString("others"));
 	        	dto.setPostOperativeCompli(rs.getString("post_operative_comp"));
-	        	dto.setSurgicalStatus(rs.getInt("surgical_status"));
+				dto.setFollowupAdvice(rs.getString("followup_advice"));
+				dto.setNextVisitDate(rs.getString("next_visit_date"));
+				dto.setSurgicalStatus(rs.getInt("surgical_status"));
 	        	dto.updatePerform=rs.getString("update_perform");
 	        }
 	        rs.close();
@@ -296,6 +301,7 @@ public class PatientSurgeryDAO {
 		Statement stmt =null;
 		DAOResult daoResult = new DAOResult();
 		daoResult.setValid(true);
+		int currentVisit = new VisitDAO().getCurrentVisitId(dto.getUserID());
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
@@ -324,25 +330,30 @@ public class PatientSurgeryDAO {
 			}
 
 
-			sql="update tbl_patient set surgical_status = 3 where id="+dto.getUserID();
-			System.out.println(sql);
-			stmt.execute(sql);
 
-			int size = dto.getAssistSurgIDList().length;
+			stmt.execute("update visit set surgical_status = 3 where id=" + currentVisit);
 
-			System.out.println("********************* from MakePostOperative with size = "+size+" *********************");
-			for(int i = 0; i < size; i++){
+			stmt.execute("update tbl_patient set surgical_status = 3 where id="+dto.getUserID());
 
-				int user = dto.getAssistSurgIDList()[i];
-				int role = MyConfig.AssistantSurgeonRole;
 
-				String upDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
-				sql = "insert into tbl_logbook(userId, patientId, updateDate, roleId) " + "values('" + user + "','" + dto.getUserID() + "','" + upDate + "','" + role + "')";
+			for(int surId:dto.getSurgeonIDList()){
+			    sql = "insert into tbl_logbook(userId, patientId, updateDate, roleId) " + "values('" + surId + "','" + dto.getUserID() + "',NOW(),'" + MyConfig.SurgeonRole + "')";
 				System.out.println(sql);
 				stmt.execute(sql);
-
-				//System.out.println("********************* from MakePostOperative with id = "+dto.getAssistSurgIDList()[i]+" *********************");
 			}
+
+			for(int surId:dto.getAssistSurgIDList()){
+			    sql = "insert into tbl_logbook(userId, patientId, updateDate, roleId) " + "values('" + surId + "','" + dto.getUserID() + "',NOW(),'" + MyConfig.AssistantSurgeonRole + "')";
+				System.out.println(sql);
+				stmt.execute(sql);
+			}
+
+			for(int surId:dto.getAnesthetistIDList()){
+			    sql = "insert into tbl_logbook(userId, patientId, updateDate, roleId) " + "values('" + surId + "','" + dto.getUserID() + "',NOW(),'" + MyConfig.AnesthetistRole + "')";
+				System.out.println(sql);
+				stmt.execute(sql);
+			}
+
 
 		}catch(Exception e){
 			System.out.println(e.toString());
@@ -361,18 +372,19 @@ public class PatientSurgeryDAO {
 		Statement stmt =null;
 		DAOResult daoResult = new DAOResult();
 		daoResult.setValid(true);
+		int currentVisit = new VisitDAO().getCurrentVisitId(dto.getUserID());
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 
-			String sql="update tbl_patient_surgery set compli_of_anesthesia='"+dto.getCompliOfAnesthesia()+"', post_operative_comp='"+dto.getPostOperativeCompli()+"', others='"+dto.getOthers()+"', operational_notes='"+dto.getOperationalNotes()+"' where patient_id="+dto.getUserID();
-			System.out.println(sql);
 			//stmt.executeUpdate(sql);
 
-			sql="update tbl_patient set surgical_status = 4, is_discharged=1, date_of_disch=NOW() where id="+dto.getUserID();
+			String sql="update tbl_patient set surgical_status = 4, is_discharged=1, date_of_disch=NOW() where id="+dto.getUserID();
 			System.out.println(sql);
 			stmt.execute(sql);
-
+			stmt.execute("update visit set surgical_status = 4, is_discharged=1, date_of_disch=NOW() where id=" + currentVisit);
+			stmt.execute("update tbl_surgical_history set surgical_status = 4,  followup_advice='"+dto.getFollowupAdvice()+"', next_visit_date='"+dto.getNextVisitDate()+"' where visit_id=" + currentVisit);
+			stmt.execute("update tbl_patient_surgery set followup_advice='"+dto.getFollowupAdvice()+"', next_visit_date='"+dto.getNextVisitDate()+"' where visit_id=" + currentVisit);
 		}catch(Exception e){
 			System.out.println(e.toString());
 			daoResult.setValid(false);

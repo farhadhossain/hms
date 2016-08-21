@@ -1,20 +1,17 @@
 package patientOthers.action;
 
 import org.apache.struts.action.Action;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionForward;
-
+import org.apache.struts.action.ActionMapping;
 import patientOthers.PatientOthersDTO;
 import patientOthers.PatientOthersService;
 import patientOthers.form.PatientOthersForm;
-
-
 import utility.DAOResult;
 import utility.SessionManager;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 public class UpdatePreAnestheticEvaluationAction extends Action{
@@ -26,8 +23,7 @@ public class UpdatePreAnestheticEvaluationAction extends Action{
 		
 		dto.setUserId(form.getUserId());
 		dto.setInfoId(form.getInfoId());
-		
-		dto.setCurProb(form.getCurProb()==null?"":form.getCurProb());
+		                                                                                                               		dto.setCurProb(form.getCurProb()==null?"":form.getCurProb());
 		dto.setOtherKnownProb(form.getOtherKnownProb()==null?"":form.getOtherKnownProb());
 		dto.setCurProbTreatment(form.getCurProbTreatment()==null?"":form.getCurProbTreatment());
 		dto.setCurDose(form.getCurDose()==null?"":form.getCurDose());

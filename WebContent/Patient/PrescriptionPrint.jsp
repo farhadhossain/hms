@@ -14,6 +14,7 @@
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 <%
 String accountID= request.getParameter("accountID");
+String visitID = request.getParameter("visitID")==null?"0":request.getParameter("visitID");
 PatientService patientServ = new PatientService();
 PatientDTO patientDTO=patientServ.getPatientDTO(Integer.parseInt(accountID));
 UserDTO  userDTO = new UserService().getUserDTO(loginDTO.getUserID());
@@ -101,7 +102,7 @@ UserDTO  userDTO = new UserService().getUserDTO(loginDTO.getUserID());
 
 	</style>
 </head>
-<body ng-controller = "TreatmentPlanController" ng-init="getPrescription('<%=accountID%>')">
+<body ng-controller = "TreatmentPlanController" ng-init="getPrescription('<%=accountID%>',<%=visitID%>)">
 <div class="container" style="padding-top: 40px;width:1000px;height: 1240px;">
 
 	<header class="banner" role="banner">

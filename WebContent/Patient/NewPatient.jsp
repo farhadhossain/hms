@@ -88,10 +88,6 @@ if(loginDTO!=null){
           alert("Please specify patient age");
           return false;
         }
-    	if(f.telephoneNum.value==null || f.telephoneNum.value==''){
-          alert("Please enter a valid telephone number");
-          return false;
-        }
     	if(f.ticketNumber.value==null || f.ticketNumber.value==''){
             alert("Please enter a valid Ticket Number");
             return false;
@@ -170,7 +166,7 @@ if(loginDTO!=null){
             	<div class="col-lg-12">
                  <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Add New Patient<%=application.getRealPath("/Assets/Images")%></h5>
+                        <h5>Add New Patient</h5>
                     </div><!--/./ibox-title-->
 					<%if(session.getAttribute(SessionManager.PatientAdd)!=null){%>
 			        	<div class="alert alert-success" id="AlertSuccess" ><%=session.getAttribute(SessionManager.PatientAdd)%></div>
@@ -238,7 +234,7 @@ if(loginDTO!=null){
 								</div>
 								
 								<div class="form-group">
-									<label class="col-sm-4 control-label">Telephone Number <span class="red">*</span></label>
+									<label class="col-sm-4 control-label">Telephone Number</label>
 									<div class="col-sm-4">
 										<input class="form-control" type="text" name="telephoneNum">
 									</div>

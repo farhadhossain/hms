@@ -1,11 +1,13 @@
 package pastSergHistory;
 
+import prescription.VisitDAO;
+import utility.DAOResult;
+import utility.MyConfig;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import utility.DAOResult;
-import utility.MyConfig;
 
 
 public class PastSurgicalHistoryDAO {
@@ -96,13 +98,14 @@ public class PastSurgicalHistoryDAO {
 		DAOResult daoResult = new DAOResult();
 		daoResult.setValid(true);
 		daoResult.setMessage("Added Successfully");
+		int currentVisitId = new VisitDAO().getCurrentVisitId(dto.getUserID());
 		try{
 			conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
 			stmt = conn.createStatement();
 			
 			String[] id={"id"};
-			String sql="INSERT INTO tbl_surgical_history(patient_id, accident_and_injuries, name_of_op, date_of_op, compli_of_anesthesia, post_operative_comp, others) " +
-					"VALUES ("+dto.getUserID()+",'"+dto.getAccAndInjuries()+"','"+dto.getNameOfOp()+"','"+dto.getDateOfOp()+"','"+dto.getCompliOfAnesthesia()+"','"+dto.getPostOperativeCompli()+"','"+dto.getOthers()+"')";
+			String sql="INSERT INTO tbl_surgical_history(patient_id, visit_id, accident_and_injuries, name_of_op, date_of_op, compli_of_anesthesia, post_operative_comp, others) " +
+					"VALUES ("+dto.getUserID()+","+currentVisitId+",'"+dto.getAccAndInjuries()+"','"+dto.getNameOfOp()+"','"+dto.getDateOfOp()+"','"+dto.getCompliOfAnesthesia()+"','"+dto.getPostOperativeCompli()+"','"+dto.getOthers()+"')";
 			System.out.println(sql);
 			stmt.executeUpdate(sql, id);
 			

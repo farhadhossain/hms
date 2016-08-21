@@ -41,10 +41,11 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 		font-size: 16px;
 	}
 </style>
-		<hr></hr>
-		<div class="col-sm-12" style="color: red; text-align: center;">
-			<strong style="color: red;"><%=diseaseList.get(key)%></strong>
+<div class="ibox-content patientView">
+		<div class="col-sm-12">
+			<strong><%=indexCount%>. <%=diseaseList.get(key)%></strong>
 		</div>
+        <div class="col-sm-offset-1">
 		<br><br>
 		<%if(disHistoryList.size()>0 && patCurDisDTO.patHisId.isEmpty()==false){%>
 			<div class="">
@@ -331,3 +332,5 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 				</div>
 			</div>
 		<%}%>
+     </div>
+</div>

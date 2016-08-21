@@ -194,7 +194,6 @@ String actionNameFollowUp="/NewFindingsOralAnMaxillofacialPatient";
 															HashMap<Integer, String> disSpecialCaseListDetailsParentByChild = disServ.getParentByChildWithSpCaseDetailsByDisIDAndCaseDetailsID(Integer.parseInt(diseaseID), key);
 														%>
 														<%=MyUtility.generateHTML(disSpecialCaseListDetails, disSpecialCaseListDetailsParentByChild, "specialCaseId", patCurDisDTO.patSpCaseId, patCurDisDTO, editAndView)%>
-
 													</table>
 										    	</div><!--/./form-group--> 
 					    	 				</div>

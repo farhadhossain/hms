@@ -32,6 +32,9 @@ public class PatientSurgeryDTO {
 	public String responsibleDoctorBed;
 	public String updatePerform;
 
+	private String followupAdvice;
+	private String nextVisitDate;
+
 	private List<UserDTO> surgeonList = new ArrayList<UserDTO>();
 	private List<UserDTO> assistSurgList = new ArrayList<UserDTO>();
 	private List<UserDTO> anesthetistList = new ArrayList<UserDTO>();
@@ -141,5 +144,21 @@ public class PatientSurgeryDTO {
 
 	public void setAnesthetistList(List<UserDTO> anesthetistList) {
 		this.anesthetistList = anesthetistList;
+	}
+
+	public String getNextVisitDate() {
+		return nextVisitDate;
+	}
+
+	public void setNextVisitDate(String nextVisitDate) {
+		this.nextVisitDate = nextVisitDate;
+	}
+
+	public String getFollowupAdvice() {
+		return followupAdvice;
+	}
+
+	public void setFollowupAdvice(String followupAdvice) {
+		this.followupAdvice = followupAdvice;
 	}
 }

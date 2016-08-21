@@ -460,17 +460,16 @@ public class ExtractionDAO {
 			System.out.println(sql);
 			stmt.execute(sql);
 
-			//if(dto.isDone()) {
+			if(dto.isDone()) {
 				sql="SELECT * FROM tbl_logbook where userId="+MyConfig.userID+" and patientId="+dto.getPatientId()+" and roleId="+MyConfig.roleID;
 				System.out.println(sql);
 				rs = stmt.executeQuery(sql);
 				while (rs.next()==Boolean.FALSE) {
-					String upDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
-					sql = "insert into tbl_logbook(userId, patientId, updateDate, roleId) " + "values('" + MyConfig.userID + "','" + dto.getPatientId() + "','" + upDate + "','" + MyConfig.roleID + "')";
+					sql = "insert into tbl_logbook(userId, patientId, updateDate, roleId) " + "values('" + MyConfig.userID + "','" + dto.getPatientId() + "',NOW(),'" + MyConfig.roleID + "')";
 					System.out.println(sql);
 					stmt.execute(sql);
 				}
-			//}
+			}
 
 		}catch(Exception e){
 			daoRes.setMessage("Error: "+e.toString());

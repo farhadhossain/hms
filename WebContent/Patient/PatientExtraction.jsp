@@ -172,8 +172,9 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 					</div>
 				</div>
 				<!-- Patient info panel END-->
-				<div class="row remove-margin well well-sm" ng-init="getVisits(<%=accountID%>);getPrescription(<%=accountID%>,<%=visitID%>);" ng-show="!isDutyNurse">
-					<div class="col-md-4" style="border-right: 1px solid gray;">
+				<table width="100%" ng-init="getVisits(<%=accountID%>);getPrescription(<%=accountID%>,<%=visitID%>);" ng-show="!isDutyNurse">
+					<tr class="row remove-margin well well-sm">
+					<td class="col-md-4" style="border-right: 1px solid #CCC;width: 33%;">
 					    <div class="row"><div class="col-sm-9"><h4><i class="fa fa-comments"></i>&nbsp;&nbsp;Chief Complaint (C/C)</h4></div></div>
 					    <div class="row" ng-repeat="cc in prescription.chiefComplain">
 							<div ng-if="isString(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div>
@@ -191,8 +192,10 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 							<div ng-if="isObject(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}.
 								<span ng-repeat="(key, value) in cc">
 									{{key}}
-									<div class="row"><div class="col-sm-6" style="border-right: 1px solid #CCC;border-bottom: 1px solid #CCC;text-align: right;">&nbsp;{{value.lt.join(', ')}}</div><div style="border-bottom: 1px solid #CCC;" class="col-sm-6">&nbsp;{{value.rt.join(', ')}}</div></div>
-									<div class="row"><div class="col-sm-6" style="border-right: 1px solid #CCC;text-align: right;">&nbsp;{{value.lb.join(', ')}}</div><div class="col-sm-6">&nbsp;{{value.rb.join(', ')}}</div></div>
+									<table style="width: 100%;">
+										<tr><td width="50%" style="border-right: 1px solid #CCC;border-bottom: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lt.join(', ')}}</td><td width="50%" style="border-bottom: 1px solid #CCC;padding: 5px;">&nbsp;{{value.rt.join(', ')}}</td></tr>
+										<tr><td width="50%" style="border-right: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lb.join(', ')}}</td><td width="50%" style="padding: 5px;">&nbsp;{{value.rb.join(', ')}}</td></tr>
+									</table>
 								</span>
 							</div>
 						</div>
@@ -202,18 +205,18 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 						<div class="row" ng-repeat="cc in prescription.onObservation">
 							<div ng-if="isString(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div>
 							<div ng-if="isObject(cc)" ng-if="isObject(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}.
-						<span ng-if="!cc.other" ng-repeat="(key, value) in cc">
-							{{key}}
-							<table style="width: 100%;">
-								<tr><td width="50%" style="border-right: 1px solid #CCC;border-bottom: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lt.join(', ')}}</td><td width="50%" style="border-bottom: 1px solid #CCC;padding: 5px;">&nbsp;{{value.rt.join(', ')}}</td></tr>
-								<tr><td width="50%" style="border-right: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lb.join(', ')}}</td><td width="50%" style="padding: 5px;">&nbsp;{{value.rb.join(', ')}}</td></tr>
-							</table>
-						</span>
+								<span ng-if="!cc.other" ng-repeat="(key, value) in cc">
+									{{key}}
+									<table style="width: 100%;">
+										<tr><td width="50%" style="border-right: 1px solid #CCC;border-bottom: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lt.join(', ')}}</td><td width="50%" style="border-bottom: 1px solid #CCC;padding: 5px;">&nbsp;{{value.rt.join(', ')}}</td></tr>
+										<tr><td width="50%" style="border-right: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lb.join(', ')}}</td><td width="50%" style="padding: 5px;">&nbsp;{{value.rb.join(', ')}}</td></tr>
+									</table>
+								</span>
 								<span ng-if="cc.other">{{cc.other.text}}</span>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-8">
+					</td>
+					<td class="col-md-8" style="vertical-align: top;width:77%;">
 						<div class="row"><div class="col-sm-9"><h4><i class="fa fa-medkit"></i>&nbsp;&nbsp;Rx</h4></div></div>
 						<div class="row col-sm-offset-1" ng-repeat="med in prescription.medicines">
 							<div class="col-sm-6">{{$index+1}}. {{med.medicineName}} ({{med.medicineType}})</div>
@@ -229,9 +232,10 @@ System.out.println("isUncheckedHide: "+isUncheckedHide);
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-
+					</td>
+				    </tr>
+				</table>
+				<br/>
 				<div class="panel panel-default" ng-init="getExtractionItems()">
 					<div class="panel-heading">
 						<h3 class="panel-title">

@@ -13,7 +13,8 @@
 	<context-param> 
     	<description>Location to store uploaded file</description> 
     	<param-name>file-upload</param-name> 
-    	<param-value>D:\apache-tomcat-8.0.32\webapps\ROOT\Assets\Images\</param-value>
+    	<param-value>I:\apache-tomcat-8.0.32\webapps\ROOT\Assets\Images\</param-value>
+        <!--param-value>/Users/macintosh/Documents/Farhad/HMS/out/artifacts/HMS_war_exploded/Assets/Images</param-value-->
 	</context-param>
 
 

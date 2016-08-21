@@ -92,7 +92,40 @@ public class UserDAO
 		}
 		return destDTOs;
 	}
-	
+
+	public ArrayList<UserDTO> getUserByProgram(String program) {
+		ArrayList<UserDTO> destDTOs = new ArrayList<UserDTO>();
+		String sql=null;
+		try{
+			Connection conn = DBMySQLConnection.DatabaseConnection.ConnectionManager();
+			sql="SELECT * FROM tbl_user where id>0 ";
+			sql+=" and program = '"+program+"'";
+
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+	        ResultSet rs=pstmt.executeQuery();
+	        while(rs.next()){
+	        	UserDTO dto = new UserDTO();
+	        	dto.setUserID(rs.getInt("id"));
+	        	dto.setUserName(rs.getString("user_name"));
+	        	dto.setPassword(rs.getString("user_pass"));
+	        	dto.setEmployeeName(rs.getString("employee_name"));
+	        	dto.setEmployeePhone(rs.getString("phone_number"));
+	        	dto.setEmployeeType(rs.getInt("user_type"));
+				dto.setDesignation(rs.getString("designation"));
+				dto.setStudentId(rs.getString("student_id"));
+				dto.setProgram(rs.getString("program"));
+				dto.setPhase(rs.getString("phase"));
+				dto.setBlock(rs.getString("block"));
+	        	destDTOs.add(dto);
+	        }
+	        rs.close();
+	        pstmt.close();
+	        conn.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return destDTOs;
+	}
 
 	public boolean dropUser(int userID) {
 		boolean isValid=true;

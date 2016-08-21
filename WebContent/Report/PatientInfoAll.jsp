@@ -25,7 +25,7 @@ StringUtil.removeNullFromObject(patientDTO);
 
 PatientOthersService patOthersServ = new PatientOthersService();
 
-PatientOthersDTO patCurInfoDTO = patOthersServ.getPatientOthersDTOByID(Integer.parseInt(accountID)); 
+PatientOthersDTO patCurInfoDTO = patOthersServ.getPatientOthersDTOByID(Integer.parseInt(accountID));
 HashMap<Integer, String> diseaseList = new DiseaseService().getSysDiseaseInfo(-1);
 HashMap<Integer, DiseaseMetaData> patExposureToList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoExposureTo);
 HashMap<Integer, DiseaseMetaData> patHabitsList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHabits);
@@ -34,6 +34,8 @@ HashMap<Integer, DiseaseMetaData> patObstetricalHistoryList = patOthersServ.getS
 HashMap<Integer, DiseaseMetaData> patFamilyRelevantDiseaseHistoryList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoFamilyRelevantDiseaseHistory);
 HashMap<Integer, DiseaseMetaData> patHistoryOfImmunizationList = patOthersServ.getSocialAndPersonalHistoryDetailsByID(MyConfig.infoHistoryOfImmunization);
 HashMap<Integer, String> statusList = new StatusService().getAllStatus();
+HashMap<Integer, String> specificDiseaseList = new DiseaseService().getSysDiseaseInfo(1);
+HashMap<Integer, String> generalDiseaseList = new DiseaseService().getSysDiseaseInfo(2);
 %>
 <html lang="en" ng-app="hms">
 <head><html:base/><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -49,7 +51,7 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 <link rel="stylesheet" type="text/css" href="../Assets/Styles/tableOfTanvir.css" />
 
     -->
-    
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -59,7 +61,7 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 	<link rel="stylesheet" type="text/css" href="../Assets/Styles/toastr.min.css">
 	<link href="../Assets/NewAssets/css/style.css" type="text/css" rel="stylesheet">
 
-    
+
    <script type="text/javascript" src="../Assets/js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="../Assets/js/bootstrap.js"></script>
 	<script type="text/javascript" src="../Assets/js/toastr.min.js"></script>
@@ -72,24 +74,56 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 	<script>
 
 	</script>
+	<style>
+		*{
+			font-family: Verdana;
+			font-size: 12px;
+		}
+		label{
+			font-size: 12px;
+		}
+		input[type=checkbox]{
+			display:none;
+			font-size: 12px;
+		}
+
+		input[type=text]{
+			border:none;
+			font-size: 12px;
+		}
+
+		select{
+			border:none;
+			width : 300px !important;
+			background: transparent;
+			-webkit-appearance: none;
+    		-moz-appearance: none;
+    		appearance: none;
+		}
+
+		.col-sm-offset-1{
+			margin-left: 3%;
+		}
+
+	</style>
 </head>
 
 
 <body>
-    
+
     <div id="wrapper">
-    
+
     	<div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
             	<div class="col-lg-12">
-               
+
              	<div style="clear:both"></div>
    				 <div class="ibox float-e-margins">
                     <div class="ibox-title" ng-controller = "ViewFindingsController" ng-init="getVisits(<%=accountID%>);">
-                    
+
                     	<div class="row">
                     		<div class="col-sm-6" style="font-family: ubuntu mono;">
-                        		<h5>View Findings of <i><%=patientDTO.getName()%></i></h5> 
+                        		<h5>View Findings of <i><%=patientDTO.getName()%></i></h5>
                        		</div>
                        		<div class="col-sm-6" style="text-align: right;">
                        			<input type="button" class="btn btn-primary" style="padding: 2px 12px;" value="Print" onClick="window.print()">
@@ -105,7 +139,7 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 
                         </div>
                     </div><!--/./ibox-title-->
-                    
+
                     <div class="ibox-content" id="print">
                     	<div class="form-horizontal">
 							<div class="header">
@@ -123,7 +157,7 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 										<p>&nbsp; </p>
 									</div>
 									<div style="font-size: 15px; color: #0A141F;">
-										
+
 										<div class="col-sm-6">
 										  	<label for="p1">Name of Patient: &nbsp;</label>
 										  	<label style="color: #010203; font-style: italic;"><%= patientDTO.getName() %></label>
@@ -140,7 +174,7 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 											<label>Ticket No:</label>
 											<label><%=visitDTO.getTicketNumber() %></label>
 										</div>
-										
+
 										<div class="col-sm-2">
 										  	<label for="p1">Ward No:  </label>
 										  	<label style=""><%=visitDTO.getWordNumber()==null?"":visitDTO.getWordNumber() %></label>
@@ -157,70 +191,98 @@ HashMap<Integer, String> statusList = new StatusService().getAllStatus();
 											<label>Blood Group: </label>
 											<label><%=patientDTO.getBloodGroup() %></label>
 										</div>
-										<div class="col-sm-4">
+										<div class="col-sm-2">
 											<label>Contact No:</label>
 											<label><%= patientDTO.getTelephoneNum() %></label>
 										</div>
-										<div class="col-sm-12">
-											<p>&nbsp; </p>
+										<div class="col-sm-2">
+											<label>Admitted in: <%=statusList.get(visitDTO.getCurrentStatus()) %> </label>
 										</div>
 									</div>
-									<div class="col-sm-12" style="text-align: center;">
+
+									<div class="col-sm-12" style="text-align: center;margin-top: 20px;">
 										<h2><strong>Patient Disease Information</strong></h2>
-										
 									</div>
-									
+
 									<div class="col-sm-12" style="color: #0A141F;">
 										<div class="row">
-											<div classs="col-sm-12">
-												<label style="font-size: 16px;">&nbsp;Admitted in:</label>
-												<label style="font-size: 16px; color: red;"><%=statusList.get(visitDTO.getCurrentStatus()) %></label>
-											</div>
 											<table class="col-sm-12" style="color: #0A141F;">
+												<tr><td style="padding-left: 35px;">
+													<%@ include file="ViewFindings/SocialAndPersonal.jsp" %>
+												</td></tr>
 												<%if(patientDTO.getDeptId()==3){%>
+
+												    <tr><td style="padding-left: 35px;"><label>2. General Disease</label></td></tr>
 				                        			<%Iterator<Integer> it = visitDTO.diseaseTypeHash.iterator();
+													 char indexCount = 'a';
 				                                  	while(it.hasNext()) {
-				                                  		int key=it.next();%>
+														Integer key=it.next();
+														if(!generalDiseaseList.keySet().contains(key)){
+														    continue;
+														}
+				                                  		%>
 				                    					<tr>
-				                    						<td>
-						                    					<%if(key==23){%>
-						                    						<%@ include file="../ViewDiseaseOnly/OroFaciaInfection.jsp" %>
-						                    					<%}else if(key==26){%>
-						                    						<%@ include file="../ViewDiseaseOnly/BenignCystTumor.jsp" %>
-						                    					<%}else{%>
-						                    						<%@ include file="../ViewDiseaseOnly/CommonDisease.jsp" %>
-						                    					<%}%>
+				                    						<td style="padding-left: 35px;">
+
+																<%@ include file="../ViewDiseaseOnly/CommonDisease.jsp" %>
+
 						                    					<br>
-						                    					
+
 					                    					</td>
 				                    					</tr>
-				                    				<%}%>
+				                    				<%indexCount++;}%>
+
+													<tr><td style="padding-left: 35px;"><label>3. Specific Disease</label></td></tr>
+														<%it = visitDTO.diseaseTypeHash.iterator();
+														indexCount = 'a';
+														while(it.hasNext()) {
+															Integer key=it.next();
+															if(generalDiseaseList.keySet().contains(key)){
+																continue;
+															}
+															%>
+															<tr>
+																<td style="padding-left: 35px;">
+																	<%if(key==23){%>
+																		<%@ include file="../ViewDiseaseOnly/OroFaciaInfection.jsp" %>
+																	<%}else if(key==26){%>
+																		<%@ include file="../ViewDiseaseOnly/BenignCystTumor.jsp" %>
+																	<%}else{%>
+																		<%@ include file="../ViewDiseaseOnly/CommonDisease.jsp" %>
+																	<%}%>
+																	<br>
+
+																</td>
+															</tr>
+														<%indexCount++;}%>
+
 				                        		<%}else{%>
 				                        			<tr>
 					                        			<td>
 					                        				<%@ include file="../Department/DiseaseUpdateViewOnly.jsp" %>
 					                        			</td>
-				                        			</tr>                        			
+				                        			</tr>
 				                        		<%}%>
+
 											</table>
 										</div>
 									</div>
-									
-									
-									
+
+
+
 								</div>
 							</div>
 					   	</div>
-                    
+
                     </div>
-					
+
                 </div><!--/./ibox float-e-margins-->
             </div><!--/./col-lg-12-->
 
            </div> <!--/./row-->
         </div><!--/./wrapper wrapper-content animated fadeInRight-->
-        
-       
+
+
     </div><!--/./gray-bg-->
 
 

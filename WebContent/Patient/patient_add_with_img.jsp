@@ -24,7 +24,7 @@
    	if((contentType.indexOf("multipart/form-data") >= 0)) {
 	    DiskFileItemFactory factory = new DiskFileItemFactory();
     	factory.setSizeThreshold(maxMemSize);
-      	factory.setRepository(new File(application.getRealPath("\\Assets\\Images")));
+      	factory.setRepository(new File(application.getRealPath("/Assets/Images")));
 	    ServletFileUpload upload = new ServletFileUpload(factory);
     	upload.setSizeMax( maxFileSize );
       	try{

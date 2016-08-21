@@ -100,6 +100,7 @@ DiseaseMetaData name = new DiseaseMetaData();
 									  	<li role="presentation" class="active"><a href="../PatientOthers/PatinetPhysicalExamination.jsp?userID=<%=userID%>">Physical Examination</a></li>
 									  	<%--<li role="presentation"><a href="../PatientOthers/PreAnestheticEvaluation.jsp?userID=<%=userID%>">Pre-Anesthetic Evaluation</a></li>--%>
 									  	<li role="presentation"><a href="../PatientOthers/GeneralSurvey.jsp?userID=<%=userID%>">General Survey</a></li>
+
 										<li role="presentation" class="dropdown">
 											<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
 									      		Surgery<span class="caret"></span>
@@ -118,7 +119,7 @@ DiseaseMetaData name = new DiseaseMetaData();
 									      		<li role="presentation"><a href="../PatientOthers/AddMedication.jsp?userID=<%=userID %>">Add New</a></li>
 									    	</ul>
 									  	</li>
-									  
+
 									</ul>
 				                </div>
 				                

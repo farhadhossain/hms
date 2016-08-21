@@ -325,7 +325,7 @@ int size=dtoList.size();
 															<a target="_blank" href="../PatientOthers/Investigation.jsp?userID=<%=dto.getAccId()%>">General Investigation</a><br>
 														<%}%>
 														<%if(dto.getDeptId()==MyConfig.deptIndoor && dto.getSurgicalStatus() != 0){%>
-															<a target="_blank" href="../PatientOthers/PreAnestheticEvaluation.jsp?userID=<%=dto.getAccId()%>">Pre-Anesthatic Evaluation</a><br>
+															<a target="_blank" href="../PatientOthers/PreAnestheticEvaluation.jsp?userID=<%=dto.getAccId()%>">Pre-Anesthetic Evaluation</a><br>
 														<%}%>
 														<%if(loginDTO.getRoleID()==MyConfig.DoctorForBed || loginDTO.getRoleID()==MyConfig.deptIndoor || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.AnesthetistRole){%>
 															<a target="_blank" href="../Report/PatientInfoAll.jsp?accountID=<%=dto.getAccId()%>">View Findings</a><br>
@@ -337,13 +337,15 @@ int size=dtoList.size();
 
 														<%if(loginDTO.getRoleID()==MyConfig.DoctorForBed || loginDTO.getRoleID()==MyConfig.deptIndoor || loginDTO.getRoleID()==MyConfig.SurgeonRole || loginDTO.getRoleID()==MyConfig.AssistantSurgeonRole || loginDTO.getRoleID()==MyConfig.AnesthetistRole){%>
 								                       		<%if(dto.getSurgicalStatus()==0){%>
-															  <a  href="../Patient/EditPatient.jsp?accountID=<%=dto.getAccId()%>&surgicalStatus=1">Admit the Patient</a><br>
+															  <a  href="../Patient/EditPatient.jsp?accountID=<%=dto.getAccId()%>&surgicalStatus=1"><input type="button" value="Admit the Patient"/></a><br>
 														    <%}else if(dto.getSurgicalStatus()==1){%>
-														  	  <a  href="../Patient/Surgery.jsp?userID=<%=dto.getAccId() %>&surgicalStatus=2">Make Pre-Operative</a>
+														  	  <a  href="../Patient/Surgery.jsp?userID=<%=dto.getAccId() %>&surgicalStatus=2"><input type="button" value="Make Pre-Operative"/></a>
 															<%}else if(dto.getSurgicalStatus()==2){%>
-																<a  href="../Patient/Surgery.jsp?userID=<%=dto.getAccId() %>&surgicalStatus=3">Make Post-Operative</a>
+																<a  href="../Patient/Surgery.jsp?userID=<%=dto.getAccId() %>&surgicalStatus=3"><input type="button" value="Make Post-Operative"/></a>
 															<%}else if(dto.getSurgicalStatus()==3){%>
-														        <a href="../Patient/Discharge.jsp?accountID=<%=dto.getAccId()%>&surgicalID=0">Make Discharge</a>
+														        <a href="../Patient/Discharge.jsp?accountID=<%=dto.getAccId()%>&surgicalID=0"><input type="button" value="Make Discharge"/></a>
+														    <%}else if(dto.getSurgicalStatus()==4){%>
+														        <a href="../Patient/Discharge.jsp?accountID=<%=dto.getAccId()%>&surgicalID=0&viewMode=true">Discharge Note</a>
 															<%}%>
 									                    <%}%>
 						                        	</td>

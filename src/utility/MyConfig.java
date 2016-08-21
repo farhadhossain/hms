@@ -66,6 +66,20 @@ public class MyConfig{
 		put(12, "DOT center");
 		put(13, "Other");
 	}};
+
+	public static HashMap<Integer, Integer> specialCaseForInvestigation = new HashMap<Integer , Integer>() {{
+		put(19, 34);
+		put(20, 30);
+		put(25, 35);
+		put(30, 29);
+		put(18, 32);
+		put(23, 12);
+		put(24, 29);
+		put(16, 36);
+		put(21, 33);
+		put(22, 31);
+		put(26, 27);
+	}};
 	
 	public static final int diagnosisRoomRole=10;
 	public static final int frontDeskRole=11;

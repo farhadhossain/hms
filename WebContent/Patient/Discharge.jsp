@@ -10,15 +10,30 @@
 <%@ page import="patient.PatientSurgeryService" %>
 <%@ page import="patient.PatientSurgeryDTO" %>
 <%@ page import="user.UserDTO" %>
+<%@ page import="prescription.VisitDAO" %>
+<%@ page import="prescription.VisitDTO" %>
+<%@ page import="utility.StringUtil" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="disease.DiseaseDTO" %>
+<%@ page import="disease.form.DiseaseMetaData" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="utility.MyUtility" %>
+<%@ page import="utility.MyConfig" %>
+<%@ page import="disease.DiseaseService" %>
 <%@ page language="Java" %>
 <%@ taglib uri="../WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="../WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="../WEB-INF/struts-logic.tld" prefix="logic" %>
 <%
-String accountID= request.getParameter("accountID");
-String surgicalID= request.getParameter("surgicalID");
-PatientDTO patientDTO=new PatientService().getPatientDTO(Integer.parseInt(accountID));
-PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(Integer.parseInt(accountID));
+	String accountID= request.getParameter("accountID");
+	String visitID = request.getParameter("visitID")==null?"0":request.getParameter("visitID");
+	String surgicalID= request.getParameter("surgicalID");
+	boolean viewMode = request.getParameter("viewMode")!=null ? Boolean.parseBoolean(request.getParameter("viewMode")) : false;
+	PatientDTO patientDTO=new PatientService().getPatientDTO(Integer.parseInt(accountID));
+	PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(Integer.parseInt(accountID),Integer.parseInt(visitID));
+	DiseaseService disServ = new DiseaseService();
+    HashMap<Integer, String> diseaseList = disServ.getSysDiseaseInfo(-1);
+
 %>
 
 <head>
@@ -51,12 +66,31 @@ PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(
 			padding-left: 0px;
 			padding-right: 0px;
 		}
+
+		input[type=checkbox]{
+			visibility:hidden;
+			font-size: 12px;
+		}
+
+		input[type=text]{
+			border:none;
+			font-size: 12px;
+		}
+
+		select{
+			border:none;
+			width : 300px !important;
+			background: transparent;
+			-webkit-appearance: none;
+    		-moz-appearance: none;
+    		appearance: none;
+		}
 	</style>
 </head>
 
 <body ng-app="hms">
 	<html:form action="/MakeDischarge">
-		<div class="container"  ng-controller = "TreatmentPlanController">
+		<div class="container" ng-controller = "TreatmentPlanController">
 
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -67,9 +101,21 @@ PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(
 			<!-- Patient info panel -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">
-						Patient Details
-					</h3>
+					<div class="row">
+						<div class="col-sm-6" style="font-family: ubuntu mono;">
+							<h4>Patient Details</h4>
+						</div>
+						<div class="col-sm-6" style="text-align: right;" ng-init="getVisits(<%=accountID%>)">
+							<ul role="presentation" class="dropdown pull-right" ng-show="<%=visitID.equals("0")%>">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+									Previous Visits <span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li ng-repeat="v in visits | limitTo:visits.length-1" ><a target="_blank" href="/Patient/Discharge.jsp?accountID=<%=accountID%>&surgicalID=0&viewMode=true&visitID={{v.id}}">{{$index+1}}) on {{v.visitDate | date:'dd MMM yyyy'}}</a></li>
+								</ul>
+							</ul>
+						</div>
+					</div>
 				</div>
 				<div class="panel-body_1 table-responsive ">
 					<table class="table-bordered table">
@@ -86,7 +132,7 @@ PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(
 						</thead>
 						<tbody>
 						<tr>
-							<td><%=patientDTO.getTicketNumber() %></td>
+							<td><%=patientDTO.getAccId() %></td>
 							<td><%=patientDTO.getBedNumber() %></td>
 							<td><%=patientDTO.getName() %></td>
 							<td><%=patientDTO.getAge() %></td>
@@ -100,26 +146,35 @@ PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(
 			</div>
 			<!-- Patient info panel END-->
 
-			<table style="width: 100%;" ng-init="getPrescription('<%=accountID%>')">
-				<tr>
+			<table style="width: 100%;" ng-init="getPrescription('<%=accountID%>', <%=visitID%>)">
+				<tr >
 					<td width="50%"><label class="control-label">Date of Admission: </label>&nbsp;&nbsp;  <%=patientDTO.date_of_adm %></td>
 					<td width="50%" style="text-align: right;"><label class="control-label">Date of Discharge:&nbsp;&nbsp; </label><%=new Date() %></td>
 				</tr>
 				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Diagnosis:</label></td></tr>
 				<tr><td colspan="2">
-					<div class="row" ng-repeat="cc in prescription.onObservation">
-						<div ng-if="isString(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div>
-						<div ng-if="isObject(cc)" ng-if="isObject(cc)" class="col-sm-9 col-lg-offset-1">{{$index+1}}.
-							<span ng-if="!cc.other" ng-repeat="(key, value) in cc">
-								{{key}}
-								<table style="width: 20%;">
-									<tr><td width="50%" style="border-right: 1px solid #CCC;border-bottom: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lt.join(', ')}}</td><td width="50%" style="border-bottom: 1px solid #CCC;padding: 5px;">&nbsp;{{value.rt.join(', ')}}</td></tr>
-									<tr><td width="50%" style="border-right: 1px solid #CCC;text-align: right;padding: 5px;">&nbsp;{{value.lb.join(', ')}}</td><td width="50%" style="padding: 5px;">&nbsp;{{value.rb.join(', ')}}</td></tr>
-								</table>
-							</span>
-							<span ng-if="cc.other">{{cc.other.text}}</span>
-						</div>
-					</div>
+
+					<table class="col-sm-offset-1">
+					<%
+						int currentVisitId = new VisitDAO().getCurrentVisitId(patientDTO.getAccId());
+						VisitDTO visitDTO = new VisitDAO().getVisitById(currentVisitId);
+						StringUtil.removeNullFromObject(visitDTO);
+						int count = 1;
+					%>
+					<%Iterator<Integer> it = visitDTO.diseaseTypeHash.iterator();
+						while(it.hasNext()) {
+							int diseaseTypeKey=it.next();
+							DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(patientDTO.getAccId(), currentVisitId, diseaseTypeKey);
+							if (patCurDisDTO.patDiagonosisId.size()>0){
+								HashMap<Integer, DiseaseMetaData> disDiagnosisList = disServ.getDiseaseDetailsByDisIDAndDisType(diseaseTypeKey, MyConfig.diseaseDiagnosis);
+								HashMap<Integer, String> disDiagnosisParentByChild = disServ.getParentByChildWithDisIDAndDisType(diseaseTypeKey, MyConfig.diseaseDiagnosis);
+					%>
+								<tr>
+									<td style="padding: 10px 0;"><strong><%=count%>. <%=diseaseList.get(diseaseTypeKey)%></strong></td>
+								</tr>
+								<%=MyUtility.generateHTML(disDiagnosisList, disDiagnosisParentByChild, "diagnosisId", patCurDisDTO.patDiagonosisId, patCurDisDTO, false)%>
+						<%count++;}}%>
+					</table>
 				</td></tr>
 
 				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Hospital Course:</label></td></tr>
@@ -138,7 +193,25 @@ PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(
 
 				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Investigations:</label></td></tr>
 				<tr><td colspan="2">
-					<div class="row" ng-repeat="cc in prescription.investigation"><div class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div></div>
+					<table class="col-sm-offset-1">
+						  <%it = visitDTO.diseaseTypeHash.iterator();
+							  count=1;
+							  while(it.hasNext()) {
+								  int diseaseTypeKey=it.next();
+								  DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(patientDTO.getAccId(), currentVisitId, diseaseTypeKey);
+								  if (patCurDisDTO.patSpCaseId.size()>0){
+									  int spCasId  = MyConfig.specialCaseForInvestigation.get(diseaseTypeKey);
+									  HashMap<Integer, DiseaseMetaData> disSpecialCaseListDetails = disServ.getSpCaseDetailsByDisIDAndCaseID(diseaseTypeKey, spCasId);
+									  HashMap<Integer, String> disSpecialCaseListDetailsParentByChild = disServ.getParentByChildWithSpCaseDetailsByDisIDAndCaseDetailsID(diseaseTypeKey, spCasId);
+
+						  %>
+								  <tr>
+									  <td style="padding: 10px 0;"><strong><%=count%>. <%=diseaseList.get(diseaseTypeKey)%></strong></td>
+								  </tr>
+								  <%=MyUtility.generateHTML(disSpecialCaseListDetails, disSpecialCaseListDetailsParentByChild, "specialCaseId", patCurDisDTO.patSpCaseId, patCurDisDTO, false)%>
+						<%count++;}}%>
+					</table>
+					<!--div class="row" ng-repeat="cc in prescription.investigation"><div class="col-sm-9 col-lg-offset-1">{{$index+1}}. {{cc}}</div></div--!>
 				</td></tr>
 
 				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Operation/Confinement/Procedure Note:</label></td></tr>
@@ -171,7 +244,7 @@ PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(
 					} %></td></tr>
 
 
-				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">TREATMENT ON DISCHARGE:</label></td></tr>
+				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">TREATMENT ON DISCHARGE</label></td></tr>
 
 				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Advice on Discharge with Recommendation (if any):</label></td></tr>
 				<tr><td colspan="2">
@@ -186,13 +259,19 @@ PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(
 
 				<tr><td colspan="2" style="padding-top: 20px;"><label class="control-label">Follow up Advice:</label></td></tr>
 				<tr><td colspan="2">
-					<div class="col-sm-9 col-lg-offset-1">
-						<textarea class="form-control" name="follow_up_advice"></textarea>
+					<div class="col-sm-11 col-sm-offset-1">
+						<textarea class="form-control" name="followupAdvice" style="width: 100%;display:<%= viewMode?"none":"" %>"></textarea>
+						<pre style="display:<%= viewMode?"":"none" %>; border: none;background: none;">
+						   <%=surgeryDTO.getFollowupAdvice()%>
+						</pre>
 					</div>
 				</td></tr>
 
 				<tr>
-					<td style="padding-top: 20px;" colspan="2"><label class="control-label">Next Visit Date:</label>&nbsp;&nbsp;&nbsp;<input type="text" /></td>
+					<td style="padding-top: 20px;" colspan="2"><label class="control-label">Next Visit Date:</label>&nbsp;&nbsp;&nbsp;
+						<input style="display:<%= viewMode?"none":"" %>" class="datepicker" type="text" name="nextVisitDate"/>
+						<label style="display:<%= viewMode?"":"none" %>"><%=surgeryDTO.getNextVisitDate()%></label>
+					</td>
 				</tr>
 
 			</table>
@@ -238,7 +317,9 @@ PatientSurgeryDTO surgeryDTO= new PatientSurgeryService().getSurgeryByPatientID(
 						<div class="row">
 							<input type="hidden" name="surgicalStatus" value="4"/>
 							<input type="hidden" name="userID" id="userID" value="<%=accountID%>">
-							<input class="btn btn-primary pull-right" type="submit" value="Save" style="margin-right: 20px;margin-left: 20px;"/>
+
+							<input class="btn btn-primary pull-right" type="submit" value="Save" style="margin-right: 20px;margin-left: 20px; display:<%= viewMode?"none":"" %>"/>
+
 							<input class="btn  pull-right" type="button" value="Print" onClick="window.print()"/>
 						</div>
 

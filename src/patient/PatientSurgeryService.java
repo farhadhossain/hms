@@ -21,8 +21,8 @@ public class PatientSurgeryService {
 		return new PatientSurgeryDAO().getSurgicalHistory(userId);
 	}
 	
-	public PatientSurgeryDTO getSurgeryByPatientID(int patientId) {
-		return new PatientSurgeryDAO().getSurgeryByPatientID(patientId);
+	public PatientSurgeryDTO getSurgeryByPatientID(int patientId, int visitId) {
+		return new PatientSurgeryDAO().getSurgeryByPatientID(patientId, visitId);
 	}
 	
 	public ArrayList<PatientSurgeryDTO> getPatientStatusLists(int fromStatusID, String startDate, String endDate) {

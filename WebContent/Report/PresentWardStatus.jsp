@@ -4,6 +4,14 @@
 <%@ page import="patient.PatientDTO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="prescription.VisitDAO" %>
+<%@ page import="prescription.VisitDTO" %>
+<%@ page import="utility.StringUtil" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="disease.DiseaseDTO" %>
+<%@ page import="disease.form.DiseaseMetaData" %>
+<%@ page import="utility.MyUtility" %>
+<%@ page import="disease.DiseaseService" %>
 <%@ include file="../includes/checkLogin.jsp"%>
 <%if(loginDTO!=null){
   if(loginDTO.getClientType()==-1 && RoleRepository.isPermitted(loginDTO.getRoleID(), PermissionDTO.ReportView)==true){
@@ -23,7 +31,8 @@
     dtoList=service.getCurrentWardStatus();
   }
   int size=dtoList.size();
-
+  HashMap<Integer, String> diseaseList = new DiseaseService().getSysDiseaseInfo(-1);
+  DiseaseService disServ = new DiseaseService();
 %>
 <%--
   Created by IntelliJ IDEA.
@@ -117,7 +126,11 @@
     }
 
   </script>
-
+  <style>
+    .my_disease td{
+      font-size: 11px;
+    }
+  </style>
 </head>
 <body>
 <div id="wrapper">
@@ -157,7 +170,29 @@
             Phone: <%=dto.getTelephoneNum()%><br>
           </td>
           <td><%= dto.date_of_adm==null?"":dto.date_of_adm %></td>
-          <td></td>
+          <td class="my_disease">
+            <table>
+                  <%
+                      int currentVisitId = new VisitDAO().getCurrentVisitId(dto.getAccId());
+                      VisitDTO visitDTO = new VisitDAO().getVisitById(currentVisitId);
+                      StringUtil.removeNullFromObject(visitDTO);
+                  %>
+                  <%Iterator<Integer> it = visitDTO.diseaseTypeHash.iterator();
+                      while(it.hasNext()) {
+                          int diseaseTypeKey=it.next();
+                          DiseaseDTO patCurDisDTO = disServ.getDiseaseInfo(dto.getAccId(), currentVisitId, diseaseTypeKey);
+                          if (patCurDisDTO.patDiagonosisId.size()>0){
+                              HashMap<Integer, DiseaseMetaData> disDiagnosisList = disServ.getDiseaseDetailsByDisIDAndDisType(diseaseTypeKey, MyConfig.diseaseDiagnosis);
+                              HashMap<Integer, String> disDiagnosisParentByChild = disServ.getParentByChildWithDisIDAndDisType(diseaseTypeKey, MyConfig.diseaseDiagnosis);
+                  %>
+                              <tr>
+                                  <td style="padding: 10px 0;"><strong><%=diseaseList.get(diseaseTypeKey)%></strong></td>
+                              </tr>
+                              <%=MyUtility.generateHTML(disDiagnosisList, disDiagnosisParentByChild, "diagnosisId", patCurDisDTO.patDiagonosisId, patCurDisDTO, false)%>
+                      <%}}%>
+            </table>
+
+          </td>
           <td>
             <%if(dto.imageName!=null && dto.imageName.length()>0){%>
             <input type="image" src="<%=MyConfig.filePath+dto.imageName%>" height="120" width="120">

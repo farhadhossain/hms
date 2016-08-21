@@ -56,18 +56,23 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 	.table {
 		font-size: 16px;
 	}
+
+	.thin{
+		font-weight: normal;
+	}
 </style>
 	<div class="ibox-content patientView">
 		
-		<div class="col-sm-12" style="color: red; text-align: center;">
-			<strong style="color: red;"><%=diseaseList.get(key)%></strong>
+		<div class="col-sm-12" style="">
+			<strong style=""><%=indexCount%>. <%=diseaseList.get(key)%></strong>
 		</div>
+		<div class="col-sm-offset-1">
 		<br>
 		<br>
 		<%if(disHistoryList.size()>0 && patCurDisDTO.patHisId.isEmpty()==false){%>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>History</label>
+					<label class="thin">History</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<table class="table">
@@ -104,7 +109,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 				<br>
 				<div class="">
 					<div class="theader col-sm-2">
-						<label>Over Lining</label>
+						<label class="thin">Over Lining</label>
 					</div>
 					<div class="table-responsive col-sm-10">
 						<table class="table">
@@ -120,7 +125,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 			<br>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>Symptom</label>
+					<label class="thin">Symptom</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<table class="table">
@@ -135,7 +140,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 			<br>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>Perticipating Factor</label>
+					<label class="thin">Perticipating Factor</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<table class="table">
@@ -151,7 +156,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 			<br>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>Inspection</label>
+					<label class="thin">Inspection</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<table class="table">
@@ -167,7 +172,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 			<br>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>Palpation</label>
+					<label class="thin">Palpation</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<table class="table">
@@ -182,7 +187,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 			<br>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>Auscultation</label>
+					<label class="thin">Auscultation</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<table class="table">
@@ -197,7 +202,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 			<br>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>Diagnosis</label>
+					<label class="thin">Diagnosis</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<table class="table">
@@ -213,7 +218,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 			<br>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>Treatment Plan</label>
+					<label class="thin">Treatment Plan</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<table class="table">
@@ -250,7 +255,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 			<br>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>Complications</label>
+					<label class="thin">Complications</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<%=patCurDisDTO.getComplications()%>
@@ -264,7 +269,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 			<br>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>Special Notes</label>
+					<label class="thin">Special Notes</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<%=patCurDisDTO.getSpecialNotes()%>
@@ -277,7 +282,7 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 		<br>
 			<div class="">
 				<div class="theader col-sm-2">
-					<label>Follow UP</label>
+					<label class="thin">Follow UP</label>
 				</div>
 				<div class="table-responsive col-sm-10">
 					<table class="table">
@@ -302,6 +307,6 @@ HashMap<Integer, String> disSpecialCaseList = disServ.getSpecialCaseIdNameList(k
 				</div>
 			</div>
 		<%}%>
-		
-	</div>
 
+		</div>
+ </div>

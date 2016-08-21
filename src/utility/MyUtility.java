@@ -1346,14 +1346,17 @@ public class MyUtility {
 		return html;
 	}
 	
-	public static String generateHTML(HashMap<Integer, DiseaseMetaData> disHistoryList, HashMap<Integer, String> parentByChild, String inputName, HashSet<Integer> patCurDisInfo, PatientOthersDTO patOthersDTO){
+	public static String generateHTML(HashMap<Integer, DiseaseMetaData> disHistoryList, HashMap<Integer, String> parentByChild, String inputName, HashSet<Integer> patCurDisInfo, PatientOthersDTO patOthersDTO, boolean... viewOnly){
 		HashSet<Integer> insertedId = new HashSet<Integer>();
 		String html="";
 		int spaceingColumn=40;
-		
+		boolean viewMode = viewOnly.length==1 && viewOnly[0];
 		int[] disKeySet = getSortedKeyList(disHistoryList);
 		for(int index=0; index<disKeySet.length; index++){
 			if(insertedId.contains(disKeySet[index])){
+				continue;
+			}
+			if(viewMode && !patCurDisInfo.contains(disKeySet[index])){
 				continue;
 			}
 			html+="<tr>\n";

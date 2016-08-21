@@ -17,6 +17,8 @@ public class PatientSurgeryForm extends ActionForm{
 	private int[] assistSurgIDList;
 	private int[] anesthetistIDList;
 	private int surgicalStatus;
+	private String followupAdvice;
+	private String nextVisitDate;
 
 
 	public int getSurgicalID() {
@@ -102,5 +104,21 @@ public class PatientSurgeryForm extends ActionForm{
 
 	public void setSurgicalStatus(int surgicalStatus) {
 		this.surgicalStatus = surgicalStatus;
+	}
+
+	public String getFollowupAdvice() {
+		return followupAdvice;
+	}
+
+	public void setFollowupAdvice(String followupAdvice) {
+		this.followupAdvice = followupAdvice;
+	}
+
+	public String getNextVisitDate() {
+		return nextVisitDate;
+	}
+
+	public void setNextVisitDate(String nextVisitDate) {
+		this.nextVisitDate = nextVisitDate;
 	}
 }
